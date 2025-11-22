@@ -2,7 +2,7 @@
 // Qbit Airdrop submit card v1
 
 (function () {
-  const TAG = "qbit_airdrop_card";
+  const TAG = "qbit-airdrop-submit-card";
   if (customElements.get(TAG)) return;
 
   const safe = (o,p,f)=>{try{let v=o;for(let i=0;i<p.length;i++){if(v==null)return f;v=v[p[i]]}return v==null?f:v}catch(e){return f}};
@@ -113,7 +113,7 @@ function formatDown(bps){
   class Card extends HTMLElement{
     constructor(){super();this._built=false;this._hass=null;this._els={};this._statusTimer=null;this._armAuto=false;this._valueAtFocus="";this._submitting=false;}
     setConfig(cfg){
-      if(!cfg||!cfg.entity) throw new Error("qbit_airdrop_card: 'entity' (select.*) is required");
+      if(!cfg||!cfg.entity) throw new Error("qbit-airdrop-submit-card: 'entity' (select.*) is required");
       this._entity=cfg.entity;
       this._cfg=Object.assign({title:"Qbit Airdrop",refresh_label:"Refresh",max_active:100},cfg);
       if(!this._built) this._build();
