@@ -449,12 +449,21 @@ function formatDown(bps){
           s.classList.add("muted");
         }
 
-        // Title (name) — shimmer; orange shimmer when availability === 0
+        // Title (name) — shimmer + direction based on state; orange variant when availability === 0
         const t=document.createElement("div");
         t.className="title loading-text";
         t.textContent=it.title||"";
+
+        // Orange gradient when availability === 0
         if (it.availability === 0) {
           t.classList.add("title-unavailable");
+        }
+
+        // Direction: right->left while downloading, left->right while uploading
+        if (stLower === "downloading") {
+          t.classList.add("shimmer-download");
+        } else if (stLower === "uploading") {
+          t.classList.add("shimmer-upload");
         }
 
         li.appendChild(m);
