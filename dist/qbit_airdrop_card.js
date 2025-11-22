@@ -259,6 +259,24 @@ function formatDown(bps){
           .size.muted{opacity:.45;cursor:default}
 
           .title{text-overflow:ellipsis;overflow:clip;white-space:nowrap}
+
+          /* Shimmering gradient text effect for titles */
+          .loading-text{
+            background:linear-gradient(90deg,#00f,#0ff,#00f) -100% / 200%;
+            -webkit-background-clip:text;
+                    background-clip:text;
+            color:transparent;
+            animation:shimmer 2s linear infinite;
+          }
+
+          /* Orange variant for availability === 0 */
+          .title-unavailable.loading-text{
+            background:linear-gradient(90deg,#c77e12,#ffc56a,#c77e12) -100% / 200%;
+          }
+
+          @keyframes shimmer{
+            to{background-position:100%}
+          }
         </style>
       `;
       this.appendChild(c);
@@ -417,12 +435,12 @@ function formatDown(bps){
           s.classList.add("muted");
         }
 
-        // Title (name) — turn orange when availability === 0
+        // Title (name) — shimmer; orange shimmer when availability === 0
         const t=document.createElement("div");
-        t.className="title";
+        t.className="title loading-text";
         t.textContent=it.title||"";
         if (it.availability === 0) {
-          t.style.color = "#c77e12";
+          t.classList.add("title-unavailable");
         }
 
         li.appendChild(m);
