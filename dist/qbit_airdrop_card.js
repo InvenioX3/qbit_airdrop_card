@@ -262,7 +262,7 @@ function formatDown(bps){
 
           /* Shimmering gradient text effect for titles */
 		  .loading-text {
-			background: linear-gradient(0deg, #c9d6c9, #1aad1a, #c9d6c9) -100% / 200%;
+			background: linear-gradient(180deg, #c9d6c9, #1aad1a, #c9d6c9) -100% / 200%;
 			-webkit-background-clip: text;
 					background-clip: text;
 			color: transparent;
@@ -271,7 +271,7 @@ function formatDown(bps){
 
 		/* availability === 0 override: only change the gradient, not the clip */
 		.title-unavailable.loading-text {
-		  background-image: linear-gradient(90deg, #c77e12, #332208, #801c0a);
+		  background-image: linear-gradient(90deg, #c77e12, #801c0a);
 		}
 
 
