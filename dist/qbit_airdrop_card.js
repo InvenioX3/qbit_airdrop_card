@@ -262,7 +262,7 @@ function formatDown(bps){
 
           /* Shimmering gradient text effect for titles */
 		  .loading-text {
-			background: linear-gradient(180deg, #c9d6c9, #1aad1a) -100% / 200%;
+			background: linear-gradient(180deg, #c9d6c9, #1aad1a, #c9d6c9) -100% / 200%;
 			-webkit-background-clip: text;
 					background-clip: text;
 			color: transparent;
