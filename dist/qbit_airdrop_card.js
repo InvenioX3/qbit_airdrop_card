@@ -1,8 +1,8 @@
-// /config/www/qbit-airdrop-submit-card.js
+// /config/www/qbit_airdrop_card.js
 // Qbit Airdrop submit card v1
 
 (function () {
-  const TAG = "qbit-airdrop-submit-card";
+  const TAG = "qbit_airdrop_card";
   if (customElements.get(TAG)) return;
 
   const safe = (o,p,f)=>{try{let v=o;for(let i=0;i<p.length;i++){if(v==null)return f;v=v[p[i]]}return v==null?f:v}catch(e){return f}};
@@ -87,28 +87,27 @@
     return b>=GB?`${(b/GB).toFixed(1)} GB`:`${(b/MB).toFixed(1)} MB`;
   }
 
-// dlspeed formatter: show e.g. "↓3.8MB" or "↓768KB"
-function formatDown(bps){
-  const s = Number(bps);
-  if (!Number.isFinite(s) || s <= 0) return "";
+  // dlspeed formatter: show e.g. "↓3.8MB" or "↓768KB"
+  function formatDown(bps){
+    const s = Number(bps);
+    if (!Number.isFinite(s) || s <= 0) return "";
 
-  const KB = 1024;
-  const MB = KB * 1024;
-  const GB = MB * 1024;
+    const KB = 1024;
+    const MB = KB * 1024;
+    const GB = MB * 1024;
 
-  if (s >= GB) {
-    return `↓${(s / GB).toFixed(1)}GB`;
+    if (s >= GB) {
+      return `↓${(s / GB).toFixed(1)}GB`;
+    }
+    if (s >= MB) {
+      return `↓${(s / MB).toFixed(1)}MB`;
+    }
+    if (s >= KB) {
+      return `↓${Math.round(s / KB)}KB`;
+    }
+
+    return `↓${Math.round(s)}B`;
   }
-  if (s >= MB) {
-    return `↓${(s / MB).toFixed(1)}MB`;
-  }
-  if (s >= KB) {
-    return `↓${Math.round(s / KB)}KB`;
-  }
-
-  return `↓${Math.round(s)}B`;
-}
-
 
   class Card extends HTMLElement{
     constructor(){super();this._built=false;this._hass=null;this._els={};this._statusTimer=null;this._armAuto=false;this._valueAtFocus="";this._submitting=false;}
@@ -147,8 +146,9 @@ function formatDown(bps){
           </div>
 
           <ul id="list" class="list"></ul>
-        </div>
+        </div`
 
+        + `
         <style>
           .wrap{padding:10px;display:grid;grid-row-gap:12px}
           .row{display:block}
@@ -247,7 +247,7 @@ function formatDown(bps){
           /* Size: clickable remove, colored #12c5de */
           .size{
             margin:0;
-			padding-right: 5px;
+            padding-right: 5px;
             text-align:right;
             font-variant-numeric:tabular-nums;
             font-size:calc(1em - 2pt);
