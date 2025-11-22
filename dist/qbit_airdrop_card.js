@@ -266,7 +266,7 @@ function formatDown(bps){
 			-webkit-background-clip: text;
 					background-clip: text;
 			color: transparent;
-			animation: shimmer 2s linear infinite;
+			animation: shimmer 3s linear infinite;
 		  }
 
 		/* availability === 0 override: only change the gradient, not the clip */
