@@ -262,16 +262,16 @@ function formatDown(bps){
 
           /* Shimmering gradient text effect for titles */
 		  .loading-text {
-			background: linear-gradient(180deg, #14c714, #c9d6c9) 0 -100% / 100% 200%;
+			background: linear-gradient(90deg, #14c714, #c9d6c9) 0 -100% / 100% 200%;
 			-webkit-background-clip: text;
 					background-clip: text;
 			color: transparent;
-			animation: shimmer 3s linear infinite;
+			animation: shimmer 2s linear infinite;
 		  }
 
 		/* availability === 0 override: only change the gradient, not the clip */
 		.title-unavailable.loading-text {
-		  background-image: linear-gradient(90deg, #c77e12, #801c0a, #0a0a0a, #c77e12);
+		  background-image: linear-gradient(90deg, #c77e12, #0a0a0a, #0a0a0a);
 		}
 
 
