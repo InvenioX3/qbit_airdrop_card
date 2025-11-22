@@ -1,11 +1,10 @@
 <!--
   PROJECT HEADER
-  Replace `docs/images/logo.png` with your project logo or icon.
 -->
 <p align="center">
-  <a href="https://github.com/YOUR_GITHUB_USERNAME/qbit-airdrop-submit-card">
+  <a href="https://github.com/InvenioX3/qbit_airdrop_card">
     <!-- PROJECT ICON PLACEHOLDER -->
-    <img src="dist/magnet.png" alt="Qbit Airdrop Submit Card" width="120" />
+    <img src="dist/magnet.png" alt="Qbit Airdrop Card" width="120" />
   </a>
 </p>
 
@@ -26,7 +25,7 @@
   <a href="https://github.com/InvenioX3">
     <img
       alt="Author"
-      src="https://img.shields.io/badge/author-InvenioX3-9A4DFF?style=for-the-badge"
+      src="https://img.shields.io/badge/author-JosephBrandenburg-9A4DFF?style=for-the-badge"
     />
   </a>
   <a href="https://github.com/InvenioX3/qbit_airdrop_card/releases">
@@ -74,7 +73,7 @@ It provides a streamlined UI for:
 This repository contains the **frontend only**: the JavaScript card and its static assets. All backend functionality (services and HTTP endpoints) comes from the Qbit Airdrop **integration**.
 
 > Integration repository:  
-> `https://github.com/InvenioX3/ha-qbit-airdrop`
+> `https://github.com/InvenioX3/qbit-airdrop`
 
 ---
 
@@ -87,7 +86,7 @@ This repository contains the **frontend only**: the JavaScript card and its stat
 - **Category inference**
   - Reads the `dn` (display name) parameter from the magnet.
   - Cleans up common naming patterns (dots, underscores, etc.).
-  - Infers a category from TV-style names (e.g., `Show.Name.S01E03...` ⇒ `Show Name`).
+  - Infers a category from TV-style names (e.g., `Item.Name.F01U03...` ⇒ `Item Name`).
   - Sends the infered category to the `qbit_airdrop.add_magnet` service.
 
 - **Cleaned titles**
@@ -124,7 +123,7 @@ This repository contains the **frontend only**: the JavaScript card and its stat
 - Home Assistant with dashboards.
 - HACS installed and configured.
 - **Qbit Airdrop integration** installed and working:
-  - Repository: `https://github.com/InvenioX3/ha-qbit-airdrop`
+  - Repository: `https://github.com/InvenioX3/qbit-airdrop`
   - Properly configured `host`, `port`, and optional `base_path`.
 - qBittorrent instance reachable from Home Assistant.
 
@@ -142,10 +141,10 @@ This repository is intended to be installed as a **HACS Dashboard plugin**.
    - Category: `Dashboard`
 3. Locate **Qbit Airdrop Submit Card** in HACS → Frontend and install it.
 4. HACS will:
-   - Install `qbit-airdrop-submit-card.js` into the appropriate location (e.g. `/hacsfiles/...`).
+   - Install `qbit-airdrop-submit-card.js` into the appropriate location (e.g. `/www/...`).
    - Register it as a dashboard resource.
 
-> Note: Because this is a Dashboard plugin, HACS manages the resource registration for you. You should not normally need to add the resource manually.
+> Note: Because this is a Dashboard plugin, HACS manages the resource registration for you. You should not need to add the resource manually, and using HACS vs manual install makes applying updates easier.
 
 5. Restart Home Assistant if prompted.
 
