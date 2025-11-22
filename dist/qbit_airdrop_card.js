@@ -271,7 +271,7 @@ function formatDown(bps){
 
           /* Orange variant for availability === 0 */
           .title-unavailable.loading-text{
-            background:linear-gradient(90deg,#c77e12,#ffc56a,#c77e12) -100% / 200%;
+            background-image:linear-gradient(90deg,#c77e12,#ffc56a,#c77e12) -100% / 200%;
           }
 
           @keyframes shimmer{
