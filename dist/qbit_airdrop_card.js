@@ -260,23 +260,36 @@ function formatDown(bps){
 
           .title{text-overflow:ellipsis;overflow:clip;white-space:nowrap}
 
-          /* Shimmering gradient text effect for titles */
-		  .loading-text {
-			background: linear-gradient(90deg, #14c714, #c9d6c9) -100% / 200%;
-			-webkit-background-clip: text;
-					background-clip: text;
-			color: transparent;
-			animation: shimmer 3s linear infinite;
-		  }
+          /* Base shimmer: blue, left -> right */
+          .loading-text{
+            background:linear-gradient(90deg,#00f,#0ff,#00f) 0 0 / 200% 100%;
+            -webkit-background-clip:text;
+                    background-clip:text;
+            color:transparent;
+            animation-name:shimmer;
+            animation-duration:2s;
+            animation-timing-function:linear;
+            animation-iteration-count:infinite;
+          }
 
-		/* availability === 0 override: only change the gradient, not the clip */
-		.title-unavailable.loading-text {
-		  background-image: linear-gradient(90deg, #c77e12, #0a0a0a, #0a0a0a);
-		}
+          /* Orange variant when availability === 0 */
+          .title-unavailable.loading-text{
+            /* only override the gradient, keep clip + animation from .loading-text */
+            background-image:linear-gradient(90deg, #c77e12, #0a0a0a, #0a0a0a);
+          }
 
+          /* Direction: right->left while downloading */
+          .loading-text.shimmer-download{
+            animation-direction:reverse; /* right -> left */
+          }
+
+          /* Direction: left->right while uploading */
+          .loading-text.shimmer-upload{
+            animation-direction:normal;  /* left -> right (default) */
+          }
 
           @keyframes shimmer{
-            to{background-position:100%}
+            to{background-position:100% 0;}
           }
         </style>
       `;
