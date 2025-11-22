@@ -261,18 +261,19 @@ function formatDown(bps){
           .title{text-overflow:ellipsis;overflow:clip;white-space:nowrap}
 
           /* Shimmering gradient text effect for titles */
-          .loading-text{
-            background:linear-gradient(90deg,#00f,#0ff,#00f) -100% / 200%;
-            -webkit-background-clip:text;
-                    background-clip:text;
-            color:transparent;
-            animation:shimmer 2s linear infinite;
-          }
+		.loading-text {
+		  background: linear-gradient(90deg, #00f, #0ff, #00f) -100% / 200%;
+		  -webkit-background-clip: text;
+				  background-clip: text;
+		  color: transparent;
+		  animation: shimmer 2s linear infinite;
+		}
 
-          /* Orange variant for availability === 0 */
-          .title-unavailable.loading-text{
-            background-image:linear-gradient(90deg,#c77e12,#ffc56a,#c77e12) -100% / 200%;
-          }
+		/* availability === 0 override: only change the gradient, not the clip */
+		.title-unavailable.loading-text {
+		  background-image: linear-gradient(90deg, #c77e12, #ffc56a, #c77e12);
+		}
+
 
           @keyframes shimmer{
             to{background-position:100%}
