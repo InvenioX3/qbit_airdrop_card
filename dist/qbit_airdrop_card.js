@@ -262,7 +262,7 @@ function formatDown(bps){
 
           /* Base shimmer: blue, left -> right */
           .loading-text{
-            background:linear-gradient(90deg,#00f,#0ff,#00f) 0 0 / 200% 100%;
+            background:linear-gradient(90deg, #14c714, #c9d6c9) -100% / 200%;
             -webkit-background-clip:text;
                     background-clip:text;
             color:transparent;
