@@ -1,0 +1,6 @@
+{
+  "name": "Qbit Airdrop Card",
+  "filename": "qbit_airdrop_card.js",
+  "homeassistant": "2024.12.0",
+  "render_readme": true
+}
