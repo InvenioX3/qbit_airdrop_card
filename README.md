@@ -60,63 +60,30 @@
 
 ---
 
-## Overview
+## Overview & Features
 
 **Qbit Airdrop Submit Card** is a custom Lovelace card (HACS Dashboard plugin) for Home Assistant.
 
-It provides a streamlined UI for:
 
-- Pasting or auto-detecting magnet links (especially on Android / Google TV).
-- Submitting them to qBittorrent through the **Qbit Airdrop integration**.
-- Viewing active torrents and managing them directly from a dashboard.
+Optimized for the Mobile Home Assistant app, it provides a streamlined UI for:
+
+- Submitting magnet links to qBittorrent through the **Qbit Airdrop integration**
+  - Tap the Qbit logo and paste a `magnet:?` URL
+    - `magnet:?` is detected & parsed/cleaned for show/movie title strings and sets the save location accordingly
+      -  e.g. `//NAS/TV-Shows/` for series
+      -  For non-series items are saved in the default location set in the qBitorrent client
+    - qBitorrent client automatically creates the category and appends it to the default save location directory
+- Managing torrents directly from this card
+  - Tapping the `State` column (leftmost) deletes the selected torrent and all related files
+  - Tapping the `Size` field removes the selected torrent and retains all related files
+- Refreshing the list
+  - Tapping the far right section of the logo triggers a refresh of the torrent list
 
 This repository contains the **frontend only**: the JavaScript card and its static assets. All backend functionality (services and HTTP endpoints) comes from the Qbit Airdrop **integration**.
 
 > Integration repository:  
 > `https://github.com/InvenioX3/qbit-airdrop`
 
----
-
-## Features
-
-- **Magnet input optimized for touch and TV UIs**
-  - Click/tap into the field and paste a `magnet:?` URL.
-  - On Android / Google TV, the card can auto-submit when it detects a magnet link in the input.
-
-- **Category inference**
-  - Reads the `dn` (display name) parameter from the magnet.
-  - Cleans up common naming patterns (dots, underscores, etc.).
-  - Infers a category from TV-style names (e.g., `Item.Name.F01U03...` ⇒ `Item Name`).
-  - Sends the infered category to the `qbit_airdrop.add_magnet` service.
-
-- **Cleaned titles**
-  - Trims the visible title to the useful part:
-    - Show name.
-    - Season/episode.
-    - Year (where possible).
-  - Hides noisy codec/source tags when appropriate.
-
-- **Active torrent list**
-  - Uses the integration’s `/api/qbit_airdrop/active` endpoint to render:
-    - **State** with progress.
-    - **Download speed** in a green `↓` column.
-    - **Size** column.
-    - **Cleaned title**, with special coloring when availability is 0.
-
-- **One-click delete / remove**
-  - Click **state** to delete torrent **and files**.
-  - Click **size** to remove torrent but keep files.
-  - Refresh button to re-query the integration and update the list.
-
-- **Backend-agnostic UI**
-  - The card only talks to Home Assistant:
-    - `qbit_airdrop.add_magnet`
-    - `qbit_airdrop.reload_entry`
-    - `/api/qbit_airdrop/active`
-    - `/api/qbit_airdrop/delete`
-  - It never talks directly to qBittorrent.
-
----
 
 ## Requirements
 
