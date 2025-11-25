@@ -63,16 +63,14 @@
 ## Overview & Features
 
 **Qbit Airdrop Submit Card** is a custom Lovelace card (HACS Dashboard plugin) for Home Assistant.
-
-
 Optimized for the Mobile Home Assistant app, it provides a streamlined UI for:
 
 - Submitting magnet links to qBittorrent through the **Qbit Airdrop integration**
-  - Tap the Qbit logo and paste a `magnet:?` URL
-    - `magnet:?` is detected & parsed/cleaned for show/movie title strings and sets the save location accordingly
+  - Tap the **Qbit logo** and paste a `magnet:?` URL
+    - `magnet:?` is detected & parsed/cleaned for show/movie title strings and appends this to the default save location set in the main integration for this card
       -  e.g. `//NAS/TV-Shows/` for series
-      -  For non-series items are saved in the default location set in the qBitorrent client
-    - qBitorrent client automatically creates the category and appends it to the default save location directory
+      -  Non-series items are saved in the default location set in the qBitorrent client
+    - qBitorrent client automatically creates the category and directory based on the save location
 - Managing torrents directly from this card
   - Tapping the `State` column (leftmost) deletes the selected torrent and all related files
   - Tapping the `Size` field removes the selected torrent and retains all related files
