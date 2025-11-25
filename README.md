@@ -4,7 +4,7 @@
 <p align="center">
   <a href="https://github.com/InvenioX3/qbit_airdrop_card">
     <!-- PROJECT ICON PLACEHOLDER -->
-    <img src="dist/magnet.png" alt="Qbit Airdrop Card" width="120" />
+    <img src="dist/icon.png" alt="Qbit Airdrop Card" width="120" />
   </a>
 </p>
 
@@ -25,7 +25,7 @@
   <a href="https://github.com/InvenioX3">
     <img
       alt="Author"
-      src="https://img.shields.io/badge/author-JosephBrandenburg-9A4DFF?style=for-the-badge"
+      src="https://img.shields.io/badge/author-Joseph Brandenburg-9A4DFF?style=for-the-badge"
     />
   </a>
   <a href="https://github.com/InvenioX3/qbit_airdrop_card/releases">
