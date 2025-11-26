@@ -121,3 +121,46 @@ type: custom:qbit-airdrop-submit-card
 title: Qbit AIRDROP
 entity: sensor.time
 ```
+
+---
+
+## Technical Details
+
+### Backend interaction
+
+This card is a pure frontend component and never talks to qBittorrent directly. All operations go through Home Assistant and the `qbit_airdrop` integration:
+
+- **Magnet submission**
+  - The card invokes the Home Assistant service:
+    - `qbit_airdrop.add_magnet`
+  - Payload:
+    - `magnet` – the raw `magnet:?` URI captured from user input.
+  - The integration then:
+    - Parses/normalizes the URI.
+    - Derives category/save-path information.
+    - Calls qBittorrent’s WebUI `torrents/add` endpoint on your configured qBittorrent instance.
+
+- **Torrent listing**
+  - To render the torrent table, the card calls an internal REST endpoint provided by the `qbit_airdrop` integration via Home Assistant’s HTTP API (e.g. through `this.hass.callApi`).
+  - That endpoint proxies qBittorrent’s `torrents/info` WebUI API and returns a JSON payload that is mapped directly into the card’s rows (hash, name, state, size, progress, etc.).
+
+- **Torrent deletion**
+  - When the user requests deletion, the card calls another internal backend endpoint, providing:
+    - The torrent identifier(s) to operate on.
+    - A boolean flag indicating whether files on disk should also be removed.
+  - The integration forwards this to qBittorrent’s `torrents/delete` WebUI API with the appropriate `deleteFiles=true/false` behavior.
+
+All of these backend calls use the existing Home Assistant HTTP/WebSocket connection; the card never stores qBittorrent credentials and is not aware of the qBittorrent host/port.
+
+---
+
+### Automations and extensibility
+
+- The card does **not** define any additional entities or services of its own; it is strictly a consumer of:
+  - The `qbit_airdrop.add_magnet` service.
+  - The internal REST endpoints exposed by the `qbit_airdrop` integration.
+- For non-UI automation (scripts, blueprints, etc.), you should:
+  - Call `qbit_airdrop.add_magnet` directly from Home Assistant automations.
+  - Optionally use qBittorrent’s WebUI API directly from external tools for advanced control beyond what the card/integration currently exposes.
+
+This keeps the card focused on presentation while the integration remains the single place where all qBittorrent WebUI API interaction is implemented.
