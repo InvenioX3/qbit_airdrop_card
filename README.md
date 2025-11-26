@@ -109,14 +109,8 @@ This repository is intended to be installed as a **HACS Dashboard plugin**.
    - Install `qbit-airdrop-submit-card.js` into the appropriate location (e.g. `/www/...`).
    - Register it as a dashboard resource.
 
-> Note: Because this is a Dashboard plugin, HACS manages the resource registration for you. You should not need to add the resource manually, and using HACS vs manual install makes applying updates easier.
+> Note: Because this is a Dashboard plugin, HACS manages the resource registration for you. You should not need to add the resource manually.
 
-5. Restart Home Assistant if prompted.
-
-### Manual (non-HACS) installation
-
-If you prefer not to use HACS:
-
-1. Copy `qbit-airdrop-submit-card.js` into:
-   ```text
-   <config>/www/community/qbit_airdrop_card/qbit-airdrop-submit-card.js
+5. Add the card to a dashboard:
+   - `Edit Dashboard`->(Hover over elements to see their labels)`Create section`->`Add card`-> type 'q', then select `Manual`->
+     -Replace `type: ""` with 
