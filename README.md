@@ -66,7 +66,7 @@
 Optimized for the Mobile Home Assistant app, it provides a streamlined UI for:
 
 - Submitting magnet links to qBittorrent through the **Qbit Airdrop integration**
-  - Tap the center of the **logo** and paste a `magnet:?` URL
+  - Tap the general area of the **logo** and paste a `magnet:?` URL
     - `magnet:?` is detected, parsed for show/movie title strings, and appends the cleaned title to the default save location for the Qbit integration
       -  e.g. `//NAS/TV-Shows/` for series
       -  Non-series items are saved in the default location set in the qBitorrent client
