@@ -66,7 +66,7 @@
 Optimized for the Mobile Home Assistant app, it provides a streamlined UI for:
 
 - Submitting magnet links to qBittorrent through the **Qbit Airdrop integration**
-  - Tap the main **logo** and paste a `magnet:?` URL
+  - Tap the center of the **logo** and paste a `magnet:?` URL
     - `magnet:?` is detected, parsed for show/movie title strings, and appends the cleaned title to the default save location for the Qbit integration
       -  e.g. `//NAS/TV-Shows/` for series
       -  Non-series items are saved in the default location set in the qBitorrent client
@@ -75,7 +75,7 @@ Optimized for the Mobile Home Assistant app, it provides a streamlined UI for:
   - Tapping the `State` column (leftmost) deletes the selected torrent and all related files, with optional confirmation prompt
   - Tapping the `Size` field removes the selected torrent and retains all related files
 - Refreshing the list
-  - Tapping the `target` section of the logo triggers a refresh of the torrent list
+  - Tapping the "`Qbit AIRDROP`" section of the logo triggers a refresh of the torrent list
 
 This repository contains the **frontend only**: the JavaScript card and its static assets. All backend functionality (services and HTTP endpoints) comes from the Qbit Airdrop **integration**.
 
