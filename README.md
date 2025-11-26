@@ -4,9 +4,11 @@
 <p align="center">
   <a href="https://github.com/InvenioX3/qbit_airdrop_card">
     <!-- PROJECT ICON PLACEHOLDER -->
-    <img src="dist/icon.png" alt="Qbit Airdrop Card" width="120" />
+    <img src="dist/icon.png" alt="Qbit AIRDROP Card" width="256" />
   </a>
 </p>
+
+<h1 align="center">Qbit AIRDROP Lovelace card</h1>
 
 <p align="center">
   <!-- BADGES: COLORS & LINKS -->
