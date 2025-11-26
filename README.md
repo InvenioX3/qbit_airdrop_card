@@ -113,4 +113,9 @@ This repository is intended to be installed as a **HACS Dashboard plugin**.
 
 5. Add the card to a dashboard:
    - `Edit Dashboard`->(Hover over elements to see their labels)`Create section`->`Add card`-> type 'q', then select `Manual`->
-     -Replace `type: ""` with 
+     -Replace `type: ""` with
+```
+type: custom:qbit-airdrop-submit-card
+title: Qbit Airdrop
+entity: sensor.time
+```
