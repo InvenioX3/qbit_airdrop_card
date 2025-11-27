@@ -643,7 +643,7 @@ function formatUp(bps){
           // Orange shimmer for unavailable items
           t.classList.add("loading-text","title-unavailable");
 
-          if (stLower === "stalleddl") {
+          if (stLower === "stalleddl" || stLower === "metadl") {
             m.textContent = "<<<<<<";
             d.textContent = "<<<<<<";
             s.textContent = "<<<<<<";
