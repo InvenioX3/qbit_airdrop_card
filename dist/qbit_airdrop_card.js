@@ -335,7 +335,7 @@ function formatUp(bps){
 
           		/* availability === 0 override: only change the gradient, not the clip */
           		.title-unavailable.loading-text {
-          		  background-image: linear-gradient(90deg, #c77e12, #0a0a0a, #0a0a0a, #c77e12);
+          		  background-image: linear-gradient(90deg, #c77e12, #0a0a0a, #c77e12, #0a0a0a, #c77e12, #0a0a0a);
           		}
 
                     /* Delete confirmation dialog overlay */
