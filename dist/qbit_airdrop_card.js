@@ -74,11 +74,12 @@ function displayStatus(percentRaw,stateRaw){
   const st = String(stateRaw || "").toLowerCase();
 
   // Force stalled torrents to show "Stalled" regardless of percent
-  if (st === "stalleddl") return "<<<<<<";
+
 
   const pct = Number(percentRaw);
   if (Number.isFinite(pct) && pct < 100) return `${pct}%`;
 
+  if (st === "stalleddl") return "<<<<<<";
   if (st === "stalledup") return "Inactive";
   if (st === "uploading") return "Seeding";
   if (st === "metadl") return "Meta DL";
