@@ -263,7 +263,7 @@ function formatUp(bps){
             display:grid;
 
             /* ORDER: State(55px) | Down(38px) | Size(7ch) | Name(1fr) */
-            grid-template-columns:55px 38px 7ch minmax(0,1fr);
+            grid-template-columns:58px 38px 7ch minmax(0,1fr);
 
             column-gap:4px; row-gap:0; align-items:center;
           }
@@ -289,7 +289,7 @@ function formatUp(bps){
             overflow:hidden;
             text-overflow:clip;
             cursor:pointer;
-			padding:3px;
+			padding:5px;
           }
           .mid.muted{opacity:.45;cursor:default}
 
