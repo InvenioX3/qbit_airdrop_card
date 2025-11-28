@@ -326,7 +326,7 @@ function formatUp(bps){
 
           /* Chevron shimmer: same timing on all four cells when applied together */
           .chevron-shimmer {
-                      background: linear-gradient(90deg, #c77e12, #0a0a0a, #0a0a0a, #0a0a0a, #0a0a0a) -100% / 200%;
+                      background: linear-gradient(90deg, #c77e12, #302d2d, #302d2d, #302d2d) -100% / 200%;
                       -webkit-background-clip: text;
                               background-clip: text;
                       color: transparent;
@@ -335,7 +335,7 @@ function formatUp(bps){
 
           		/* availability === 0 override: only change the gradient, not the clip */
           		.title-unavailable.loading-text {
-          		  background-image: linear-gradient(90deg, #c77e12, #302d2d);
+          		  background-image: linear-gradient(90deg, #c77e12, #0a0a0a, #0a0a0a, #0a0a0a, #0a0a0a);
           		}
 
                     /* Delete confirmation dialog overlay */
