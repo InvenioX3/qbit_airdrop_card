@@ -79,7 +79,7 @@ function displayStatus(percentRaw,stateRaw){
   const pct = Number(percentRaw);
   if (Number.isFinite(pct) && pct < 100) return `${pct}%`;
 
-  if (st === "stalleddl") return "<<<<<<";
+  if (st === "stalleddl") return "←←←←←←";
   if (st === "stalledup") return "Inactive";
   if (st === "uploading") return "Seeding";
   if (st === "metadl") return "Meta DL";
@@ -603,7 +603,7 @@ function formatUp(bps){
         d.className = "down";
         const stLower = String(it.state || "").toLowerCase();
         if (stLower === "stalleddl") {
-          d.textContent = "<<<<<<";
+          d.textContent = "←←←←←←";
         } else if (stLower === "uploading") {
           // Show upspeed, formatted the same way as dlspeed, with an up-arrow glyph
           d.textContent = formatUp(it.upspeed); // blank when <= 0
@@ -615,7 +615,7 @@ function formatUp(bps){
         const s=document.createElement("div");
         s.className="size";
         if (stLower === "stalleddl") {
-          s.textContent = "<<<<<<";
+          s.textContent = "←←←←←←";
         } else {
           s.textContent = formatSize(it.size);
         }
@@ -645,9 +645,9 @@ function formatUp(bps){
           t.classList.add("loading-text","title-unavailable");
 
           if (stLower === "stalleddl" || stLower === "metadl") {
-            m.textContent = "<<<<<<";
-            d.textContent = "<<<<<<";
-            s.textContent = "<<<<<<";
+            m.textContent = "←←←←←←";
+            d.textContent = "←←←←←←";
+            s.textContent = "←←←←←←";
 
             // Remove any previous green shimmer classes
             t.classList.remove("loading-text","loading-text-uploading");
