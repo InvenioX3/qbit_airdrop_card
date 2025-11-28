@@ -215,7 +215,7 @@ function formatUp(bps){
             color:var(--primary-text-color);
 
             /* image placeholder using magnet.png */
-            background-image:url("/local/community/qbit_airdrop_card/magnet.png");
+            background-image:url("/local/community/qbit_airdrop_card/qbit.gif");
             background-repeat:no-repeat;
             background-position:left;
             background-size:375px 160px;
