@@ -321,7 +321,7 @@ function formatUp(bps){
 					  background-clip: text;
 			  color: transparent;
 			  /* same keyframes, but run them in reverse so motion is opposite */
-			  animation: shimmer 2s linear infinite reverse;
+			  animation: shimmer 1s linear infinite reverse;
 			}
 
           /* Chevron shimmer: same timing on all four cells when applied together */
@@ -330,7 +330,7 @@ function formatUp(bps){
                       -webkit-background-clip: text;
                               background-clip: text;
                       color: transparent;
-                      animation: shimmer 3s linear infinite;
+                      animation: shimmer 2s linear infinite;
                     }
 
           		/* availability === 0 override: only change the gradient, not the clip */
