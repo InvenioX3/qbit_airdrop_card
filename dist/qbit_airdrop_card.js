@@ -221,7 +221,7 @@ function formatUp(bps){
             background-size:375px 160px;
             padding-left:4px;
 
-            /* make room for overlay refresh button (~25px + padding) */
+            /* make room for overlay refresh button (~40px + padding) */
             padding-right:40px;
           }
 
@@ -262,8 +262,8 @@ function formatUp(bps){
             border:1px solid var(--divider-color);border-radius:8px;background:var(--card-background-color);
             display:grid;
 
-            /* ORDER: State(50px) | Down(40px) | Size(7ch) | Name(1fr) */
-            grid-template-columns:50px 40px 7ch minmax(0,1fr);
+            /* ORDER: State(55px) | Down(38px) | Size(7ch) | Name(1fr) */
+            grid-template-columns:55px 38px 7ch minmax(0,1fr);
 
             column-gap:4px; row-gap:0; align-items:center;
           }
@@ -289,6 +289,7 @@ function formatUp(bps){
             overflow:hidden;
             text-overflow:clip;
             cursor:pointer;
+			padding:3px;
           }
           .mid.muted{opacity:.45;cursor:default}
 
