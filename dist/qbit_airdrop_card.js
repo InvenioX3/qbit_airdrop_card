@@ -640,7 +640,7 @@ function formatUp(bps){
           t.style.color = "#828282";
         }
 
-        if (it.availability === 0) {
+        if (it.availability === 0 || it.state === "stalleddl" ) {
           // Orange shimmer for unavailable items
           t.classList.add("loading-text","title-unavailable");
 
