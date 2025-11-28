@@ -296,7 +296,7 @@ function formatUp(bps){
           /* Size: clickable remove, colored #12c5de */
           .size{
             margin:0;
-			padding-right: 5px;
+			padding-right: 3px;
             text-align:right;
             font-variant-numeric:tabular-nums;
             font-size:calc(1em - 2pt);
