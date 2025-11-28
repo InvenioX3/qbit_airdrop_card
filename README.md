@@ -3,22 +3,20 @@
 -->
 <p align="center">
   <a href="https://github.com/InvenioX3/qbit_airdrop_card">
-    <!-- PROJECT ICON PLACEHOLDER -->
-    <img src="dist/icon.png" alt="Qbit AIRDROP Card for Home Assistant" width="256" />
+    <img src="dist/icon.png" alt="Qbit Airdrop Card for Home Assistant" width="256" />
   </a>
 </p>
 
-<h1 align="center">Qbit AIRDROP Lovelace card</h1>
+<h1 align="center">Qbit Airdrop Lovelace card</h1>
 
 <p align="center">
-  <!-- BADGES: COLORS & LINKS -->
   <a href="https://hacs.xyz/">
     <img
       alt="HACS Dashboard Plugin"
       src="https://img.shields.io/badge/HACS-Dashboard%20Plugin-41BDF5?style=for-the-badge&logo=homeassistantcommunitystore&logoColor=white"
     />
   </a>
-  <a href="https://github.com/InvenioX3/qbit_airdrop_card/commits/main">
+  <a href="https://github.com/InvenioX3/qbit_Airdrop_card/commits/main">
     <img
       alt="Version (HACS hash)"
       src="https://img.shields.io/badge/version-HACS%20hash-0A84FF?style=for-the-badge"
@@ -67,7 +65,7 @@
 **Qbit Card** is a custom Lovelace card (HACS Dashboard plugin) for Home Assistant.
 Optimized for the Mobile Home Assistant app, it provides a streamlined UI for:
 
-- Submitting magnet links to qBittorrent through the **Qbit AIRDROP integration**
+- Submitting magnet links to qBittorrent through the **Qbit Airdrop integration**
   - Tap the general area of the **logo** and paste a `magnet:?` URL
     - `magnet:?` is detected, parsed for show/movie title strings, and appends the cleaned title to the default save location for the Qbit integration
       -  e.g. `//NAS/TV-Shows/` for series
@@ -77,10 +75,10 @@ Optimized for the Mobile Home Assistant app, it provides a streamlined UI for:
   - Tapping the `State` column (leftmost) deletes the selected torrent and all related files, with optional confirmation prompt
   - Tapping the `Size` field removes the selected torrent and retains all related files
 - Refreshing the list
-  - Tapping the "`Qbit AIRDROP`" section of the logo triggers a refresh of the torrent list
+  - Tapping the "`Qbit Airdrop`" section of the logo triggers a refresh of the torrent list
 
-This repository contains the **frontend only**: the JavaScript card and its static assets. All backend functionality (services and HTTP endpoints) comes from the Qbit AIRDROP **integration** located here:
-<a href="https://github.com/InvenioX3/qbit_airdrop"><strong>Qbit AIRDROP</strong></a>
+This repository contains the **frontend only**: the JavaScript card and its static assets. All backend functionality (services and HTTP endpoints) comes from the Qbit Airdrop **integration** located here:
+<a href="https://github.com/InvenioX3/qbit_airdrop"><strong>Qbit Airdrop</strong></a>
 
 
 
@@ -89,7 +87,7 @@ This repository contains the **frontend only**: the JavaScript card and its stat
 
 - Home Assistant with dashboards.
 - HACS installed and configured.
-- **Qbit AIRDROP integration** installed and working:
+- **Qbit Airdrop integration** installed and working:
   - Repository: `https://github.com/InvenioX3/qbit-airdrop`
   - Properly configured `host`, `port`, and optional `base_path`.
 - qBittorrent instance reachable from Home Assistant.
@@ -106,7 +104,7 @@ This repository is intended to be installed as a **HACS Dashboard plugin**.
 2. Add this repository as a **Custom Repository** if needed:
    - Repository: `https://github.com/InvenioX3/qbit_airdrop_card`
    - Category: `Dashboard`
-3. Locate **Qbit AIRDROP Card** in HACS → Frontend and install it.
+3. Locate **Qbit Airdrop Card** in HACS → Frontend and install it.
 4. HACS will:
    - Install `qbit-airdrop-submit-card.js` into the appropriate location (e.g. `/www/...`).
    - Register it as a dashboard resource.
@@ -118,7 +116,7 @@ This repository is intended to be installed as a **HACS Dashboard plugin**.
      -Replace `type: ""` with
 ```
 type: custom:qbit-airdrop-submit-card
-title: Qbit AIRDROP
+title: Qbit Airdrop
 entity: sensor.time
 ```
 
