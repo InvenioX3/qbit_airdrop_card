@@ -313,7 +313,7 @@ function formatUp(bps){
 			-webkit-background-clip: text;
 					background-clip: text;
 			color: transparent;
-			animation: shimmer 3s linear infinite;
+			animation: shimmer 2s linear infinite;
 		  }
 			.loading-text-uploading {
 			  background: linear-gradient(270deg, #14c714, #f2f7f2, #f2f7f2) -100% / 200%;
@@ -321,7 +321,7 @@ function formatUp(bps){
 					  background-clip: text;
 			  color: transparent;
 			  /* same keyframes, but run them in reverse so motion is opposite */
-			  animation: shimmer 1s linear infinite reverse;
+			  animation: shimmer 2s linear infinite reverse;
 			}
 
           /* Chevron shimmer: same timing on all four cells when applied together */
