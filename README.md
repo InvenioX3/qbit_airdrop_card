@@ -3,7 +3,7 @@
 -->
 <p align="center">
   <a href="https://github.com/InvenioX3/qbit_airdrop_card">
-    <img src="icon.png" alt="Qbit Airdrop Card for Home Assistant" width="256" />
+    <img src="/local/community/qbit_airdrop_card/icon.png" alt="Qbit Airdrop Card for Home Assistant" width="256" />
   </a>
 </p>
 
