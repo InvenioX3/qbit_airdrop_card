@@ -309,7 +309,7 @@ function formatUp(bps){
 
           /* Shimmering gradient text effect for titles */
 		  .loading-text {
-			background: linear-gradient(90deg, #14c714, #f2f7f2) -100% / 200%;
+			background: linear-gradient(90deg, #14c714, #f2f7f2, #f2f7f2, #f2f7f2, #f2f7f2, #f2f7f2, #f2f7f2) -100% / 200%;
 			-webkit-background-clip: text;
 					background-clip: text;
 			color: transparent;
@@ -326,7 +326,7 @@ function formatUp(bps){
 
           /* Chevron shimmer: same timing on all four cells when applied together */
           .chevron-shimmer {
-                      background: linear-gradient(90deg, #0a0a0a, #c77e12, #544444, #544444, #544444) -100% / 200%;
+                      background: linear-gradient(90deg, #0a0a0a, #c77e12, #c77e12, #544444, #544444, #544444) -100% / 200%;
                       -webkit-background-clip: text;
                               background-clip: text;
                       color: transparent;
