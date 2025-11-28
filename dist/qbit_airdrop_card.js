@@ -80,10 +80,11 @@ function displayStatus(percentRaw,stateRaw){
   if (Number.isFinite(pct) && pct < 100 && st != "stalleddl") return `${pct}%`;
 
   if (st === "stalleddl") return "←←←←←←";
-  if (st === "stalledup") return "Inactive";
+  if (st === "stalledup") return "Complete";
   if (st === "uploading") return "Seeding";
   if (st === "metadl") return "Meta DL";
   if (st === "moving") return "Moving";
+  if (st === "downloading") return "Meta DL";
 
   return String(stateRaw ?? "");
 }
