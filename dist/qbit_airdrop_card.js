@@ -77,7 +77,7 @@ function displayStatus(percentRaw,stateRaw){
 
 
   const pct = Number(percentRaw);
-  if (Number.isFinite(pct) && pct < 100) return `${pct}%`;
+  if (Number.isFinite(pct) && pct < 100 && st != "stalleddl") return `${pct}%`;
 
   if (st === "stalleddl") return "←←←←←←";
   if (st === "stalledup") return "Inactive";
