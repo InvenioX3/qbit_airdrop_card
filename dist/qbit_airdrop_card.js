@@ -262,8 +262,8 @@ function formatUp(bps){
             border:1px solid var(--divider-color);border-radius:8px;background:var(--card-background-color);
             display:grid;
 
-            /* ORDER: State(55px) | Down(38px) | Size(7ch) | Name(1fr) */
-            grid-template-columns:58px 38px 7ch minmax(0,1fr);
+            /* ORDER: State(60px) | Down(38px) | Size(7ch) | Name(1fr) */
+            grid-template-columns:60px 38px 7ch minmax(0,1fr);
 
             column-gap:4px; row-gap:0; align-items:center;
           }
