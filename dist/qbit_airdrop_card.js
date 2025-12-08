@@ -7,49 +7,69 @@
 
   const safe = (o,p,f)=>{try{let v=o;for(let i=0;i<p.length;i++){if(v==null)return f;v=v[p[i]]}return v==null?f:v}catch(e){return f}};
 
-  // dn parser & category inference
+  // dn parser, shared title analysis, title cleaning, and category inference
   function getDisplayName(magnet){
-    const q=String(magnet||"").split("?")[1]||"";
-    const params=new URLSearchParams(q);
-    const dn=params.get("dn");
-    return (dn?decodeURIComponent(dn):String(magnet||"")).replace(/[+]/g," ").trim();
+    const q = String(magnet || "").split("?")[1] || "";
+    const params = new URLSearchParams(q);
+    const dn = params.get("dn");
+    return (dn ? decodeURIComponent(dn) : String(magnet || ""))
+      .replace(/[+]/g, " ")
+      .trim();
   }
-  function inferCategory(magnet){
-    const name=getDisplayName(magnet);
-    const tok=/S\d{1,2}E\d{1,3}\b/i.exec(name);
-    if(!tok)return"";
-    let end=tok.index;
-    while(end>0){
-      const ch=name.charAt(end-1);
-      if(ch===" "||ch==="."||ch==="_"||ch==="-" ) end--; else break;
+
+  // Shared title analysis: find the dominant token (SxxEyy, Sxx, or year)
+  function analyzeTitle(nameRaw){
+    const name = String(nameRaw || "");
+    if (!name) {
+      return {
+        name: "",
+        token: null,
+        tokenIndex: 0,
+        tokenLength: 0,
+        tokenType: null,
+      };
     }
-    return name.slice(0,end).replace(/[._]+/g," ").replace(/[ \._\-]+$/g,"").trim();
-  }
 
-  // Name truncation: keep through first SxxEyy or Sxx; remove year tokens like "2020" / "(2020)" and anything after
-  function cleanTitle(nameRaw){
-    const name=String(nameRaw||"");
-    if(!name) return name;
+    const se = /\bS\d{1,2}E\d{1,3}\b/i.exec(name);
+    const s  = /\bS\d{1,2}\b/i.exec(name);
+    const yr = /\b(?:19|20)\d{2}\b/.exec(name);
 
-    const se=/\bS\d{1,2}E\d{1,3}\b/i.exec(name);
-    const s =/\bS\d{1,2}\b/i.exec(name);
-    const yr=/\b(?:19|20)\d{2}\b/.exec(name);
+    let token = null;
+    let tokenType = null;
 
-    let token=null;
-    if (se && (!s || se.index<=s.index) && (!yr || se.index<=yr.index)) {
-      token=se;
-    } else if (s && (!yr || s.index<=yr.index)) {
-      token=s;
+    if (se && (!s || se.index <= s.index) && (!yr || se.index <= yr.index)) {
+      token = se;
+      tokenType = "se";   // SxxEyy
+    } else if (s && (!yr || s.index <= yr.index)) {
+      token = s;
+      tokenType = "s";    // Sxx
     } else if (yr) {
-      token=yr;
+      token = yr;
+      tokenType = "year"; // 19xx / 20xx
     }
 
-    let cut=name.length;
-    if (token) {
-      if (token === yr) {
+    return {
+      name,
+      token,
+      tokenIndex: token ? token.index : name.length,
+      tokenLength: token ? token[0].length : 0,
+      tokenType,
+    };
+  }
+
+  // Name truncation: keep through first SxxEyy or Sxx; drop year tokens and anything after
+  function cleanTitle(nameRaw){
+    const info = analyzeTitle(nameRaw);
+    const name = info.name;
+    if (!name) return name;
+
+    let cut = name.length;
+
+    if (info.token) {
+      if (info.tokenType === "year") {
         // Year case: walk backwards to drop any separator before the year,
         // so we remove " 2020", " (2020)", ".2020", etc.
-        let start = token.index;
+        let start = info.tokenIndex;
         while (start > 0) {
           const ch = name.charAt(start - 1);
           if (ch === " " || ch === "." || ch === "_" || ch === "-" || ch === "(") {
@@ -60,14 +80,48 @@
         }
         cut = start;
       } else {
-        // SxxEyy / Sxx: keep inclusive, as before
-        cut = token.index + token[0].length;
+        // SxxEyy / Sxx: keep inclusive (so titles show "Show Name S01E01" or "Show Name S01")
+        cut = info.tokenIndex + info.tokenLength;
       }
     }
 
-    const kept=name.slice(0,cut);
-    const trimmed=kept.replace(/[ ._-]+$/g,"");
-    return trimmed.replace(/\./g," ").replace(/\s{2,}/g," ").trim();
+    const kept    = name.slice(0, cut);
+    const trimmed = kept.replace(/[ ._-]+$/g, "");
+    return trimmed
+      .replace(/\./g, " ")
+      .replace(/\s{2,}/g, " ")
+      .trim();
+  }
+
+  // Category inference: reuse the same token analysis as cleanTitle
+  function inferCategory(magnet){
+    const dn   = getDisplayName(magnet);
+    const info = analyzeTitle(dn);
+    const name = info.name;
+
+    if (!name || !info.token) {
+      // No usable token → no series category; backend can fall back to defaults
+      return "";
+    }
+
+    // Movies: we still do not create a category; they use qBittorrent's default location
+    if (info.tokenType === "year") {
+      return "";
+    }
+
+    // Series: category is the base show name, before SxxEyy / Sxx
+    let cut = info.tokenIndex;
+    if (cut <= 0) {
+      return "";
+    }
+
+    const base = name
+      .slice(0, cut)
+      .replace(/[._]+/g, " ")
+      .replace(/[ \._\-]+$/g, "")
+      .trim();
+
+    return base;
   }
 
 function displayStatus(percentRaw,stateRaw){
