@@ -630,9 +630,6 @@ function formatUp(bps){
 
 
         // Title (name)
-        // - availability === 0  => orange shimmer (existing rule, preserved)
-        // - else if state === "downloading" => green shimmer
-        // - else => no shimmer
         const t=document.createElement("div");
         t.className="title";
         t.textContent=it.title||"";
