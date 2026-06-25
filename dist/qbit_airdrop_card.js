@@ -312,14 +312,17 @@ function formatUp(bps){
 
           .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
           .item{
-            padding:6px 2px;
-            border:1px solid var(--divider-color);border-radius:8px;background:var(--card-background-color);
-            display:grid;
+			  padding:6px 8px;
+			  border:1px solid var(--divider-color);
+			  border-radius:8px;
+			  background:var(--card-background-color);
 
-            /* ORDER: State(60px) | Down(38px) | Size(7ch) | Name(1fr) */
-            grid-template-columns:60px 38px 7ch minmax(0,1fr);
+			  display:grid;
+			  grid-template-columns:auto auto auto;
+			  grid-template-rows:auto auto;
 
-            column-gap:4px; row-gap:0; align-items:center;
+			  column-gap:12px;
+			  row-gap:3px;
           }
 
           /* Down column (green glyph) */
@@ -361,7 +364,28 @@ function formatUp(bps){
           }
           .size.muted{opacity:.45;cursor:default}
 
-          .title{text-overflow:ellipsis;overflow:clip;white-space:nowrap}
+          .title{
+			  grid-column:1 / 4;
+			  font-size:1.0rem;
+			  font-weight:500;
+			  white-space:nowrap;
+			  overflow:hidden;
+			  text-overflow:ellipsis;
+			  }
+			.mid{
+			  grid-column:1;
+			  grid-row:2;
+			}
+
+			.down{
+			  grid-column:2;
+			  grid-row:2;
+			}
+
+			.size{
+			  grid-column:3;
+			  grid-row:2;
+			}
 
           /* Shimmering gradient text effect for titles */
 		  .loading-text {
@@ -722,10 +746,10 @@ function formatUp(bps){
           t.classList.add("loading-text-uploading");
         }
 
-        li.appendChild(m);
-        li.appendChild(d);
-        li.appendChild(s);
         li.appendChild(t);
+		li.appendChild(m);
+		li.appendChild(d);
+		li.appendChild(s);
         ul.appendChild(li);
       }
     }
