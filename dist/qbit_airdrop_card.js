@@ -328,9 +328,9 @@ function formatUp(bps){
           .down{
             text-align:right;
             font-variant-numeric: tabular-nums;
-            font-size:calc(1em - 1.3pt);
+            font-size:calc(1em - 1.4pt);
 			line-height:1.2;
-			padding:3px 0px 0px;
+			padding:2px 0px 0px;
             color:#16ba3f;
             white-space:nowrap; overflow:hidden; text-overflow:clip;
           }
