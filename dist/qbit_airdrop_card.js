@@ -331,7 +331,7 @@ function formatSeeds(num_seeds, num_complete){
 			  background:var(--card-background-color);
 
 			  display:grid;
-			  grid-template-columns:auto 50px 50px 70px;
+			  grid-template-columns:auto 70px 70px 70px;
 			  grid-template-rows:auto auto;
 
 			  row-gap:3px;
