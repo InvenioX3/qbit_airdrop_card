@@ -371,6 +371,7 @@ function formatSeeds(num_seeds, num_complete){
 			overflow:hidden;
 			text-overflow:clip;
 		  }
+          .seed.muted{opacity:.45;cursor:default}
 
           /* Size: clickable remove, colored #12c5de */
           .size{
@@ -399,13 +400,18 @@ function formatSeeds(num_seeds, num_complete){
 			  grid-row:2;
 			}
 
-			.down{
+			.seed{
 			  grid-column:2;
 			  grid-row:2;
 			}
 
-			.size{
+			.down{
 			  grid-column:3;
+			  grid-row:2;
+			}
+
+			.size{
+			  grid-column:4;
 			  grid-row:2;
 			}
 
@@ -662,6 +668,7 @@ function formatSeeds(num_seeds, num_complete){
         const li=document.createElement("li"); li.className="item";
         li.innerHTML=
           `<div class="mid muted">—</div>`+
+          `<div class="seed muted"></div>`+		  
           `<div class="down"></div>`+
           `<div class="size muted">—</div>`+
           `<div class="title">No torrents</div>`;
