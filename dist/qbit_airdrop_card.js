@@ -716,7 +716,7 @@ function formatSeeds(num_seeds, num_complete){
         d.className = "down";
         const stLower = String(it.state || "").toLowerCase();
         if (stLower === "stalleddl") {
-          d.textContent = "←←←←←←";
+          d.textContent = "";
         } else if (stLower === "uploading") {
           // Show upspeed, formatted the same way as dlspeed, with an up-arrow glyph
           d.textContent = formatUp(it.upspeed); // blank when <= 0
@@ -755,7 +755,7 @@ function formatSeeds(num_seeds, num_complete){
 		  t.style.color = "#828282";
 		}
 
-        if (it.availability === 0 || it.state === "stalleddl" ) {
+        if (it.availability === 0 || it.state === "stalleddl" || num_seeds === 0) {
           // Orange shimmer for unavailable items
           t.classList.add("loading-text","title-unavailable");
 
