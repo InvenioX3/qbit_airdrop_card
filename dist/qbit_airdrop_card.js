@@ -711,6 +711,12 @@ function formatSeeds(num_seeds, num_complete){
           m.classList.add("muted");
         }
 
+		// Seeds
+		const seed = document.createElement("div");
+		seed.className = "seed";
+		seed.textContent = formatSeeds(it.num_seeds, it.num_complete);
+		seed.title = "Seeds:";
+
         // Down
         const d = document.createElement("div");
         d.className = "down";
