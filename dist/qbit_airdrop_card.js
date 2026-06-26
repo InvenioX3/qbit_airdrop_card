@@ -330,6 +330,7 @@ function formatUp(bps){
             font-variant-numeric: tabular-nums;
             font-size:calc(1em - 1.3pt);
 			line-height:1.2;
+			padding:2px 0px 0px;
             color:#16ba3f;
             white-space:nowrap; overflow:hidden; text-overflow:clip;
           }
@@ -340,7 +341,7 @@ function formatUp(bps){
             font-weight:400;
             font-size:calc(1em - 1pt);
             line-height:1.2;
-			padding:0px 16px 3px;
+			padding:0px 16px;
             color:#ebbf10;
             white-space:nowrap;
             overflow:hidden;
@@ -356,7 +357,7 @@ function formatUp(bps){
             font-variant-numeric:tabular-nums;
             font-size:calc(1em - 1pt);
             line-height:1.2;
-			padding: 0px 10px 3px 10px;
+			padding: 0px 10px;
             color:#12c5de;
             white-space:nowrap; overflow:hidden; text-overflow:clip;
             cursor:pointer;
