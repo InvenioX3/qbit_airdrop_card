@@ -737,7 +737,7 @@ function formatSeeds(num_seeds, num_complete){
         const s=document.createElement("div");
         s.className="size";
         if (stLower === "stalleddl") {
-          s.textContent = "←←←";
+          s.textContent = "";
         } else {
           s.textContent = formatSize(it.size);
         }
@@ -769,20 +769,16 @@ function formatSeeds(num_seeds, num_complete){
           t.classList.add("loading-text","title-unavailable");
 
           if (stLower === "stalleddl" || stLower === "metadl") {
-            m.textContent = "←←←";
-			seed.textContent = "←←←";
-            d.textContent = "←←←";
-            s.textContent = "←←←";
+            m.textContent = "";
+			seed.textContent = "";
+            d.textContent = "";
+            s.textContent = "";
 
             // Remove any previous green shimmer classes
             t.classList.remove("loading-text","loading-text-uploading");
 
-            // Apply the same chevron shimmer class to all four cells
             t.classList.add("chevron-shimmer");
-            m.classList.add("chevron-shimmer");
-			seed.classList.add("chevron-shimmer");
-            d.classList.add("chevron-shimmer");
-            s.classList.add("chevron-shimmer");
+
           }
         } else if (stLower === "downloading") {
           // Downloading shimmer (existing behavior)
