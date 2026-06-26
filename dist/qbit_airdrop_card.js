@@ -194,6 +194,17 @@ function formatUp(bps){
   return `↑${Math.round(s)}B`;
 }
 
+// seeds formatter
+function formatSeeds(numSeeds, numComplete){
+  const s = Number(numSeeds);
+  const c = Number(numComplete);
+
+  if (!Number.isFinite(s) || !Number.isFinite(c))
+    return "";
+
+  return `${s}(${c})`;
+}
+
   class Card extends HTMLElement{
     constructor(){
       super();
@@ -318,7 +329,7 @@ function formatUp(bps){
 			  background:var(--card-background-color);
 
 			  display:grid;
-			  grid-template-columns:auto auto 70px;
+			  grid-template-columns:auto auto auto 70px;
 			  grid-template-rows:auto auto;
 
 			  row-gap:3px;
@@ -349,6 +360,17 @@ function formatUp(bps){
             cursor:pointer;
           }
           .mid.muted{opacity:.45;cursor:default}
+		  
+		  /* Seeds column */
+		  .seed{
+			text-align:center;
+			font-variant-numeric:tabular-nums;
+			font-size:calc(1em - 2pt);
+			color:#b0b0b0;
+			white-space:nowrap;
+			overflow:hidden;
+			text-overflow:clip;
+		  }
 
           /* Size: clickable remove, colored #12c5de */
           .size{
@@ -365,7 +387,7 @@ function formatUp(bps){
           .size.muted{opacity:.45;cursor:default}
 
           .title{
-			  grid-column:1 / 4;
+			  grid-column:1 / -1;
 			  font-size:1.2rem;
 			  font-weight:500;
 			  white-space:nowrap;
@@ -604,6 +626,8 @@ function formatUp(bps){
             return {
               dlspeed: Number(safe(r,["dlspeed"], 0)),
               upspeed: Number(safe(r,["upspeed"], 0)),
+			  num_seeds: Number(safe(r,["num_seeds"], 0)),
+			  num_complete: Number(safe(r,["num_complete"], 0)),
               title: cleanTitle(String(safe(r,["title"],"")||"")),
               percent: (typeof safe(r,["percent"],null) === "number" ? safe(r,["percent"],null) : null),
               hash: String(safe(r,["hash"],"") || ""),
@@ -615,6 +639,8 @@ function formatUp(bps){
           return {
             dlspeed: 0,
             upspeed: 0,
+			numSeeds: 0,
+			numComplete: 0,
             title: cleanTitle(String(r || "")),
             percent: null,
             hash: "",
@@ -753,6 +779,7 @@ function formatUp(bps){
 
         li.appendChild(t);
 		li.appendChild(m);
+		li.appendChild(seed);
 		li.appendChild(d);
 		li.appendChild(s);
         ul.appendChild(li);
