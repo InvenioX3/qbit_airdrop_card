@@ -134,7 +134,7 @@ function displayStatus(percentRaw,stateRaw){
   if (Number.isFinite(pct) && pct < 100 && st != "stalleddl") return `${pct}%`;
 
   if (st === "stalleddl") return "←←←←←←";
-  if (st === "stalledup") return "Complete";
+  if (st === "stalledup" || st === "forcedUP") return "Complete";
   if (st === "uploading") return "Seeding";
   if (st === "metadl") return "Meta DL";
   if (st === "moving") return "Moving";
@@ -327,9 +327,9 @@ function formatUp(bps){
 
           /* Down column (green glyph) */
           .down{
-            text-align:right;
+            text-align:center;
             font-variant-numeric: tabular-nums;
-            font-size:calc(1em - 3pt);
+            font-size:calc(1em - 1pt);
             color:#16ba3f;
             white-space:nowrap; overflow:hidden; text-overflow:clip;
           }
@@ -340,7 +340,7 @@ function formatUp(bps){
             font-weight:400;
             font-size:calc(1em - 1pt);
             line-height:1.2;
-            align-self:center;
+            align-self:left;
             color:#ebbf10;
             white-space:nowrap;
             overflow:hidden;
