@@ -326,7 +326,7 @@ function formatUp(bps){
 
           /* Down column (green glyph) */
           .down{
-            text-align:center;
+            text-align:left;
             font-variant-numeric: tabular-nums;
             font-size:calc(1em - 1pt);
             color:#16ba3f;
@@ -335,7 +335,7 @@ function formatUp(bps){
 
           /* State column (unchanged behavior; deletes with files) */
           .mid{
-            text-align:right;
+            text-align:left;
             font-weight:400;
             font-size:calc(1em - 1pt);
             line-height:1.2;
@@ -345,17 +345,16 @@ function formatUp(bps){
             overflow:hidden;
             text-overflow:clip;
             cursor:pointer;
-			padding:5px;
           }
           .mid.muted{opacity:.45;cursor:default}
 
           /* Size: clickable remove, colored #12c5de */
           .size{
             margin:0;
-            text-align:center;
+            text-align:right;
             font-variant-numeric:tabular-nums;
-            font-size:calc(1em - 1pt);
-            line-height:1.2; align-self:center;
+            font-size:calc(1em - 1.2pt);
+            line-height:1.2; align-self:right;
             color:#12c5de;
             white-space:nowrap; overflow:hidden; text-overflow:clip;
             cursor:pointer;
@@ -364,7 +363,7 @@ function formatUp(bps){
 
           .title{
 			  grid-column:1 / 4;
-			  font-size:1.0rem;
+			  font-size:1.2rem;
 			  font-weight:500;
 			  white-space:nowrap;
 			  overflow:hidden;
