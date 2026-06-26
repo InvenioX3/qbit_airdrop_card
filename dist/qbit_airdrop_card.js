@@ -712,10 +712,15 @@ function formatUp(bps){
         t.className="title";
         t.textContent=it.title||"";
 
-        // NEW: if state is "stalledup", tint the title gray
-        if (stLower === "stalledup" || (stLower === "forcedup" && Number(safe(r, ["upspeed"], 0)) === 0)) {
-          t.style.color = "#828282";
-        }
+		// Gray completed uploads, and forced uploads that currently have no upload traffic.
+		const upSpeed = Number(it.upspeed) || 0;
+
+		if (
+		  stLower === "stalledup" ||
+		  (stLower === "forcedup" && upSpeed === 0)
+		) {
+		  t.style.color = "#828282";
+		}
 
         if (it.availability === 0 || it.state === "stalleddl" ) {
           // Orange shimmer for unavailable items
