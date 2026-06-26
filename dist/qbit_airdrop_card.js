@@ -30,23 +30,25 @@
       };
     }
 
-    const se = /\bS\d{1,2}E\d{1,3}\b/i.exec(name);
-    const s  = /\bS\d{1,2}\b/i.exec(name);
-    const yr = /\b(?:19|20)\d{2}\b/.exec(name);
+		const se = /\bS\d{1,2}E\d{1,3}\b/i.exec(name);
+		const s  = /\bS\d{1,2}\b/i.exec(name);
+		const yr = /\b(?:19|20)\d{2}\b/.exec(name);
 
-    let token = null;
-    let tokenType = null;
+		let token = null;
+		let tokenType = null;
 
-    if (se && (!s || se.index <= s.index) && (!yr || se.index <= yr.index)) {
-      token = se;
-      tokenType = "se";   // SxxEyy
-    } else if (s && (!yr || s.index <= yr.index)) {
-      token = s;
-      tokenType = "s";    // Sxx
-    } else if (yr) {
-      token = yr;
-      tokenType = "year"; // 19xx / 20xx
-    }
+		if (se) {
+			token = se;
+			tokenType = "se";
+		}
+		else if (s) {
+			token = s;
+			tokenType = "s";
+		}
+		else if (yr) {
+			token = yr;
+			tokenType = "year";
+		}
 
     return {
       name,
