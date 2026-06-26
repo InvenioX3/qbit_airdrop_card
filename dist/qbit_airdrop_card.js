@@ -318,7 +318,7 @@ function formatUp(bps){
 			  background:var(--card-background-color);
 
 			  display:grid;
-			  grid-template-columns:auto auto 60px;
+			  grid-template-columns:auto auto 70px;
 			  grid-template-rows:auto auto;
 
 			  row-gap:3px;
@@ -328,7 +328,7 @@ function formatUp(bps){
           .down{
             text-align:right;
             font-variant-numeric: tabular-nums;
-            font-size:calc(1em - 1.2pt);
+            font-size:calc(1em - 1.3pt);
 			line-height:1.2;
             color:#16ba3f;
             white-space:nowrap; overflow:hidden; text-overflow:clip;
@@ -356,7 +356,7 @@ function formatUp(bps){
             font-variant-numeric:tabular-nums;
             font-size:calc(1em - 1pt);
             line-height:1.2;
-			padding: 0px 5px 3px 8px;
+			padding: 0px 10px 3px 10px;
             color:#12c5de;
             white-space:nowrap; overflow:hidden; text-overflow:clip;
             cursor:pointer;
