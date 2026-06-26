@@ -713,7 +713,7 @@ function formatUp(bps){
         t.textContent=it.title||"";
 
         // NEW: if state is "stalledup", tint the title gray
-        if (stLower === "stalledup" || (stLower === "forcedup" && upspeed === 0)) {
+        if (stLower === "stalledup") {
           t.style.color = "#828282";
         }
 
