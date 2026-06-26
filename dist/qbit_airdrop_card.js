@@ -366,7 +366,8 @@ function formatSeeds(num_seeds, num_complete){
 			text-align:right;
 			font-variant-numeric:tabular-nums;
 			font-size:calc(1em - 2pt);
-			padding:0px 8px 0px;
+			line-height:1.2;
+			padding:0px 8px 1px;
 			color:#b0b0b0;
 			white-space:nowrap;
 			overflow:hidden;
@@ -715,8 +716,7 @@ function formatSeeds(num_seeds, num_complete){
 		// Seeds
 		const seed = document.createElement("div");
 		seed.className = "seed";
-		seed.textContent = formatSeeds(it.num_seeds, it.num_complete);
-		seed.title = "Seeds:";
+		seed.textContent = `Seeds: ${formatSeeds(it.num_seeds, it.num_complete)}`;
 
         // Down
         const d = document.createElement("div");
@@ -735,7 +735,7 @@ function formatSeeds(num_seeds, num_complete){
         const s=document.createElement("div");
         s.className="size";
         if (stLower === "stalleddl") {
-          s.textContent = "←←←←←";
+          s.textContent = "←←←";
         } else {
           s.textContent = formatSize(it.size);
         }
@@ -767,10 +767,10 @@ function formatSeeds(num_seeds, num_complete){
           t.classList.add("loading-text","title-unavailable");
 
           if (stLower === "stalleddl" || stLower === "metadl") {
-            m.textContent = "←←←←←";
-			seed.textContent = "←←←←←";
-            d.textContent = "←←←←←";
-            s.textContent = "←←←←←";
+            m.textContent = "←←←";
+			seed.textContent = "←←←";
+            d.textContent = "←←←";
+            s.textContent = "←←←";
 
             // Remove any previous green shimmer classes
             t.classList.remove("loading-text","loading-text-uploading");
