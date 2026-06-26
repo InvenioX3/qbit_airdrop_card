@@ -195,9 +195,9 @@ function formatUp(bps){
 }
 
 // seeds formatter
-function formatSeeds(numSeeds, numComplete){
-  const s = Number(numSeeds);
-  const c = Number(numComplete);
+function formatSeeds(num_seeds, num_complete){
+  const s = Number(num_seeds);
+  const c = Number(num_complete);
 
   if (!Number.isFinite(s) || !Number.isFinite(c))
     return "";
