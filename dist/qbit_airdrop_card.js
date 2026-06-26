@@ -330,7 +330,7 @@ function formatUp(bps){
             font-variant-numeric: tabular-nums;
             font-size:calc(1em - 1.3pt);
 			line-height:1.2;
-			padding:2px 0px 0px;
+			padding:5px 0px 0px;
             color:#16ba3f;
             white-space:nowrap; overflow:hidden; text-overflow:clip;
           }
