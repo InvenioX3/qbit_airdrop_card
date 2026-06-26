@@ -310,18 +310,17 @@ function formatUp(bps){
           .bar-cell{display:flex;align-items:center;justify-content:center}
           .status{height:1.6em;line-height:1.6em;text-align:center;color:var(--secondary-text-color);overflow:hidden;white-space:nowrap;text-overflow:clip}
 
-          .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+          .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
           .item{
-			  padding:6px 8px;
+			  padding:6px 6px;
 			  border:1px solid var(--divider-color);
-			  border-radius:8px;
+			  border-radius:10px;
 			  background:var(--card-background-color);
 
 			  display:grid;
 			  grid-template-columns:auto auto auto;
 			  grid-template-rows:auto auto;
 
-			  column-gap:12px;
 			  row-gap:3px;
           }
 
@@ -353,10 +352,9 @@ function formatUp(bps){
           /* Size: clickable remove, colored #12c5de */
           .size{
             margin:0;
-			padding-right: 3px;
-            text-align:right;
+            text-align:center;
             font-variant-numeric:tabular-nums;
-            font-size:calc(1em - 2pt);
+            font-size:calc(1em - 1pt);
             line-height:1.2; align-self:center;
             color:#12c5de;
             white-space:nowrap; overflow:hidden; text-overflow:clip;
