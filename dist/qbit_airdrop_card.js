@@ -365,7 +365,7 @@ function formatSeeds(num_seeds, num_complete){
 		  
 		  /* Seeds column */
 		  .seed{
-			text-align:right;
+			text-align:left;
 			font-variant-numeric:tabular-nums;
 			font-size:calc(1em - 2pt);
 			line-height:1.2;
