@@ -436,15 +436,6 @@ function formatSeeds(num_seeds, num_complete){
 			  animation: shimmer 5s linear infinite reverse;
 			}
 
-          /* Chevron shimmer: same timing on all four cells when applied together */
-          .chevron-shimmer {
-                      background: linear-gradient(90deg, #0a0a0a, #c77e12, #c77e12, #544444, #544444, #544444) -100% / 200%;
-                      -webkit-background-clip: text;
-                              background-clip: text;
-                      color: transparent;
-                      animation: shimmer 5s linear infinite;
-                    }
-
           		/* availability === 0 override: only change the gradient, not the clip */
           		.title-unavailable.loading-text {
           		  background-image: linear-gradient(90deg, #0a0a0a, #c77e12, #c77e12, #544444, #544444, #544444);
