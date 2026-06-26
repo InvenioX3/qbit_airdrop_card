@@ -331,7 +331,7 @@ function formatSeeds(num_seeds, num_complete){
 			  background:var(--card-background-color);
 
 			  display:grid;
-			  grid-template-columns:auto 85px 70px 70px;
+			  grid-template-columns:auto 90px 70px 70px;
 			  grid-template-rows:auto auto;
 
 			  row-gap:3px;
@@ -341,7 +341,7 @@ function formatSeeds(num_seeds, num_complete){
           .down{
             text-align:right;
             font-variant-numeric: tabular-nums;
-            font-size:calc(1em - 1.4pt);
+            font-size:calc(1em - 2pt);
 			line-height:1.2;
 			padding:0px 0px 1px;
             color:#16ba3f;
@@ -382,7 +382,7 @@ function formatSeeds(num_seeds, num_complete){
             margin:0;
             text-align:left;
             font-variant-numeric:tabular-nums;
-            font-size:calc(1em - 1pt);
+            font-size:calc(1em - 2pt);
             line-height:1.2;
 			padding: 0px 10px;
             color:#12c5de;
