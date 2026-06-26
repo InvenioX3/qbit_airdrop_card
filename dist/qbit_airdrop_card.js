@@ -695,7 +695,7 @@ function formatUp(bps){
         const s=document.createElement("div");
         s.className="size";
         if (stLower === "stalleddl") {
-          s.textContent = "←←←←←←";
+          s.textContent = "←←←←←";
         } else {
           s.textContent = formatSize(it.size);
         }
@@ -722,9 +722,9 @@ function formatUp(bps){
           t.classList.add("loading-text","title-unavailable");
 
           if (stLower === "stalleddl" || stLower === "metadl") {
-            m.textContent = "←←←←←←";
-            d.textContent = "←←←←←←";
-            s.textContent = "←←←←←←";
+            m.textContent = "←←←←←";
+            d.textContent = "←←←←←";
+            s.textContent = "←←←←←";
 
             // Remove any previous green shimmer classes
             t.classList.remove("loading-text","loading-text-uploading");
