@@ -327,6 +327,7 @@ function formatUp(bps){
           /* Down column (green glyph) */
           .down{
             text-align:right;
+            align-self:end;
             font-variant-numeric: tabular-nums;
             font-size:calc(1em - 1pt);
             color:#16ba3f;
@@ -339,7 +340,7 @@ function formatUp(bps){
             font-weight:400;
             font-size:calc(1em - 1pt);
             line-height:1.2;
-            align-self:left;
+            align-self:end;
             color:#ebbf10;
             white-space:nowrap;
             overflow:hidden;
@@ -351,7 +352,7 @@ function formatUp(bps){
           /* Size: clickable remove, colored #12c5de */
           .size{
             margin:0;
-            text-align:right;
+            text-align:left;
             font-variant-numeric:tabular-nums;
             font-size:calc(1em - 1pt);
             line-height:1.2;
