@@ -363,9 +363,10 @@ function formatSeeds(num_seeds, num_complete){
 		  
 		  /* Seeds column */
 		  .seed{
-			text-align:center;
+			text-align:right;
 			font-variant-numeric:tabular-nums;
 			font-size:calc(1em - 2pt);
+			padding:0px 8px 0px;
 			color:#b0b0b0;
 			white-space:nowrap;
 			overflow:hidden;
@@ -421,7 +422,7 @@ function formatSeeds(num_seeds, num_complete){
 			-webkit-background-clip: text;
 					background-clip: text;
 			color: transparent;
-			animation: shimmer 2s linear infinite;
+			animation: shimmer 5s linear infinite;
 		  }
 			.loading-text-uploading {
 			  background: linear-gradient(270deg, #14c714, #f2f7f2, #f2f7f2) -100% / 200%;
@@ -429,7 +430,7 @@ function formatSeeds(num_seeds, num_complete){
 					  background-clip: text;
 			  color: transparent;
 			  /* same keyframes, but run them in reverse so motion is opposite */
-			  animation: shimmer 2s linear infinite reverse;
+			  animation: shimmer 5s linear infinite reverse;
 			}
 
           /* Chevron shimmer: same timing on all four cells when applied together */
@@ -438,7 +439,7 @@ function formatSeeds(num_seeds, num_complete){
                       -webkit-background-clip: text;
                               background-clip: text;
                       color: transparent;
-                      animation: shimmer 2s linear infinite;
+                      animation: shimmer 5s linear infinite;
                     }
 
           		/* availability === 0 override: only change the gradient, not the clip */
