@@ -760,7 +760,7 @@ function formatSeeds(num_seeds, num_complete){
 
         // Orange shimmer for unavailable items
 		const unavailable =
-			(!it.completed &&
+			(it.availability >= 0 &&
 			it.availability < 1) ||
 			stLower === "stalleddl";
 
