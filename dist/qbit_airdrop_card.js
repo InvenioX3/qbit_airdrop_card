@@ -758,16 +758,19 @@ function formatSeeds(num_seeds, num_complete){
 		  t.style.color = "#828282";
 		}
 
-        if (it.availability === 0 ||
-			it.state === "stalleddl" ) {
-          // Orange shimmer for unavailable items
-          t.classList.add("loading-text","title-unavailable");
+        // Orange shimmer for unavailable items
+		const unavailable =
+			!it.completed &&
+			it.availability < 1;
 
-          if (stLower === "stalleddl" || stLower === "metadl" || stLower === "forcedmetadl") {
-            m.textContent = "";
+		if (unavailable) {
+			t.classList.add("loading-text","title-unavailable");
+
+			m.textContent = "";
 			seed.textContent = "";
-            d.textContent = "";
-            s.textContent = "";
+			d.textContent = "";
+			s.textContent = "";
+		}
 
             // Remove any previous green shimmer classes
             t.classList.remove("loading-text","loading-text-uploading");
