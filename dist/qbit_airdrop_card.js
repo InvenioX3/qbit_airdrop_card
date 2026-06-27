@@ -716,7 +716,7 @@ function formatSeeds(num_seeds, num_complete){
         d.className = "down";
         const stLower = String(it.state || "").toLowerCase();
         if (stLower === "stalleddl") {
-          d.textContent = "";
+          d.textContent = "←←←";
         } else if (stLower === "uploading") {
           // Show upspeed, formatted the same way as dlspeed, with an up-arrow glyph
           d.textContent = formatUp(it.upspeed); // blank when <= 0
@@ -745,7 +745,7 @@ function formatSeeds(num_seeds, num_complete){
         t.className="title";
         t.textContent=it.title||"";
 
-		// Gray titles - Completed || Zero peers connected
+		// Gray completed uploads, and forced uploads that currently have no upload traffic.
 		const upSpeed = Number(it.upspeed) || 0;
 
 		if (
@@ -755,11 +755,11 @@ function formatSeeds(num_seeds, num_complete){
 		  t.style.color = "#828282";
 		}
 
-        if (it.availability < 1 || it.state === "stalleddl") {
+        if (it.availability < 1 || it.state === "stalleddl" ) {
           // Orange shimmer for unavailable items
           t.classList.add("loading-text","title-unavailable");
 
-          if (stLower === "stalleddl" || stLower === "metadl" || ) {
+          if (stLower === "stalleddl" || stLower === "metadl") {
             m.textContent = "";
 			seed.textContent = "";
             d.textContent = "";
