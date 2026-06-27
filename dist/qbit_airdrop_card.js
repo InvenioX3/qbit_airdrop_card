@@ -718,7 +718,7 @@ function formatSeeds(num_seeds, num_complete){
         d.className = "down";
         const stLower = String(it.state || "").toLowerCase();
         if (stLower === "stalleddl") {
-          d.textContent = "←←←";
+          d.textContent = "";
         } else if (stLower === "uploading") {
           // Show upspeed, formatted the same way as dlspeed, with an up-arrow glyph
           d.textContent = formatUp(it.upspeed); // blank when <= 0
@@ -770,12 +770,6 @@ function formatSeeds(num_seeds, num_complete){
 			seed.textContent = "";
 			d.textContent = "";
 			s.textContent = "";
-		}
-
-            // Remove any previous green shimmer classes
-            t.classList.remove("loading-text","loading-text-uploading");
-
-            t.classList.add("chevron-shimmer");
 
         } else if (stLower === "downloading") {
           // Downloading shimmer (existing behavior)
@@ -791,7 +785,7 @@ function formatSeeds(num_seeds, num_complete){
 		li.appendChild(d);
 		li.appendChild(s);
         ul.appendChild(li);
-      }
+	  }
     }
 
     async _removeOnly(hash,title){
