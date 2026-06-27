@@ -72,7 +72,6 @@
 	function detectAudio(nameRaw) {
 	  const name = String(nameRaw || "");
 
-	  const formats = [
 		const formats = [
 		  { name: "Atmos",     re: /\batmos\b/i },
 		  { name: "TrueHD",    re: /\btruehd\b/i },
