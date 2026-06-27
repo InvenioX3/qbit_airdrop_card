@@ -767,7 +767,7 @@ function formatSeeds(num_seeds, num_complete){
 		if (unavailable) {
 			t.classList.add("loading-text","title-unavailable");
 
-			m.textContent = "";
+			m.textContent = "Delete";
 			seed.textContent = "";
 			d.textContent = "";
 			s.textContent = "";
