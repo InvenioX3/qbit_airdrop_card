@@ -69,32 +69,61 @@
     };
   }
 
-	function analyzeMedia(nameRaw){
+	function detectAudio(nameRaw) {
 	  const name = String(nameRaw || "");
 
-	  let resolution = "";
+	  const formats = [
+		const formats = [
+		  { name: "Atmos",     re: /\batmos\b/i },
+		  { name: "TrueHD",    re: /\btruehd\b/i },
+		  { name: "DTS-HD MA", re: /\bdts[\s.-]?hd[\s.-]?ma\b/i },
+		  { name: "DTS-HD",    re: /\bdts[\s.-]?hd\b/i },
+		  { name: "DTS:X",     re: /\bdts[:\s-]?x\b/i },
+		  { name: "DDP",       re: /\bddp(?:\d(?:\.\d)?)?\b/i },
+		  { name: "DTS",       re: /\bdts\b/i },
+		  { name: "DD",        re: /\bdd(?:\d(?:\.\d)?)?\b/i },
+		  { name: "AC3",       re: /\bac3\b/i },
+		  { name: "AAC",       re: /\baac(?:\d(?:\.\d)?)?\b/i }
+		];
 
-	  const r =
-		/\b(2160p|1080p|720p|480p)\b/i.exec(name);
-
-	  if (r) {
-		resolution = r[1].toUpperCase();
+	for (const f of formats) {
+	  if (f.re.test(name)) {
+		return f.name;
 	  }
-
-	  let codec = "";
-
-	  if (/\b(x265|h[\.\s]?265|hevc)\b/i.test(name)) {
-		codec = "H265";
-	  }
-	  else if (/\b(x264|h[\.\s]?264|avc)\b/i.test(name)) {
-		codec = "H264";
-	  }
-
-	  return {
-		resolution,
-		codec
-	  };
 	}
+
+	return "";
+	}
+
+  function analyzeMedia(nameRaw){
+	const name = String(nameRaw || "");
+
+	let res = "";
+
+	const r =
+	  /\b(2160p|1080p|720p|480p)\b/i.exec(name);
+
+	if (r) {
+	  res = r[1].toUpperCase();
+	}
+
+	let codec = "";
+
+	if (/\b(x265|h[\.\s]?265|hevc)\b/i.test(name)) {
+	  codec = "H265";
+	}
+	else if (/\b(x264|h[\.\s]?264|avc)\b/i.test(name)) {
+	  codec = "H264";
+	}
+
+	const audio = detectAudio(name);
+
+	return {
+	  res,
+	  codec,
+	  audio
+	};
+  }
 
   // Name truncation: keep through first SxxEyy or Sxx; drop year tokens and anything after
   function cleanTitle(nameRaw){
@@ -177,7 +206,7 @@ function displayStatus(percentRaw,stateRaw){
   if (st === "uploading") return "Seeding";
   if (st === "metadl") return "Meta DL";
   if (st === "moving") return "Moving";
-  if (st === "downloading") return "Meta DL";
+  if (st === "downloading") return "Downloading";
 
   return String(stateRaw ?? "");
 }
