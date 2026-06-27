@@ -763,7 +763,7 @@ function formatSeeds(num_seeds, num_complete){
           // Orange shimmer for unavailable items
           t.classList.add("loading-text","title-unavailable");
 
-          if (stLower === "stalleddl" || stLower === "metadl") {
+          if (stLower === "stalleddl" || stLower === "metadl" || stLower === "forcedmetadl") {
             m.textContent = "";
 			seed.textContent = "";
             d.textContent = "";
