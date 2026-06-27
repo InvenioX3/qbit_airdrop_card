@@ -629,6 +629,7 @@ function formatSeeds(num_seeds, num_complete){
               upspeed: Number(safe(r,["upspeed"], 0)),
 			  num_seeds: Number(safe(r,["num_seeds"], 0)),
 			  num_complete: Number(safe(r,["num_complete"], 0)),
+			  completed: Number(safe(r,["completed"], 0)),
               title: cleanTitle(String(safe(r,["title"],"")||"")),
               percent: (typeof safe(r,["percent"],null) === "number" ? safe(r,["percent"],null) : null),
               hash: String(safe(r,["hash"],"") || ""),
@@ -642,6 +643,7 @@ function formatSeeds(num_seeds, num_complete){
             upspeed: 0,
 			numSeeds: 0,
 			numComplete: 0,
+			completed: 0,
             title: cleanTitle(String(r || "")),
             percent: null,
             hash: "",
@@ -755,7 +757,8 @@ function formatSeeds(num_seeds, num_complete){
 		  t.style.color = "#828282";
 		}
 
-        if (it.availability < 1 || it.state === "stalleddl" ) {
+        if (it.availability < 1 && completed === 0) ||
+			it.state === "stalleddl" ) {
           // Orange shimmer for unavailable items
           t.classList.add("loading-text","title-unavailable");
 
