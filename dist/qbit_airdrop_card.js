@@ -745,9 +745,8 @@ function formatSeeds(num_seeds, num_complete){
         t.className="title";
         t.textContent=it.title||"";
 
-		// Gray completed uploads, and forced uploads that currently have no upload traffic.
+		// Gray titles - Completed || Zero peers connected
 		const upSpeed = Number(it.upspeed) || 0;
-		const num_seed = Number(it.num_speed) || 0;
 
 		if (
 		  stLower === "stalledup" ||
@@ -756,11 +755,11 @@ function formatSeeds(num_seeds, num_complete){
 		  t.style.color = "#828282";
 		}
 
-        if (it.availability === 0 || it.state === "stalleddl") {
+        if (it.availability < 1 || it.state === "stalleddl") {
           // Orange shimmer for unavailable items
           t.classList.add("loading-text","title-unavailable");
 
-          if (stLower === "stalleddl" || stLower === "metadl") {
+          if (stLower === "stalleddl" || stLower === "metadl" || ) {
             m.textContent = "";
 			seed.textContent = "";
             d.textContent = "";
