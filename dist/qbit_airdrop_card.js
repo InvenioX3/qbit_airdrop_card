@@ -747,10 +747,11 @@ function formatSeeds(num_seeds, num_complete){
 
 		// Gray completed uploads, and forced uploads that currently have no upload traffic.
 		const upSpeed = Number(it.upspeed) || 0;
+		const num_seed = Number(it.num_speed) || 0;
 
 		if (
 		  stLower === "stalledup" ||
-		  (stLower === "forcedup" && upSpeed === 0)
+		  (stLower === "forcedup" && upSpeed === 0 || num_seed === 0)
 		) {
 		  t.style.color = "#828282";
 		}
