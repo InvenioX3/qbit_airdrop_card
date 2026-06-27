@@ -751,7 +751,7 @@ function formatSeeds(num_seeds, num_complete){
 
 		if (
 		  stLower === "stalledup" ||
-		  (stLower === "forcedup" && upSpeed === 0 || num_seed === 0)
+		  (stLower === "forcedup" && upSpeed === 0)
 		) {
 		  t.style.color = "#828282";
 		}
