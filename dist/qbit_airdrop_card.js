@@ -135,7 +135,6 @@ function displayStatus(percentRaw,stateRaw){
   const pct = Number(percentRaw);
   if (Number.isFinite(pct) && pct < 100 && st != "stalleddl") return `${pct}%`;
 
-  if (st === "stalleddl") return "←←←←←←";
   if (st === "stalledup" || st === "forcedup") return "Complete";
   if (st === "uploading") return "Seeding";
   if (st === "metadl") return "Meta DL";
@@ -629,7 +628,6 @@ function formatSeeds(num_seeds, num_complete){
               upspeed: Number(safe(r,["upspeed"], 0)),
 			  num_seeds: Number(safe(r,["num_seeds"], 0)),
 			  num_complete: Number(safe(r,["num_complete"], 0)),
-			  completed: Number(safe(r,["completed"], 0)),
               title: cleanTitle(String(safe(r,["title"],"")||"")),
               percent: (typeof safe(r,["percent"],null) === "number" ? safe(r,["percent"],null) : null),
               hash: String(safe(r,["hash"],"") || ""),
@@ -643,7 +641,6 @@ function formatSeeds(num_seeds, num_complete){
             upspeed: 0,
 			num_seeds: 0,
 			num_complete: 0,
-			completed: 0,
             title: cleanTitle(String(r || "")),
             percent: null,
             hash: "",
@@ -749,7 +746,6 @@ function formatSeeds(num_seeds, num_complete){
 
 		// Gray completed uploads, and forced uploads that currently have no upload traffic.
 		const upSpeed = Number(it.upspeed) || 0;
-		const completed = Number(it.completed) || 0;
 
 		if (
 		  stLower === "stalledup" ||
