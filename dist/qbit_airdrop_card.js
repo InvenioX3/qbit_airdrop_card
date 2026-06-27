@@ -777,7 +777,6 @@ function formatSeeds(num_seeds, num_complete){
 
             t.classList.add("chevron-shimmer");
 
-          }
         } else if (stLower === "downloading") {
           // Downloading shimmer (existing behavior)
           t.classList.add("loading-text");
