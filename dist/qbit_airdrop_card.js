@@ -17,7 +17,7 @@
       .trim();
   }
 
-  // Shared title analysis: find the dominant token (SxxEyy, Sxx, or year)
+  // Shared title analysis
   function analyzeTitle(nameRaw){
     const name = String(nameRaw || "");
     if (!name) {
@@ -30,25 +30,35 @@
       };
     }
 
-		const se = /\bS\d{1,2}E\d{1,3}\b/i.exec(name);
-		const s  = /\bS\d{1,2}\b/i.exec(name);
-		const yr = /\b(?:19|20)\d{2}\b/.exec(name);
+	const se      = /\bS\d{1,2}E\d{1,3}\b/i.exec(name);
+	const s       = /\bS\d{1,2}\b/i.exec(name);
+	const season  = /\bSeason\s+\d+(?:\s*-\s*\d+)?\b/i.exec(name);
+	const complete= /\b(?:Complete\s+Series|Complete\s+Season)\b/i.exec(name);
+	const yr      = /\b(?:19|20)\d{2}\b/.exec(name);
 
-		let token = null;
-		let tokenType = null;
+	let token = null;
+	let tokenType = null;
 
-		if (se) {
-			token = se;
-			tokenType = "se";
-		}
-		else if (s) {
-			token = s;
-			tokenType = "s";
-		}
-		else if (yr) {
-			token = yr;
-			tokenType = "year";
-		}
+	if (se) {
+		token = se;
+		tokenType = "se";
+	}
+	else if (s) {
+		token = s;
+		tokenType = "s";
+	}
+	else if (season) {
+		token = season;
+		tokenType = "season";
+	}
+	else if (complete) {
+		token = complete;
+		tokenType = "complete";
+	}
+	else if (yr) {
+		token = yr;
+		tokenType = "year";
+	}
 
     return {
       name,
@@ -58,6 +68,33 @@
       tokenType,
     };
   }
+
+	function analyzeMedia(nameRaw){
+	  const name = String(nameRaw || "");
+
+	  let resolution = "";
+
+	  const r =
+		/\b(2160p|1080p|720p|480p)\b/i.exec(name);
+
+	  if (r) {
+		resolution = r[1].toUpperCase();
+	  }
+
+	  let codec = "";
+
+	  if (/\b(x265|h[\.\s]?265|hevc)\b/i.test(name)) {
+		codec = "H265";
+	  }
+	  else if (/\b(x264|h[\.\s]?264|avc)\b/i.test(name)) {
+		codec = "H264";
+	  }
+
+	  return {
+		resolution,
+		codec
+	  };
+	}
 
   // Name truncation: keep through first SxxEyy or Sxx; drop year tokens and anything after
   function cleanTitle(nameRaw){
@@ -117,13 +154,14 @@
       return "";
     }
 
-    const base = name
-      .slice(0, cut)
-      .replace(/[._]+/g, " ")
-      .replace(/[ \._\-]+$/g, "")
-      .trim();
+	const base = name
+	  .slice(0, cut)
+	  .replace(/[._]+/g, " ")
+	  .replace(/[ \._\-]+$/g, "")
+	  .replace(/\b(?:19|20)\d{2}\b\s*$/,"")
+	  .trim();
 
-    return base;
+	return base;
   }
 
 function displayStatus(percentRaw,stateRaw){
