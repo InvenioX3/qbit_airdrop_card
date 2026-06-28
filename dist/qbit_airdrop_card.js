@@ -738,6 +738,7 @@ function formatSeeds(num_seeds, num_complete){
       if(!items.length){
         const li=document.createElement("li"); li.className="item";
         li.innerHTML=
+		  `<div class="media"></div>`+
           `<div class="mid muted">—</div>`+
           `<div class="seed muted"></div>`+		  
           `<div class="down"></div>`+
@@ -817,7 +818,9 @@ function formatSeeds(num_seeds, num_complete){
 
 
         // Title (name)
-        const t=document.createElement("div");
+		const t = document.createElement("div");
+		t.className = "title";
+
 		const meta = document.createElement("div");
 		meta.className = "media";
 
@@ -867,6 +870,8 @@ function formatSeeds(num_seeds, num_complete){
 		li.appendChild(seed);
 		li.appendChild(d);
 		li.appendChild(s);
+		
+		ul.appendChild(li);
 	  }
     }
 
