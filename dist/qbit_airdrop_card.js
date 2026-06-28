@@ -677,17 +677,23 @@ function formatSeeds(num_seeds, num_complete){
             const avRaw = safe(r,["availability"], null);
             const avNum = Number(avRaw);
             const availability = (avRaw == null || !Number.isFinite(avNum)) ? null : avNum;
-
+			
+			const rawTitle = String(safe(r,["title"],"") || "");
+			const media = analyzeMedia(rawTitle);
+			
             return {
               dlspeed: Number(safe(r,["dlspeed"], 0)),
               upspeed: Number(safe(r,["upspeed"], 0)),
 			  num_seeds: Number(safe(r,["num_seeds"], 0)),
 			  num_complete: Number(safe(r,["num_complete"], 0)),
-const rawTitle = String(safe(r,["title"],"") || "");
-const media = analyzeMedia(rawTitle);
-
-return {
-              percent: (typeof safe(r,["percent"],null) === "number" ? safe(r,["percent"],null) : null),
+			  title: cleanTitle(rawTitle),
+			  res: media.res,
+              codec: media.codec,
+              audio: media.audio,
+              percent: (typeof safe(r,["percent"],null) === "number"
+			  ? safe(r,["percent"],null)
+			  : null),
+			  
               hash: String(safe(r,["hash"],"") || ""),
               state: String(safe(r,["state"],"") || ""),
               size: safe(r,["size"], null),
@@ -704,10 +710,7 @@ return {
             hash: "",
             state: "",
             size: null,
-            availability: null,
-            res: media.res,
-            codec: media.codec,
-            audio: media.audio
+            availability: null
           };
         });
         items.sort((a,b)=>a.title.localeCompare(b.title,undefined,{numeric:true,sensitivity:"base"}));
@@ -804,15 +807,15 @@ return {
         const t=document.createElement("div");
         t.className="title";
         const mediaInfo = [
-  it.res,
-  it.codec,
-  it.audio
-].filter(Boolean).join(" • ");
+		  it.res,
+		  it.codec,
+		  it.audio
+		].filter(Boolean).join(" • ");
 
-t.textContent =
-  mediaInfo
-    ? `${it.title}  [${mediaInfo}]`
-    : (it.title || "");
+		t.textContent =
+		  mediaInfo
+			? `${it.title}  [${mediaInfo}]`
+			: (it.title || "");
 
 		// Gray completed uploads, and forced uploads that currently have no upload traffic.
 		const upSpeed = Number(it.upspeed) || 0;
