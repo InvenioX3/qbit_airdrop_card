@@ -135,7 +135,6 @@
     if (info.token) {
 if (info.tokenType === "year") {
     cut = info.tokenIndex + info.tokenLength;
-}
       } else {
         // SxxEyy / Sxx: keep inclusive (so titles show "Show Name S01E01" or "Show Name S01")
         cut = info.tokenIndex + info.tokenLength;
