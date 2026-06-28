@@ -141,13 +141,28 @@ if (info.tokenType === "year") {
       }
     }
 
-    const kept    = name.slice(0, cut);
-    const trimmed = kept.replace(/[ ._-]+$/g, "");
-    return trimmed
-	  .replace(/[()]/g, "")
-      .replace(/\./g, " ")
-      .replace(/\s{2,}/g, " ")
-      .trim();
+	const kept = name.slice(0, cut);
+
+	let trimmed = kept
+	  .replace(/[ ._-]+$/g, "")
+	  .replace(/[()]/g, "");
+
+	if (
+	  info.tokenType === "se" ||
+	  info.tokenType === "s" ||
+	  info.tokenType === "season" ||
+	  info.tokenType === "complete"
+	) {
+	  trimmed = trimmed.replace(
+		/\b(?:19|20)\d{2}(?=\s+(?:S\d{1,2}(?:E\d{1,3})?|Season\b))/i,
+		""
+	  );
+	}
+
+	return trimmed
+	  .replace(/\./g, " ")
+	  .replace(/\s{2,}/g, " ")
+	  .trim();
   }
 
   // Category inference: reuse the same token analysis as cleanTitle
