@@ -386,7 +386,7 @@ function formatSeeds(num_seeds, num_complete){
 
 			  display:grid;
 			  grid-template-columns:auto 90px 70px 70px;
-			  grid-template-rows:auto auto;
+			  grid-template-rows:auto auto auto;
 
 			  row-gap:3px;
           }
@@ -452,25 +452,38 @@ function formatSeeds(num_seeds, num_complete){
 			  white-space:nowrap;
 			  overflow:hidden;
 			  text-overflow:ellipsis;
-			  }
+			}
+		  .media{
+			  grid-column:1 / -1;
+			  grid-row:2;
+
+			  font-size:calc(1em - 2pt);
+			  line-height:1.2;
+
+			  color:var(--secondary-text-color);
+
+			  white-space:nowrap;
+			  overflow:hidden;
+			  text-overflow:ellipsis;
+			}
 			.mid{
 			  grid-column:1;
-			  grid-row:2;
+			  grid-row:3;
 			}
 
 			.seed{
 			  grid-column:2;
-			  grid-row:2;
+			  grid-row:3;
 			}
 
 			.down{
 			  grid-column:3;
-			  grid-row:2;
+			  grid-row:3;
 			}
 
 			.size{
 			  grid-column:4;
-			  grid-row:2;
+			  grid-row:3;
 			}
 
           /* Shimmering gradient text effect for titles */
@@ -805,17 +818,16 @@ function formatSeeds(num_seeds, num_complete){
 
         // Title (name)
         const t=document.createElement("div");
-        t.className="title";
-        const mediaInfo = [
+		const meta = document.createElement("div");
+		meta.className = "media";
+
+		meta.textContent = [
 		  it.res,
 		  it.codec,
 		  it.audio
 		].filter(Boolean).join(" • ");
 
-		t.textContent =
-		  mediaInfo
-			? `${it.title}  [${mediaInfo}]`
-			: (it.title || "");
+		t.textContent = it.title || "";
 
 		// Gray completed uploads, and forced uploads that currently have no upload traffic.
 		const upSpeed = Number(it.upspeed) || 0;
@@ -849,12 +861,12 @@ function formatSeeds(num_seeds, num_complete){
           t.classList.add("loading-text-uploading");
         }
 
-        li.appendChild(t);
+		li.appendChild(t);
+		li.appendChild(meta);
 		li.appendChild(m);
 		li.appendChild(seed);
 		li.appendChild(d);
 		li.appendChild(s);
-        ul.appendChild(li);
 	  }
     }
 
