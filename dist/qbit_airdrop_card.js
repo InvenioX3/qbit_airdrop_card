@@ -124,7 +124,7 @@
 	};
   }
 
-  // Name truncation: keep through first SxxEyy or Sxx; drop year tokens and anything after
+  // Name truncation
   function cleanTitle(nameRaw){
     const info = analyzeTitle(nameRaw);
     const name = info.name;
@@ -133,19 +133,9 @@
     let cut = name.length;
 
     if (info.token) {
-      if (info.tokenType === "year") {
-        // Year case: walk backwards to drop any separator before the year,
-        // so we remove " 2020", " (2020)", ".2020", etc.
-        let start = info.tokenIndex;
-        while (start > 0) {
-          const ch = name.charAt(start - 1);
-          if (ch === " " || ch === "." || ch === "_" || ch === "-" || ch === "(") {
-            start--;
-          } else {
-            break;
-          }
-        }
-        cut = start;
+if (info.tokenType === "year") {
+    cut = info.tokenIndex + info.tokenLength;
+}
       } else {
         // SxxEyy / Sxx: keep inclusive (so titles show "Show Name S01E01" or "Show Name S01")
         cut = info.tokenIndex + info.tokenLength;
@@ -176,7 +166,7 @@
       return "";
     }
 
-    // Series: category is the base show name, before SxxEyy / Sxx
+    // Series: category is the base show name
     let cut = info.tokenIndex;
     if (cut <= 0) {
       return "";
@@ -694,7 +684,10 @@ function formatSeeds(num_seeds, num_complete){
               upspeed: Number(safe(r,["upspeed"], 0)),
 			  num_seeds: Number(safe(r,["num_seeds"], 0)),
 			  num_complete: Number(safe(r,["num_complete"], 0)),
-              title: cleanTitle(String(safe(r,["title"],"")||"")),
+const rawTitle = String(safe(r,["title"],"") || "");
+const media = analyzeMedia(rawTitle);
+
+return {
               percent: (typeof safe(r,["percent"],null) === "number" ? safe(r,["percent"],null) : null),
               hash: String(safe(r,["hash"],"") || ""),
               state: String(safe(r,["state"],"") || ""),
@@ -712,7 +705,10 @@ function formatSeeds(num_seeds, num_complete){
             hash: "",
             state: "",
             size: null,
-            availability: null
+            availability: null,
+            res: media.res,
+            codec: media.codec,
+            audio: media.audio
           };
         });
         items.sort((a,b)=>a.title.localeCompare(b.title,undefined,{numeric:true,sensitivity:"base"}));
@@ -808,7 +804,16 @@ function formatSeeds(num_seeds, num_complete){
         // Title (name)
         const t=document.createElement("div");
         t.className="title";
-        t.textContent=it.title||"";
+        const mediaInfo = [
+  it.res,
+  it.codec,
+  it.audio
+].filter(Boolean).join(" • ");
+
+t.textContent =
+  mediaInfo
+    ? `${it.title}  [${mediaInfo}]`
+    : (it.title || "");
 
 		// Gray completed uploads, and forced uploads that currently have no upload traffic.
 		const upSpeed = Number(it.upspeed) || 0;
