@@ -144,6 +144,7 @@ if (info.tokenType === "year") {
     const kept    = name.slice(0, cut);
     const trimmed = kept.replace(/[ ._-]+$/g, "");
     return trimmed
+	  .replace(/[()]/g, "")
       .replace(/\./g, " ")
       .replace(/\s{2,}/g, " ")
       .trim();
