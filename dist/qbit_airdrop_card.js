@@ -34,7 +34,7 @@
 	const s       = /\bS\d{1,2}\b/i.exec(name);
 	const season  = /\bSeason\s+\d+(?:\s*-\s*\d+)?\b/i.exec(name);
 	const complete= /\b(?:Complete\s+Series|Complete\s+Season)\b/i.exec(name);
-	const yr      = /\b(?:19|20)\d{2}\b/.exec(name);
+	const yr = /\(?\b(?:19|20)\d{2}\b\)?/.exec(name);
 
 	let token = null;
 	let tokenType = null;
