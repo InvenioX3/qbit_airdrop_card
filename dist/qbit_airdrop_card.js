@@ -133,26 +133,22 @@
 	let normalized = name;
 
 	if (info.tokenType === "year") {
-		const english = normalized.match(
+	  const english = normalized.match(
 		/[A-Za-z][A-Za-z0-9 '&:.-]+?\s+\b(?:19|20)\d{2}\b/
-		);
+	  );
 
-		if (english) {
-		  normalized = english[0];
-		}
+	  if (english) {
+		return english[0].trim();
 	  }
+	}
 
-	  let cut = normalized.length;
+	let cut = name.length;
 
-    if (info.token) {
-	  if (info.tokenType === "year") {
-		cut = info.tokenIndex + info.tokenLength;
-      } else {
-        cut = info.tokenIndex + info.tokenLength;
-      }
-    }
+	if (info.token) {
+	  cut = info.tokenIndex + info.tokenLength;
+	}
 
-	const kept = normalized.slice(0, cut);
+	const kept = name.slice(0, cut);
 
 	let trimmed = kept
 	  .replace(/[ ._-]+$/g, "")
