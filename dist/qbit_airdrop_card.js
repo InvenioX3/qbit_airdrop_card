@@ -126,22 +126,33 @@
 
   // Name truncation
   function cleanTitle(nameRaw){
-    const info = analyzeTitle(nameRaw);
-    const name = info.name;
-    if (!name) return name;
+	const info = analyzeTitle(nameRaw);
+	const name = info.name;
+	if (!name) return name;
 
-    let cut = name.length;
+	let normalized = name;
+
+	if (info.tokenType === "year") {
+		const english = normalized.match(
+		/[A-Za-z][A-Za-z0-9 '&:.-]+?\s+\b(?:19|20)\d{2}\b/
+		);
+
+		if (english) {
+		  normalized = english[0];
+		}
+	  }
+
+	  let cut = normalized.length;
 
     if (info.token) {
-if (info.tokenType === "year") {
-    cut = info.tokenIndex + info.tokenLength;
+	  if (info.tokenType === "year") {
+		cut = info.tokenIndex + info.tokenLength;
       } else {
-        // SxxEyy / Sxx: keep inclusive (so titles show "Show Name S01E01" or "Show Name S01")
         cut = info.tokenIndex + info.tokenLength;
       }
     }
 
-	const kept = name.slice(0, cut);
+	const kept = normalized.slice(0, cut);
 
 	let trimmed = kept
 	  .replace(/[ ._-]+$/g, "")
@@ -172,16 +183,14 @@ if (info.tokenType === "year") {
     const name = info.name;
 
     if (!name || !info.token) {
-      // No usable token → no series category; backend can fall back to defaults
+
       return "";
     }
 
-    // Movies: we still do not create a category; they use qBittorrent's default location
     if (info.tokenType === "year") {
       return "";
     }
 
-    // Series: category is the base show name
     let cut = info.tokenIndex;
     if (cut <= 0) {
       return "";
@@ -201,7 +210,6 @@ function displayStatus(percentRaw,stateRaw){
   const st = String(stateRaw || "").toLowerCase();
 
   // Force stalled torrents to show "Stalled" regardless of percent
-
 
   const pct = Number(percentRaw);
   if (Number.isFinite(pct) && pct < 100 && st != "stalleddl") return `${pct}%`;
@@ -287,8 +295,8 @@ function formatSeeds(num_seeds, num_complete){
       this._armAuto = false;
       this._valueAtFocus = "";
       this._submitting = false;
-      this._confirmDelete = false;  // new: integration-level delete confirmation flag
-      this._pendingDelete = null;   // { hash, title, type: "full" } when dialog is shown
+      this._confirmDelete = false;
+      this._pendingDelete = null;
     }
     setConfig(cfg){
       if(!cfg) throw new Error("qbit-airdrop-submit-card: config is required");
@@ -765,7 +773,6 @@ function formatSeeds(num_seeds, num_complete){
       for(const it of items){
         const li=document.createElement("li"); li.className="item";
 
-        // State first (far left)
         const m=document.createElement("div");
         m.className="mid";
         m.textContent=displayStatus(it.percent,it.state);
@@ -773,12 +780,12 @@ function formatSeeds(num_seeds, num_complete){
         if (it.hash) {
           const doDelete = () => {
             if (!this._confirmDelete) {
-              // No confirm: behave exactly as before
+
               this._deleteFully(it.hash, it.title || "");
               return;
             }
 
-            // Confirm enabled: show custom overlay dialog
+    // Confirm enabled: show custom overlay dialog
             this._pendingDelete = {
               hash:  it.hash,
               title: it.title || "",
@@ -811,7 +818,7 @@ function formatSeeds(num_seeds, num_complete){
         if (stLower === "stalleddl") {
           d.textContent = "";
         } else if (stLower === "uploading") {
-          // Show upspeed, formatted the same way as dlspeed, with an up-arrow glyph
+
           d.textContent = formatUp(it.upspeed); // blank when <= 0
         } else {
           d.textContent = formatDown(it.dlspeed); // blank when <= 0
@@ -873,10 +880,10 @@ function formatSeeds(num_seeds, num_complete){
 			s.textContent = "";
 
         } else if (stLower === "downloading") {
-          // Downloading shimmer (existing behavior)
+
           t.classList.add("loading-text");
         } else if (stLower === "uploading") {
-          // Uploading shimmer, using the 270deg variant
+
           t.classList.add("loading-text-uploading");
         }
 
