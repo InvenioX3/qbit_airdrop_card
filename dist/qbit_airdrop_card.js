@@ -12,9 +12,10 @@
     const q = String(magnet || "").split("?")[1] || "";
     const params = new URLSearchParams(q);
     const dn = params.get("dn");
-    return (dn ? decodeURIComponent(dn) : String(magnet || ""))
-      .replace(/[+]/g, " ")
-      .trim();
+	return (dn ? decodeURIComponent(dn) : String(magnet || ""))
+	  .replace(/[+]/g, " ")
+	  .replace(/&amp;/gi, "&")
+	  .trim();
   }
 
   // Shared title analysis
