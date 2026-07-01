@@ -104,7 +104,7 @@
 	  /\b(2160p|1080p|720p|480p)\b/i.exec(name);
 
 	if (r) {
-	  res = r[1].toUpperCase();
+	  res = r[1];
 	}
 
 	let codec = "";
