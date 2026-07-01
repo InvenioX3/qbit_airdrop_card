@@ -138,13 +138,12 @@
 	  .replace(/&apos;/gi, "'");
 
 	if (info.tokenType === "year") {
-	  const english = normalized.match(
-	    /[A-Za-z0-9][A-Za-z0-9 &'":.-]+?\s+\(?\b(?:19|20)\d{2}\b\)?/
-	  );
-
-	  if (english) {
-		return english[0].trim();
-	  }
+	  return normalized
+		.slice(0, info.tokenIndex + info.tokenLength)
+		.replace(/[()]/g, "")
+		.replace(/\./g, " ")
+		.replace(/\s{2,}/g, " ")
+		.trim();
 	}
 
 	let cut = name.length;
