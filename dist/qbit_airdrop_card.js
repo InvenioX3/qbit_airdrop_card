@@ -139,7 +139,7 @@
 
 	if (info.tokenType === "year") {
 	  const english = normalized.match(
-	    /[A-Za-z][A-Za-z0-9 &'":.-]+?\s+\b(?:19|20)\d{2}\b/
+	    /[A-Za-z][A-Za-z0-9 &'":.-]+?\s+\(?\b(?:19|20)\d{2}\b\)?/
 	  );
 
 	  if (english) {
@@ -153,7 +153,7 @@
 	  cut = info.tokenIndex + info.tokenLength;
 	}
 
-	const kept = name.slice(0, cut);
+	const kept = normalized.slice(0, cut);
 
 	let trimmed = kept
 	  .replace(/[ ._-]+$/g, "")
