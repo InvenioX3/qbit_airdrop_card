@@ -126,16 +126,19 @@
   }
 
   // Name truncation
-  function cleanTitle(nameRaw){
 	const info = analyzeTitle(nameRaw);
 	const name = info.name;
 	if (!name) return name;
 
-	let normalized = name;
+	let normalized = name
+	  .replace(/&amp;/gi, "&")
+	  .replace(/&quot;/gi, '"')
+	  .replace(/&#39;/gi, "'")
+	  .replace(/&apos;/gi, "'");
 
 	if (info.tokenType === "year") {
 	  const english = normalized.match(
-		/[A-Za-z][A-Za-z0-9 '&:.-]+?\s+\b(?:19|20)\d{2}\b/
+	    /[A-Za-z][A-Za-z0-9 &'":.-]+?\s+\b(?:19|20)\d{2}\b/
 	  );
 
 	  if (english) {
