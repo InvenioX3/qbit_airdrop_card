@@ -126,6 +126,7 @@
   }
 
   // Name truncation
+  function cleanTitle(nameRaw){
 	const info = analyzeTitle(nameRaw);
 	const name = info.name;
 	if (!name) return name;
