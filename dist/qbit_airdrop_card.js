@@ -138,12 +138,17 @@
 	  .replace(/&apos;/gi, "'");
 
 	if (info.tokenType === "year") {
-	  return normalized
-		.slice(0, info.tokenIndex + info.tokenLength)
-		.replace(/[()]/g, "")
-		.replace(/\./g, " ")
-		.replace(/\s{2,}/g, " ")
-		.trim();
+	  const m = /\(?\b(?:19|20)\d{2}\b\)?/.exec(normalized);
+
+	  if (m) {
+		return normalized
+		  .slice(0, m.index + m[0].length)
+		  .replace(/[()]/g, "")
+		  .replace(/[<>:"/\\|?*]/g, "")
+		  .replace(/\./g, " ")
+		  .replace(/\s{2,}/g, " ")
+		  .trim();
+	  }
 	}
 
 	let cut = name.length;
