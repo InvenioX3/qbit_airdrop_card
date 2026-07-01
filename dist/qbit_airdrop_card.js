@@ -927,8 +927,21 @@ function formatSeeds(num_seeds, num_complete){
         return;
       }
       const category=inferCategory(magnet);
+	  
+	  const rawTitle = getDisplayName(magnet);
+	  const media = analyzeMedia(rawTitle);
+	  
       try{
-        const payload=category?{magnet,category}:{magnet};
+		const payload = {
+		  magnet,
+		  category,
+
+		  clean_title: cleanTitle(rawTitle),
+
+		  res: media.res,
+		  codec: media.codec,
+		  audio: media.audio
+		};
         await this._hass.callService("qbit_airdrop","add_magnet",payload);
         this._els.mag.value="";
         this._els.mag.blur();
