@@ -950,6 +950,16 @@ function formatSeeds(num_seeds, num_complete){
 
 		  clean_title: cleanTitle(rawTitle),
 
+		  rename_name:
+			titleInfo.tokenType === "year"
+			  ? [
+				  cleanTitle(rawTitle),
+				  media.res,
+				  media.codec,
+				  media.audio
+				].filter(Boolean).join(" ")
+			  : cleanTitle(rawTitle),
+
 		  token_type: titleInfo.tokenType,
 
 		  season:
