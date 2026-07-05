@@ -949,7 +949,17 @@ function formatSeeds(num_seeds, num_complete){
 		  category,
 
 		  clean_title: cleanTitle(rawTitle),
+
 		  token_type: titleInfo.tokenType,
+
+		  season:
+			titleInfo.tokenType === "se"
+			  ? (titleInfo.token[0].match(/S\d+/i)?.[0] || "")
+			  : (
+				  titleInfo.tokenType === "s"
+					? titleInfo.token[0]
+					: ""
+				),
 
 		  res: media.res,
 		  codec: media.codec,
