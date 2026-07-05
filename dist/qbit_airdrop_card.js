@@ -942,16 +942,20 @@ function formatSeeds(num_seeds, num_complete){
 	  const media = analyzeMedia(rawTitle);
 	  
       try{
+		const titleInfo = analyzeTitle(rawTitle);
+
 		const payload = {
 		  magnet,
 		  category,
 
 		  clean_title: cleanTitle(rawTitle),
+		  token_type: titleInfo.tokenType,
 
 		  res: media.res,
 		  codec: media.codec,
 		  audio: media.audio
 		};
+		
         await this._hass.callService("qbit_airdrop","add_magnet",payload);
         this._els.mag.value="";
         this._els.mag.blur();
