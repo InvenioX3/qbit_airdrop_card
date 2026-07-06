@@ -34,7 +34,7 @@
 	const se      = /\bS\d{1,2}E\d{1,3}\b/i.exec(name);
 	const s		  = /\bS\d{1,2}\b(?!-\d)/i.exec(name);
 	const season  = /\bSeason\s+\d+(?:\s*-\s*\d+)?\b/i.exec(name);
-	const complete= /\b(?:Complete\s+Series|Complete\s+Season)\b/i.exec(name);
+	const complete= /\b(?:Complete\s+Series|Complete\s+Season|Complete)\b/i.exec(name);
 	const yr = /\(?\b(?:19|20)\d{2}\b\)?/.exec(name);
 
 	let token = null;
@@ -963,13 +963,22 @@ function formatSeeds(num_seeds, num_complete){
 		  token_type: titleInfo.tokenType,
 
 		  season:
-			titleInfo.tokenType === "se"
-			  ? (titleInfo.token[0].match(/S\d+/i)?.[0] || "")
-			  : (
-				  titleInfo.tokenType === "s"
-					? titleInfo.token[0]
-					: ""
-				),
+			(() => {
+			  if (titleInfo.tokenType === "se") {
+				return titleInfo.token[0].match(/S\d+/i)?.[0] || "";
+			  }
+
+			  if (titleInfo.tokenType === "s") {
+				return titleInfo.token[0].toUpperCase();
+			  }
+
+			  if (titleInfo.tokenType === "season") {
+				const n = titleInfo.token[0].match(/\d+/)?.[0] || "";
+				return n ? `S${String(n).padStart(2, "0")}` : "";
+			  }
+
+			  return "";
+			})(),
 
 		  res: media.res,
 		  codec: media.codec,
