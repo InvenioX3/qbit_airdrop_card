@@ -33,9 +33,17 @@
 
 	const se      = /\bS\d{1,2}E\d{1,3}\b/i.exec(name);
 	const s		  = /\bS\d{1,2}\b(?!-\d)/i.exec(name);
-	const season  = /\bSeason\s+\d+(?:\s*-\s*\d+)?\b/i.exec(name);
+	const season  = /\bSeason\s+(\d+)(?:\s*-\s*(\d+))?\b/i.exec(name);
 	const complete= /\b(?:Complete\s+Series|Complete\s+Season|Complete)\b/i.exec(name);
 	const yr = /\(?\b(?:19|20)\d{2}\b\)?/.exec(name);
+
+	// A season range ("Season 1-9") or a list of distinct season tokens
+	// ("S01 S02 S03...") indicates a complete/multi-season release, not a
+	// single season — even though the bare regexes above would otherwise
+	// match just the first token.
+	const seasonIsRange = !!(season && season[2]);
+	const multipleSeasonTokens =
+		((name.match(/\bS\d{1,2}\b(?!-\d)/gi) || []).length) >= 2;
 
 	let token = null;
 	let tokenType = null;
@@ -44,16 +52,16 @@
 		token = se;
 		tokenType = "se";
 	}
-	else if (s) {
+	else if (s && !multipleSeasonTokens) {
 		token = s;
 		tokenType = "s";
 	}
-	else if (season) {
+	else if (season && !seasonIsRange) {
 		token = season;
 		tokenType = "season";
 	}
-	else if (complete) {
-		token = complete;
+	else if (complete || seasonIsRange || multipleSeasonTokens) {
+		token = complete || season || s;
 		tokenType = "complete";
 	}
 	else if (yr) {
