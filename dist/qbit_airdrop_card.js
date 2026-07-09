@@ -133,9 +133,10 @@
 	};
   }
 
-  // Name truncation
-  function cleanTitle(nameRaw){
-	const info = analyzeTitle(nameRaw);
+  // Name truncation. Pass a pre-computed `infoParam` (from analyzeTitle) to
+  // avoid re-running the analysis when the caller already has it.
+  function cleanTitle(nameRaw, infoParam){
+	const info = infoParam || analyzeTitle(nameRaw);
 	const name = info.name;
 	if (!name) return name;
 
@@ -190,12 +191,9 @@
 	  .trim();
   }
 
-  // Category inference: reuse the same token analysis as cleanTitle
-  function inferCategory(magnet){
-    const dn   = getDisplayName(magnet);
-    const info = analyzeTitle(dn);
-    const name = info.name;
-
+  // Category inference: takes the already-computed display name and
+  // analyzeTitle() result so callers don't have to redo that analysis.
+  function inferCategory(name, info){
     if (!name || !info.token) {
 
       return "";
@@ -244,8 +242,8 @@ function displayStatus(percentRaw,stateRaw){
     return b>=GB?`${(b/GB).toFixed(1)} GB`:`${(b/MB).toFixed(1)} MB`;
   }
 
-// dlspeed formatter: show e.g. "↓3.8MB" or "↓768KB"
-function formatDown(bps){
+// Speed formatter shared by download/upload: e.g. "↓3.8MB" or "↑768KB"
+function formatSpeed(bps, arrow){
   const s = Number(bps);
   if (!Number.isFinite(s) || s <= 0) return "";
 
@@ -254,38 +252,16 @@ function formatDown(bps){
   const GB = MB * 1024;
 
   if (s >= GB) {
-    return `↓${(s / GB).toFixed(1)}GB`;
+    return `${arrow}${(s / GB).toFixed(1)}GB`;
   }
   if (s >= MB) {
-    return `↓${(s / MB).toFixed(1)}MB`;
+    return `${arrow}${(s / MB).toFixed(1)}MB`;
   }
   if (s >= KB) {
-    return `↓${Math.round(s / KB)}KB`;
+    return `${arrow}${Math.round(s / KB)}KB`;
   }
 
-  return `↓${Math.round(s)}B`;
-}
-
-// upspeed formatter: same formatting as dlspeed but with ↑
-function formatUp(bps){
-  const s = Number(bps);
-  if (!Number.isFinite(s) || s <= 0) return "";
-
-  const KB = 1024;
-  const MB = KB * 1024;
-  const GB = MB * 1024;
-
-  if (s >= GB) {
-    return `↑${(s / GB).toFixed(1)}GB`;
-  }
-  if (s >= MB) {
-    return `↑${(s / MB).toFixed(1)}MB`;
-  }
-  if (s >= KB) {
-    return `↑${Math.round(s / KB)}KB`;
-  }
-
-  return `↑${Math.round(s)}B`;
+  return `${arrow}${Math.round(s)}B`;
 }
 
 // seeds formatter
@@ -631,7 +607,7 @@ function formatSeeds(num_seeds, num_complete){
             return;
           }
           if (p.type === "full") {
-            this._deleteFully(p.hash, p.title || "");
+            this._delete(p.hash, p.title || "", true);
           }
           this._pendingDelete = null;
           this._updateConfirmOverlay();
@@ -795,7 +771,7 @@ function formatSeeds(num_seeds, num_complete){
           const doDelete = () => {
             if (!this._confirmDelete) {
 
-              this._deleteFully(it.hash, it.title || "");
+              this._delete(it.hash, it.title || "", true);
               return;
             }
 
@@ -833,9 +809,9 @@ function formatSeeds(num_seeds, num_complete){
           d.textContent = "";
         } else if (stLower === "uploading") {
 
-          d.textContent = formatUp(it.upspeed); // blank when <= 0
+          d.textContent = formatSpeed(it.upspeed, "↑"); // blank when <= 0
         } else {
-          d.textContent = formatDown(it.dlspeed); // blank when <= 0
+          d.textContent = formatSpeed(it.dlspeed, "↓"); // blank when <= 0
         }
 
         // Size
@@ -848,7 +824,7 @@ function formatSeeds(num_seeds, num_complete){
         }
         s.title="Remove (keep files)";
         if(it.hash){
-          s.addEventListener("click",()=>this._removeOnly(it.hash,it.title||""));
+          s.addEventListener("click",()=>this._delete(it.hash,it.title||"",false));
         } else {
           s.classList.add("muted");
         }
@@ -912,28 +888,17 @@ function formatSeeds(num_seeds, num_complete){
 	  }
     }
 
-    async _removeOnly(hash,title){
+    async _delete(hash,title,deleteFiles){
       if(!hash) return;
-      this._setStatus(title?`Removing: ${title}`:"Removing…");
+      const verb = deleteFiles ? "Deleting (files)" : "Removing";
+      this._setStatus(title?`${verb}: ${title}`:`${verb}…`);
       try{
-        await this._hass.callApi("POST","qbit_airdrop/delete",{hash,deleteFiles:false});
-        this._setStatus("Removed");
+        await this._hass.callApi("POST","qbit_airdrop/delete",{hash,deleteFiles});
+        this._setStatus(deleteFiles ? "Deleted" : "Removed");
       }catch{
-        this._setStatus("Remove failed",false,2000);
+        this._setStatus(deleteFiles ? "Delete failed" : "Remove failed",false,2000);
       }
-      setTimeout(()=>{ this._loadActive(); },600);
-    }
-
-    async _deleteFully(hash,title){
-      if(!hash) return;
-      this._setStatus(title?`Deleting (files): ${title}`:"Deleting…");
-      try{
-        await this._hass.callApi("POST","qbit_airdrop/delete",{hash,deleteFiles:true});
-        this._setStatus("Deleted");
-      }catch{
-        this._setStatus("Delete failed",false,2000);
-      }
-      setTimeout(()=>{ this._loadActive(); },900);
+      setTimeout(()=>{ this._loadActive(); }, deleteFiles ? 900 : 600);
     }
 
     async _onSubmit(){
@@ -944,29 +909,29 @@ function formatSeeds(num_seeds, num_complete){
         this._submitting=false;
         return;
       }
-      const category=inferCategory(magnet);
-	  
-	  const rawTitle = getDisplayName(magnet);
-	  const media = analyzeMedia(rawTitle);
-	  
-      try{
-		const titleInfo = analyzeTitle(rawTitle);
 
+      // Computed once and reused below, instead of each derived value
+      // re-running getDisplayName/analyzeTitle on the same magnet.
+      const rawTitle = getDisplayName(magnet);
+      const titleInfo = analyzeTitle(rawTitle);
+      const media = analyzeMedia(rawTitle);
+      const category = inferCategory(rawTitle, titleInfo);
+      const cleanedTitle = cleanTitle(rawTitle, titleInfo);
+
+      try{
 		const payload = {
 		  magnet,
 		  category,
 
-		  clean_title: cleanTitle(rawTitle),
-
 		  rename_name:
 			titleInfo.tokenType === "year"
 			  ? [
-				  cleanTitle(rawTitle),
+				  cleanedTitle,
 				  media.res,
 				  media.codec,
 				  media.audio
 				].filter(Boolean).join(" ")
-			  : cleanTitle(rawTitle),
+			  : cleanedTitle,
 
 		  token_type: titleInfo.tokenType,
 
@@ -987,12 +952,8 @@ function formatSeeds(num_seeds, num_complete){
 
 			  return "";
 			})(),
-
-		  res: media.res,
-		  codec: media.codec,
-		  audio: media.audio
 		};
-		
+
         await this._hass.callService("qbit_airdrop","add_magnet",payload);
         this._els.mag.value="";
         this._els.mag.blur();
