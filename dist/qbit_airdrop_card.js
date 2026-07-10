@@ -473,7 +473,7 @@ function formatSeeds(num_seeds, num_complete){
           .title{
 			  grid-column:1 / -1;
 			  font-size:1.2rem;
-			  padding:0px 10px 0px 0px;
+			  padding:0px 10px 0px 3px;
 			  font-weight:500;
 			  white-space:nowrap;
 			  overflow:hidden;
@@ -483,7 +483,8 @@ function formatSeeds(num_seeds, num_complete){
 			  grid-column:1 / -1;
 			  grid-row:2;
 			  font-size:calc(1em - 2pt);
-			  padding:0px 0px 8px 25px;
+			  padding:0px 0px 8px 28px;
+			  line-height:1;
 			  color:var(--secondary-text-color);
 			  white-space:nowrap;
 			  overflow:hidden;
