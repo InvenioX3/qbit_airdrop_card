@@ -397,7 +397,7 @@ function formatSeeds(num_seeds, num_complete){
 
           .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
           .item{
-			  padding:3px 6px 4px 20px;
+			  padding:3px 6px 4px 0px;
 			  border:1px solid var(--divider-color);
 			  border-radius:20px;
 			  background:var(--card-background-color);
@@ -405,8 +405,6 @@ function formatSeeds(num_seeds, num_complete){
 			  display:grid;
 			  grid-template-columns:32px auto 80px 70px 70px;
 			  grid-template-rows:auto auto auto;
-
-			  row-gap:3px;
           }
 
           /* Trash column (delete torrent + files) */
@@ -465,7 +463,7 @@ function formatSeeds(num_seeds, num_complete){
             font-variant-numeric:tabular-nums;
             font-size:calc(1em - 2pt);
             line-height:1.2;
-			padding: 0px 3px 0px 6px;
+			padding: 0px 4px 0px 6px;
             color:#12c5de;
             white-space:nowrap; overflow:hidden; text-overflow:clip;
             cursor:pointer;
@@ -485,7 +483,7 @@ function formatSeeds(num_seeds, num_complete){
 			  grid-column:1 / -1;
 			  grid-row:2;
 			  font-size:calc(1em - 2pt);
-			  padding:0px 0px 8px 20px;
+			  padding:0px 0px 8px 25px;
 			  color:var(--secondary-text-color);
 			  white-space:nowrap;
 			  overflow:hidden;
