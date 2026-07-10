@@ -403,7 +403,7 @@ function formatSeeds(num_seeds, num_complete){
 			  background:var(--card-background-color);
 
 			  display:grid;
-			  grid-template-columns:32px auto 90px 70px 70px;
+			  grid-template-columns:32px auto 80px 70px 70px;
 			  grid-template-rows:auto auto auto;
 
 			  row-gap:3px;
@@ -438,7 +438,7 @@ function formatSeeds(num_seeds, num_complete){
             font-weight:400;
             font-size:calc(1em - 1pt);
             line-height:1.2;
-			padding:0px 16px;
+			padding:0px 8px;
             color:#12c5de;
             white-space:nowrap;
             overflow:hidden;
