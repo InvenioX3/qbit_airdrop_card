@@ -465,7 +465,7 @@ function formatSeeds(num_seeds, num_complete){
             font-variant-numeric:tabular-nums;
             font-size:calc(1em - 2pt);
             line-height:1.2;
-			padding: 0px 10px;
+			padding: 0px 6px;
             color:#12c5de;
             white-space:nowrap; overflow:hidden; text-overflow:clip;
             cursor:pointer;
@@ -483,10 +483,9 @@ function formatSeeds(num_seeds, num_complete){
 		  .media{
 			  grid-column:1 / -1;
 			  grid-row:2;
-
 			  font-size:calc(1em - 2pt);
 			  line-height:1.2;
-			  padding:0px 0px 4px 15px;
+			  padding:0px 0px 4px 20px;
 			  color:var(--secondary-text-color);
 			  white-space:nowrap;
 			  overflow:hidden;
