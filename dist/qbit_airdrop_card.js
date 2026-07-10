@@ -438,7 +438,7 @@ function formatSeeds(num_seeds, num_complete){
             font-weight:400;
             font-size:calc(1em - 2pt);
             line-height:1.2;
-			padding:1px 0px 10px 6px;
+			padding:1px 10px 0px 6px;
             color:#12c5de;
             white-space:nowrap;
             overflow:hidden;
