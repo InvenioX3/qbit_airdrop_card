@@ -411,13 +411,11 @@ function formatSeeds(num_seeds, num_complete){
 
           /* Trash column (delete torrent + files) */
           .trash{
-            text-align:center;
-            font-size:calc(1em - 1pt);
-            line-height:1.2;
+            display:flex;
+            align-items:center;
+            justify-content:center;
             color:#ebbf10;
             cursor:pointer;
-            white-space:nowrap;
-            overflow:hidden;
           }
           .trash.muted{opacity:.45;cursor:default}
 
@@ -791,7 +789,14 @@ function formatSeeds(num_seeds, num_complete){
         // empty-space click inside it no longer triggers delete.
         const del = document.createElement("div");
         del.className = "trash";
-        del.textContent = "🗑️";
+        del.innerHTML =
+          '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+
+          '<line x1="4" y1="7" x2="20" y2="7"/>'+
+          '<path d="M9 7V4h6v3"/>'+
+          '<path d="M6 7l1 13h10l1-13"/>'+
+          '<line x1="10" y1="11" x2="10" y2="17"/>'+
+          '<line x1="14" y1="11" x2="14" y2="17"/>'+
+          '</svg>';
         del.title = "Delete torrent and files";
         if (it.hash) {
           const doDelete = () => {
