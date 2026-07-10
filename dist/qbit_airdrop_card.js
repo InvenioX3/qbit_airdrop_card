@@ -397,11 +397,11 @@ function formatSeeds(num_seeds, num_complete){
 
           .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
           .item{
-			  padding:3px 6px 4px 0px;
+			  padding:3px 6px 4px 10px;
 			  border:1px solid var(--divider-color);
 			  border-radius:20px;
 			  background:var(--card-background-color);
-
+			  row-gap:1px;
 			  display:grid;
 			  grid-template-columns:32px auto 80px 70px 70px;
 			  grid-template-rows:auto auto auto;
