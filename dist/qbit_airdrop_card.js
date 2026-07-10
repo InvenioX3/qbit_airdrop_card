@@ -221,10 +221,14 @@
 function displayStatus(percentRaw,stateRaw){
   const st = String(stateRaw || "").toLowerCase();
 
-  // Force stalled torrents to show "Stalled" regardless of percent
+  // Stalled/forced states are shown regardless of percent — knowing a
+  // torrent is stalled, or was already force-started, is useful even
+  // mid-download.
+  if (st === "stalleddl") return "Stalled";
+  if (st === "forceddl") return "[F] Downloading";
 
   const pct = Number(percentRaw);
-  if (Number.isFinite(pct) && pct < 100 && st != "stalleddl") return `${pct}%`;
+  if (Number.isFinite(pct) && pct < 100) return `${pct}%`;
 
   if (st === "stalledup" || st === "forcedup") return "Complete";
   if (st === "uploading") return "Seeding";
@@ -399,11 +403,23 @@ function formatSeeds(num_seeds, num_complete){
 			  background:var(--card-background-color);
 
 			  display:grid;
-			  grid-template-columns:auto 90px 70px 70px;
+			  grid-template-columns:32px auto 90px 70px 70px;
 			  grid-template-rows:auto auto auto;
 
 			  row-gap:3px;
           }
+
+          /* Trash column (delete torrent + files) */
+          .trash{
+            text-align:center;
+            font-size:calc(1em - 1pt);
+            line-height:1.2;
+            color:#ebbf10;
+            cursor:pointer;
+            white-space:nowrap;
+            overflow:hidden;
+          }
+          .trash.muted{opacity:.45;cursor:default}
 
           /* Down column (green glyph) */
           .down{
@@ -416,22 +432,20 @@ function formatSeeds(num_seeds, num_complete){
             white-space:nowrap; overflow:hidden; text-overflow:clip;
           }
 
-          /* State column (unchanged behavior; deletes with files) */
+          /* State column (display only, colored to match size) */
           .mid{
             text-align:left;
             font-weight:400;
             font-size:calc(1em - 1pt);
             line-height:1.2;
 			padding:0px 16px;
-            color:#ebbf10;
+            color:#12c5de;
             white-space:nowrap;
             overflow:hidden;
             text-overflow:clip;
-            cursor:pointer;
           }
-          .mid.muted{opacity:.45;cursor:default}
-		  
-		  /* Seeds column */
+
+		  /* Seeds column: clickable, triggers setForceStart */
 		  .seed{
 			text-align:left;
 			font-variant-numeric:tabular-nums;
@@ -442,6 +456,7 @@ function formatSeeds(num_seeds, num_complete){
 			white-space:nowrap;
 			overflow:hidden;
 			text-overflow:clip;
+			cursor:pointer;
 		  }
           .seed.muted{opacity:.45;cursor:default}
 
@@ -480,23 +495,28 @@ function formatSeeds(num_seeds, num_complete){
 			  overflow:hidden;
 			  text-overflow:ellipsis;
 			}
-			.mid{
+			.trash{
 			  grid-column:1;
 			  grid-row:3;
 			}
 
-			.seed{
+			.mid{
 			  grid-column:2;
 			  grid-row:3;
 			}
 
-			.down{
+			.seed{
 			  grid-column:3;
 			  grid-row:3;
 			}
 
-			.size{
+			.down{
 			  grid-column:4;
+			  grid-row:3;
+			}
+
+			.size{
+			  grid-column:5;
 			  grid-row:3;
 			}
 
@@ -753,29 +773,34 @@ function formatSeeds(num_seeds, num_complete){
         const li=document.createElement("li"); li.className="item";
         li.innerHTML=
 		  `<div class="media"></div>`+
+          `<div class="trash muted"></div>`+
           `<div class="mid muted">—</div>`+
-          `<div class="seed muted"></div>`+		  
+          `<div class="seed muted"></div>`+
           `<div class="down"></div>`+
-          `<div class="size muted">—</div>`+
+          `<div class="size muted">————</div>`+
           `<div class="title">No torrents</div>`;
         ul.appendChild(li); return;
       }
       for(const it of items){
         const li=document.createElement("li"); li.className="item";
 
-        const m=document.createElement("div");
-        m.className="mid";
-        m.textContent=displayStatus(it.percent,it.state);
-        m.title="Delete torrent and files";
+        const stLower = String(it.state || "").toLowerCase();
+        const forced = stLower === "forceddl" || stLower === "forcedup";
+
+        // Trash (delete torrent + files) — moved off the state column so an
+        // empty-space click inside it no longer triggers delete.
+        const del = document.createElement("div");
+        del.className = "trash";
+        del.textContent = "🗑️";
+        del.title = "Delete torrent and files";
         if (it.hash) {
           const doDelete = () => {
             if (!this._confirmDelete) {
-
               this._delete(it.hash, it.title || "", true);
               return;
             }
 
-    // Confirm enabled: show custom overlay dialog
+            // Confirm enabled: show custom overlay dialog
             this._pendingDelete = {
               hash:  it.hash,
               title: it.title || "",
@@ -784,8 +809,10 @@ function formatSeeds(num_seeds, num_complete){
             this._updateConfirmOverlay();
           };
 
-          m.addEventListener("click", () => doDelete());
-          m.addEventListener("keydown", (e) => {
+          del.setAttribute("role","button");
+          del.setAttribute("tabindex","0");
+          del.addEventListener("click", () => doDelete());
+          del.addEventListener("keydown", (e) => {
             const k = e.key || e.code;
             if (k === "Enter" || k === " " || k === "Spacebar" || k === "Space") {
               e.preventDefault();
@@ -793,35 +820,51 @@ function formatSeeds(num_seeds, num_complete){
             }
           });
         } else {
-          m.classList.add("muted");
+          del.classList.add("muted");
         }
 
-		// Seeds
+        // State — display only now; always reflects displayStatus(), never
+        // overwritten to hide it behind an "unavailable" indicator.
+        const m=document.createElement("div");
+        m.className="mid";
+        m.textContent=displayStatus(it.percent,it.state);
+
+		// Seeds — clickable, toggles setForceStart based on current state.
 		const seed = document.createElement("div");
 		seed.className = "seed";
 		seed.textContent = `Seeds: ${formatSeeds(it.num_seeds, it.num_complete)}`;
+		if (it.hash) {
+		  const doForceStart = () => this._forceStart(it.hash, it.title || "", forced);
+		  seed.setAttribute("role","button");
+		  seed.setAttribute("tabindex","0");
+		  seed.addEventListener("click", doForceStart);
+		  seed.addEventListener("keydown", (e) => {
+			const k = e.key || e.code;
+			if (k === "Enter" || k === " " || k === "Spacebar" || k === "Space") {
+			  e.preventDefault();
+			  doForceStart();
+			}
+		  });
+		} else {
+		  seed.classList.add("muted");
+		}
 
-        // Down
+        // Down — formatSpeed already returns "" for zero/negative, no
+        // separate state-based blanking needed.
         const d = document.createElement("div");
         d.className = "down";
-        const stLower = String(it.state || "").toLowerCase();
-        if (stLower === "stalleddl") {
-          d.textContent = "";
-        } else if (stLower === "uploading") {
-
-          d.textContent = formatSpeed(it.upspeed, "↑"); // blank when <= 0
+        if (stLower === "uploading") {
+          d.textContent = formatSpeed(it.upspeed, "↑");
         } else {
-          d.textContent = formatSpeed(it.dlspeed, "↓"); // blank when <= 0
+          d.textContent = formatSpeed(it.dlspeed, "↓");
         }
 
-        // Size
+        // Size — placeholder only when metadata genuinely hasn't resolved
+        // yet (size <= 0); otherwise always show the real value regardless
+        // of current state.
         const s=document.createElement("div");
         s.className="size";
-        if (stLower === "stalleddl") {
-          s.textContent = "";
-        } else {
-          s.textContent = formatSize(it.size);
-        }
+        s.textContent = (Number(it.size) > 0) ? formatSize(it.size) : "————";
         s.title="Remove (keep files)";
         if(it.hash){
           s.addEventListener("click",()=>this._delete(it.hash,it.title||"",false));
@@ -855,7 +898,8 @@ function formatSeeds(num_seeds, num_complete){
 		  t.style.color = "#828282";
 		}
 
-        // Orange shimmer for unavailable items
+        // Orange shimmer for unavailable items — title-only indicator now;
+        // no longer blanks seed/size/speed or overwrites state.
 		const unavailable =
 			(it.availability >= 0 &&
 			it.availability < 1) ||
@@ -863,13 +907,7 @@ function formatSeeds(num_seeds, num_complete){
 
 		if (unavailable) {
 			t.classList.add("loading-text","title-unavailable");
-
-			m.textContent = "Delete";
-			seed.textContent = "";
-			d.textContent = "";
-			s.textContent = "";
-
-        } else if (stLower === "downloading") {
+        } else if (stLower === "downloading" || stLower === "forceddl") {
 
           t.classList.add("loading-text");
         } else if (stLower === "uploading") {
@@ -879,11 +917,12 @@ function formatSeeds(num_seeds, num_complete){
 
 		li.appendChild(t);
 		li.appendChild(meta);
+		li.appendChild(del);
 		li.appendChild(m);
 		li.appendChild(seed);
 		li.appendChild(d);
 		li.appendChild(s);
-		
+
 		ul.appendChild(li);
 	  }
     }
@@ -899,6 +938,20 @@ function formatSeeds(num_seeds, num_complete){
         this._setStatus(deleteFiles ? "Delete failed" : "Remove failed",false,2000);
       }
       setTimeout(()=>{ this._loadActive(); }, deleteFiles ? 900 : 600);
+    }
+
+    async _forceStart(hash,title,currentlyForced){
+      if(!hash) return;
+      const value = !currentlyForced;
+      const verb = value ? "Forcing start" : "Un-forcing";
+      this._setStatus(title?`${verb}: ${title}`:`${verb}…`);
+      try{
+        await this._hass.callApi("POST","qbit_airdrop/force_start",{hash,value});
+        this._setStatus(value ? "Forced" : "Un-forced");
+      }catch{
+        this._setStatus("Force start failed",false,2000);
+      }
+      setTimeout(()=>{ this._loadActive(); },900);
     }
 
     async _onSubmit(){
