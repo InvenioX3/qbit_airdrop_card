@@ -52,17 +52,30 @@
 		token = se;
 		tokenType = "se";
 	}
-	else if (s && !multipleSeasonTokens) {
-		token = s;
-		tokenType = "s";
-	}
-	else if (season && !seasonIsRange) {
-		token = season;
-		tokenType = "season";
-	}
 	else if (complete || seasonIsRange || multipleSeasonTokens) {
 		token = complete || season || s;
 		tokenType = "complete";
+	}
+	else if (s && season) {
+		// Redundant season notation in the same title (e.g. "Season 01 S01")
+		// — use whichever occurs first so category inference cuts before
+		// both, instead of picking by type-priority and leaving the earlier
+		// one stuck in the category string.
+		if (s.index <= season.index) {
+			token = s;
+			tokenType = "s";
+		} else {
+			token = season;
+			tokenType = "season";
+		}
+	}
+	else if (s) {
+		token = s;
+		tokenType = "s";
+	}
+	else if (season) {
+		token = season;
+		tokenType = "season";
 	}
 	else if (yr) {
 		token = yr;
