@@ -397,9 +397,9 @@ function formatSeeds(num_seeds, num_complete){
 
           .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
           .item{
-			  padding:6px 6px;
+			  padding:2px 6px 4px 4px;
 			  border:1px solid var(--divider-color);
-			  border-radius:10px;
+			  border-radius:15px;
 			  background:var(--card-background-color);
 
 			  display:grid;
@@ -485,6 +485,7 @@ function formatSeeds(num_seeds, num_complete){
 			  grid-row:2;
 			  font-size:calc(1em - 2pt);
 			  line-height:1.2;
+			  align-items:top;
 			  padding:0px 0px 4px 20px;
 			  color:var(--secondary-text-color);
 			  white-space:nowrap;
