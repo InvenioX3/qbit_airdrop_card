@@ -800,7 +800,7 @@ function formatSeeds(num_seeds, num_complete){
         const del = document.createElement("div");
         del.className = "trash";
         del.innerHTML =
-          '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+
+          '<svg viewBox="0 0 24 24" width="14" height="17" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+
           '<line x1="4" y1="7" x2="20" y2="7"/>'+
           '<path d="M9 7V4h6v3"/>'+
           '<path d="M6 7l1 13h10l1-13"/>'+
