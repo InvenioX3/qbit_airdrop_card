@@ -397,7 +397,7 @@ function formatSeeds(num_seeds, num_complete){
 
           .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
           .item{
-			  padding:5px 6px 3px 10px;
+			  padding:4px 6px 3px 8px;
 			  border:1px solid var(--divider-color);
 			  border-radius:20px;
 			  background:var(--card-background-color);
@@ -434,7 +434,7 @@ function formatSeeds(num_seeds, num_complete){
             font-weight:400;
             font-size:calc(1em - 2pt);
             line-height:1.2;
-			padding:1px 10px 0px 6px;
+			padding:1px 10px 0px 5px;
             color:#12c5de;
             white-space:nowrap;
             overflow:hidden;
@@ -473,7 +473,7 @@ function formatSeeds(num_seeds, num_complete){
           .title{
 			  grid-column:1 / -1;
 			  font-size:1.2rem;
-			  padding:0px 10px 0px 3px;
+			  padding:0px 10px 0px 5px;
 			  font-weight:500;
 			  white-space:nowrap;
 			  overflow:hidden;
