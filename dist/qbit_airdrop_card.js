@@ -969,7 +969,7 @@ function formatSeeds(num_seeds, num_complete){
     async _onRefresh(){
       this._setStatus("Refreshing…");
       try{
-        await this._hass.callService("qbit_airdrop","reload_entry",{});
+        await this._hass.callService("qbit_airdrop","flush_orphaned",{});
       }catch{}
       setTimeout(()=>{
         this._loadActive();
