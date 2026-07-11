@@ -409,7 +409,7 @@ function formatSeeds(num_seeds, num_complete){
 			  background:var(--card-background-color);
 			  row-gap:0px;
 			  display:grid;
-			  grid-template-columns:32px auto 40px 80px 70px 70px;
+			  grid-template-columns:32px auto 80px 70px 70px;
 			  grid-template-rows:auto auto auto;
           }
 
@@ -500,7 +500,7 @@ function formatSeeds(num_seeds, num_complete){
 			  text-overflow:ellipsis;
 			}
 		  .media{
-			  grid-column:1 / -1;
+			  grid-column:1 / 4;
 			  grid-row:2;
 			  font-size:calc(1em - 2pt);
 			  padding:0px 0px 12px 28px;
@@ -509,6 +509,12 @@ function formatSeeds(num_seeds, num_complete){
 			  white-space:nowrap;
 			  overflow:hidden;
 			  text-overflow:ellipsis;
+			}
+			.pct{
+			  grid-column:4 / -1;
+			  grid-row:2;
+			  justify-content:flex-end;
+			  padding:0px 4px 12px 0px;
 			}
 			.trash{
 			  grid-column:1;
@@ -520,23 +526,18 @@ function formatSeeds(num_seeds, num_complete){
 			  grid-row:3;
 			}
 
-			.pct{
+			.seed{
 			  grid-column:3;
 			  grid-row:3;
 			}
 
-			.seed{
+			.down{
 			  grid-column:4;
 			  grid-row:3;
 			}
 
-			.down{
-			  grid-column:5;
-			  grid-row:3;
-			}
-
 			.size{
-			  grid-column:6;
+			  grid-column:5;
 			  grid-row:3;
 			}
 
@@ -793,9 +794,9 @@ function formatSeeds(num_seeds, num_complete){
         const li=document.createElement("li"); li.className="item";
         li.innerHTML=
 		  `<div class="media"></div>`+
+          `<div class="pct"></div>`+
           `<div class="trash muted"></div>`+
           `<div class="mid muted">—</div>`+
-          `<div class="pct"></div>`+
           `<div class="seed muted"></div>`+
           `<div class="down"></div>`+
           `<div class="size muted">————</div>`+
@@ -857,12 +858,6 @@ function formatSeeds(num_seeds, num_complete){
         m.className="mid";
         m.textContent=displayStatus(it.state);
 
-        // Percent — its own column now, separate from the state label.
-        const pctVal = Number(it.percent);
-        const pctEl = document.createElement("div");
-        pctEl.className = "pct";
-        pctEl.textContent = Number.isFinite(pctVal) ? `${pctVal}%` : "";
-
 		// Seeds — clickable, toggles setForceStart based on current state.
 		const seed = document.createElement("div");
 		seed.className = "seed";
@@ -920,6 +915,12 @@ function formatSeeds(num_seeds, num_complete){
 		  it.audio
 		].filter(Boolean).join(" • ");
 
+		// Percent — end of the same row as meta, separate from the state label.
+		const pctVal = Number(it.percent);
+		const pctEl = document.createElement("div");
+		pctEl.className = "pct";
+		pctEl.textContent = Number.isFinite(pctVal) ? `${pctVal}%` : "";
+
 		t.textContent = it.title || "";
 
 		// Gray completed uploads, and forced uploads that currently have no upload traffic.
@@ -951,9 +952,9 @@ function formatSeeds(num_seeds, num_complete){
 
 		li.appendChild(t);
 		li.appendChild(meta);
+		li.appendChild(pctEl);
 		li.appendChild(del);
 		li.appendChild(m);
-		li.appendChild(pctEl);
 		li.appendChild(seed);
 		li.appendChild(d);
 		li.appendChild(s);
