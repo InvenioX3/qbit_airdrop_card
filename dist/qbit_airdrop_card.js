@@ -514,7 +514,7 @@ function formatSeeds(num_seeds, num_complete){
 			  grid-column:4 / -1;
 			  grid-row:2;
 			  justify-content:flex-end;
-			  padding:0px 4px 12px 0px;
+			  padding:0px 10px 0px 0px;
 			}
 			.trash{
 			  grid-column:1;
