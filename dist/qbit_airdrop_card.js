@@ -403,7 +403,7 @@ function formatSeeds(num_seeds, num_complete){
 
           .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
           .item{
-			  padding:4px 4px 6px 5px;
+			  padding:4px 4px 6px 0px;
 			  border:1px solid var(--divider-color);
 			  border-radius:20px;
 			  background:var(--card-background-color);
