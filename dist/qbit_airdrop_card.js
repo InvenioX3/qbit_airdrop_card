@@ -231,18 +231,11 @@
 	return base;
   }
 
-function displayStatus(percentRaw,stateRaw){
+function displayStatus(stateRaw){
   const st = String(stateRaw || "").toLowerCase();
 
-  // Stalled/forced states are shown regardless of percent — knowing a
-  // torrent is stalled, or was already force-started, is useful even
-  // mid-download.
   if (st === "stalleddl") return "Stalled";
   if (st === "forceddl") return "[F] Downloading";
-
-  const pct = Number(percentRaw);
-  if (Number.isFinite(pct) && pct < 100) return `${pct}%`;
-
   if (st === "stalledup" || st === "forcedup") return "Complete";
   if (st === "uploading") return "Seeding";
   if (st === "metadl") return "Meta DL";
@@ -416,7 +409,7 @@ function formatSeeds(num_seeds, num_complete){
 			  background:var(--card-background-color);
 			  row-gap:0px;
 			  display:grid;
-			  grid-template-columns:32px auto 80px 70px 70px;
+			  grid-template-columns:32px auto 40px 80px 70px 70px;
 			  grid-template-rows:auto auto auto;
           }
 
@@ -452,6 +445,20 @@ function formatSeeds(num_seeds, num_complete){
             white-space:nowrap;
             overflow:hidden;
             text-overflow:clip;
+          }
+
+          /* Percent column — separated out from state, anchored to the
+             bottom edge of its cell. */
+          .pct{
+            display:flex;
+            align-items:flex-end;
+            justify-content:flex-start;
+            font-variant-numeric:tabular-nums;
+            font-size:calc(1em - 2pt);
+            line-height:1;
+            color:var(--secondary-text-color);
+            white-space:nowrap;
+            overflow:hidden;
           }
 
 		  /* Seeds column: clickable, triggers setForceStart */
@@ -513,18 +520,23 @@ function formatSeeds(num_seeds, num_complete){
 			  grid-row:3;
 			}
 
-			.seed{
+			.pct{
 			  grid-column:3;
 			  grid-row:3;
 			}
 
-			.down{
+			.seed{
 			  grid-column:4;
 			  grid-row:3;
 			}
 
-			.size{
+			.down{
 			  grid-column:5;
+			  grid-row:3;
+			}
+
+			.size{
+			  grid-column:6;
 			  grid-row:3;
 			}
 
@@ -783,6 +795,7 @@ function formatSeeds(num_seeds, num_complete){
 		  `<div class="media"></div>`+
           `<div class="trash muted"></div>`+
           `<div class="mid muted">—</div>`+
+          `<div class="pct"></div>`+
           `<div class="seed muted"></div>`+
           `<div class="down"></div>`+
           `<div class="size muted">————</div>`+
@@ -842,7 +855,13 @@ function formatSeeds(num_seeds, num_complete){
         // overwritten to hide it behind an "unavailable" indicator.
         const m=document.createElement("div");
         m.className="mid";
-        m.textContent=displayStatus(it.percent,it.state);
+        m.textContent=displayStatus(it.state);
+
+        // Percent — its own column now, separate from the state label.
+        const pctVal = Number(it.percent);
+        const pctEl = document.createElement("div");
+        pctEl.className = "pct";
+        pctEl.textContent = Number.isFinite(pctVal) ? `${pctVal}%` : "";
 
 		// Seeds — clickable, toggles setForceStart based on current state.
 		const seed = document.createElement("div");
@@ -934,6 +953,7 @@ function formatSeeds(num_seeds, num_complete){
 		li.appendChild(meta);
 		li.appendChild(del);
 		li.appendChild(m);
+		li.appendChild(pctEl);
 		li.appendChild(seed);
 		li.appendChild(d);
 		li.appendChild(s);
