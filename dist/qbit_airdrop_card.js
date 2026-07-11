@@ -467,7 +467,7 @@ function formatSeeds(num_seeds, num_complete){
 			font-variant-numeric:tabular-nums;
 			font-size:calc(1em - 2pt);
 			line-height:1.2;
-			padding:1px 0px 0px;
+			padding:1px 0px 0px 5px;
 			color:#b0b0b0;
 			white-space:nowrap;
 			overflow:hidden;
@@ -493,7 +493,7 @@ function formatSeeds(num_seeds, num_complete){
           .title{
 			  grid-column:1 / -1;
 			  font-size:1.2rem;
-			  padding:0px 10px 0px 5px;
+			  padding:0px 5px 0px 5px;
 			  font-weight:500;
 			  white-space:nowrap;
 			  overflow:hidden;
@@ -514,7 +514,7 @@ function formatSeeds(num_seeds, num_complete){
 			  grid-column:4 / -1;
 			  grid-row:2;
 			  justify-content:flex-end;
-			  padding:0px 20px 0px 0px;
+			  padding:0px 25px 0px 0px;
 			}
 			.trash{
 			  grid-column:1;
@@ -539,6 +539,7 @@ function formatSeeds(num_seeds, num_complete){
 			.size{
 			  grid-column:5;
 			  grid-row:3;
+			  justify-content:flex-end;
 			}
 
           /* Shimmering gradient text effect for titles */
