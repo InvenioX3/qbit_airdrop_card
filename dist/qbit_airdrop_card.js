@@ -539,7 +539,6 @@ function formatSeeds(num_seeds, num_complete){
 			.size{
 			  grid-column:5;
 			  grid-row:3;
-			  justify-content:flex-end;
 			}
 
           /* Shimmering gradient text effect for titles */
