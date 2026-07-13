@@ -231,7 +231,7 @@
 	return base;
   }
 
-function displayStatus(stateRaw){
+function displayStatus(stateRaw, inQueue){
   const st = String(stateRaw || "").toLowerCase();
 
   if (st === "stalleddl") return "Stalled";
@@ -241,6 +241,7 @@ function displayStatus(stateRaw){
   if (st === "metadl") return "Meta DL";
   if (st === "moving") return "Moving";
   if (st === "downloading") return "Downloading";
+  if (st === "stoppeddl") return inQueue ? "Parsing metadata . . ." : "Stopped";
 
   return String(stateRaw ?? "");
 }
@@ -765,6 +766,7 @@ function formatSeeds(num_seeds, num_complete){
               hash: String(safe(r,["hash"],"") || ""),
               state: String(safe(r,["state"],"") || ""),
               size: safe(r,["size"], null),
+              inQueue: !!safe(r,["in_queue"], false),
               availability: availability
             };
           }
@@ -778,6 +780,7 @@ function formatSeeds(num_seeds, num_complete){
             hash: "",
             state: "",
             size: null,
+            inQueue: false,
             availability: null
           };
         });
@@ -856,7 +859,7 @@ function formatSeeds(num_seeds, num_complete){
         // overwritten to hide it behind an "unavailable" indicator.
         const m=document.createElement("div");
         m.className="mid";
-        m.textContent=displayStatus(it.state);
+        m.textContent=displayStatus(it.state, it.inQueue);
 
 		// Seeds — clickable, toggles setForceStart based on current state.
 		const seed = document.createElement("div");
