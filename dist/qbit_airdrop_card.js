@@ -430,6 +430,9 @@ function formatSeeds(num_seeds, num_complete){
 			  grid-template-columns:32px auto 80px 70px 70px;
 			  grid-template-rows:auto auto auto;
           }
+          .item.complete{
+			  border-color:#65F527;
+          }
 
           /* Trash column (delete torrent + files) */
           .trash{
@@ -834,6 +837,9 @@ function formatSeeds(num_seeds, num_complete){
 
         const stLower = String(it.state || "").toLowerCase();
         const forced = stLower === "forceddl" || stLower === "forcedup";
+        if (stLower === "uploading" || stLower === "stalledup" || stLower === "forcedup") {
+          li.classList.add("complete");
+        }
 
         // Trash (delete torrent + files) — moved off the state column so an
         // empty-space click inside it no longer triggers delete.
