@@ -7,15 +7,32 @@
 
   const safe = (o,p,f)=>{try{let v=o;for(let i=0;i<p.length;i++){if(v==null)return f;v=v[p[i]]}return v==null?f:v}catch(e){return f}};
 
+  // Some non-English tracker sites prepend a duplicate title in the
+  // torrent's native script before the actual (Latin-script) release title,
+  // separated by a run of extra whitespace — e.g. "Дорога, дорога домой
+  // The Way Way Back (2013) BDRip...". Strip that leading segment when it
+  // contains no Latin letters at all, so category/rename inference runs on
+  // the real title instead.
+  function stripForeignPrefix(nameRaw){
+    const name = String(nameRaw || "");
+    const m = /^(.*?)\s{2,}(\S.*)$/.exec(name);
+    if (!m) return name;
+    const lead = m[1];
+    if (/[a-z]/i.test(lead)) return name;
+    if (!/[^\x00-\x7f]/.test(lead)) return name;
+    return m[2];
+  }
+
   // dn parser, shared title analysis, title cleaning, and category inference
   function getDisplayName(magnet){
     const q = String(magnet || "").split("?")[1] || "";
     const params = new URLSearchParams(q);
     const dn = params.get("dn");
-	return (dn ? decodeURIComponent(dn) : String(magnet || ""))
+	const name = (dn ? decodeURIComponent(dn) : String(magnet || ""))
 	  .replace(/[+]/g, " ")
 	  .replace(/&amp;/gi, "&")
 	  .trim();
+	return stripForeignPrefix(name);
   }
 
   // Shared title analysis
@@ -747,7 +764,7 @@ function formatSeeds(num_seeds, num_complete){
             const avNum = Number(avRaw);
             const availability = (avRaw == null || !Number.isFinite(avNum)) ? null : avNum;
 			
-			const rawTitle = String(safe(r,["title"],"") || "");
+			const rawTitle = stripForeignPrefix(String(safe(r,["title"],"") || ""));
 			const media = analyzeMedia(rawTitle);
 			
             return {
@@ -784,7 +801,13 @@ function formatSeeds(num_seeds, num_complete){
             availability: null
           };
         });
-        items.sort((a,b)=>a.title.localeCompare(b.title,undefined,{numeric:true,sensitivity:"base"}));
+        const _COMPLETE_STATES = new Set(["uploading","stalledup","forcedup"]);
+        items.sort((a,b)=>{
+          const aDone = _COMPLETE_STATES.has(String(a.state||"").toLowerCase()) ? 0 : 1;
+          const bDone = _COMPLETE_STATES.has(String(b.state||"").toLowerCase()) ? 0 : 1;
+          if (aDone !== bDone) return aDone - bDone;
+          return a.title.localeCompare(b.title,undefined,{numeric:true,sensitivity:"base"});
+        });
         this._render(items);
       }catch{
         this._render([]);
