@@ -205,8 +205,8 @@
 	const kept = normalized.slice(0, cut);
 
 	let trimmed = kept
-	  .replace(/[ ._-]+$/g, "")
-	  .replace(/[()]/g, "");
+	  .replace(/[ ._\-\[\]{}()]+$/g, "")
+	  .replace(/[()\[\]{}]/g, "");
 
 	if (
 	  info.tokenType === "se" ||
@@ -247,7 +247,7 @@
 	const base = name
 	  .slice(0, cut)
 	  .replace(/[._]+/g, " ")
-	  .replace(/[ \._\-]+$/g, "")
+	  .replace(/[ ._\-\[\]{}()]+$/g, "")
 	  .replace(/\(?\b(?:19|20)\d{2}\b\)?\s*$/,"")
 	  .trim();
 
