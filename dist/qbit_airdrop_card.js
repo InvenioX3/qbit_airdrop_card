@@ -70,8 +70,14 @@
 		tokenType = "se";
 	}
 	else if (complete || seasonIsRange || multipleSeasonTokens) {
-		token = complete || season || s;
 		tokenType = "complete";
+		// Redundant season notation (e.g. "S02 Season 2 COMPLETE") can put
+		// multiple season-related markers in the title — cut at whichever
+		// occurs first so category inference clears all of them, not just
+		// the one that triggered "complete" classification.
+		token = [complete, season, s]
+			.filter(Boolean)
+			.reduce((earliest, c) => (!earliest || c.index < earliest.index) ? c : earliest, null);
 	}
 	else if (s && season) {
 		// Redundant season notation in the same title (e.g. "Season 01 S01")
