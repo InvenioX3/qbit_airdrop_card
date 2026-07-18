@@ -183,16 +183,18 @@
 	  .replace(/&apos;/gi, "'");
 
 	if (info.tokenType === "year") {
-	  const m = /\(?\b(?:19|20)\d{2}\b\)?/.exec(normalized);
+	  const m = /\(?\b((?:19|20)\d{2})\b\)?/.exec(normalized);
 
 	  if (m) {
-		return normalized
-		  .slice(0, m.index + m[0].length)
+		const yearDigits = m[1];
+		const prefix = normalized
+		  .slice(0, m.index)
 		  .replace(/[()]/g, "")
 		  .replace(/[<>:"/\\|?*]/g, "")
 		  .replace(/\./g, " ")
 		  .replace(/\s{2,}/g, " ")
 		  .trim();
+		return prefix ? `${prefix} (${yearDigits})` : `(${yearDigits})`;
 	  }
 	}
 
