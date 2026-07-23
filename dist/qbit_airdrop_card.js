@@ -338,6 +338,8 @@ function formatSeeds(num_seeds, num_complete){
       c.innerHTML=`
         <div class="wrap">
           <div class="row row-stats">
+            <span class="stat-label">External IP:</span>
+            <span id="stat-ip" class="stat-value">—</span>
             <span class="stat-label">Free space:</span>
             <span id="stat-free" class="stat-value">—</span>
             <span class="stat-label">Global d/l:</span>
@@ -677,6 +679,7 @@ function formatSeeds(num_seeds, num_complete){
         refresh:   c.querySelector("#refresh"),
         status:    c.querySelector("#status"),
         list:      c.querySelector("#list"),
+        statIp:    c.querySelector("#stat-ip"),
         statFree:  c.querySelector("#stat-free"),
         statDl:    c.querySelector("#stat-dl"),
       };
@@ -782,14 +785,17 @@ function formatSeeds(num_seeds, num_complete){
     }
 
     async _loadStats(){
-      if(!this._hass||!this._els?.statFree||!this._els?.statDl) return;
+      if(!this._hass||!this._els?.statFree||!this._els?.statDl||!this._els?.statIp) return;
       try{
         const data = await this._hass.callApi("GET","qbit_airdrop/stats");
         if(!data || !data.ok){
+          this._els.statIp.textContent = "—";
           this._els.statFree.textContent = "—";
           this._els.statDl.textContent = "—";
           return;
         }
+
+        this._els.statIp.textContent = data.external_ip ? String(data.external_ip) : "—";
 
         const freeBytes = Number(data.free_space);
         this._els.statFree.textContent = Number.isFinite(freeBytes)
@@ -801,6 +807,7 @@ function formatSeeds(num_seeds, num_complete){
           ? `${(dlBps / (1024 * 1024)).toFixed(2)} MB/s`
           : "—";
       }catch{
+        this._els.statIp.textContent = "—";
         this._els.statFree.textContent = "—";
         this._els.statDl.textContent = "—";
       }
