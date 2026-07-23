@@ -388,20 +388,20 @@ function formatSeeds(num_seeds, num_complete){
             display:flex;
             align-items:center;
             justify-content:center;
-            gap:6px;
-            font-size:calc(1em - 1pt);
+            gap:4px;
+            font-size:calc(1em - 2pt);
             color:var(--secondary-text-color);
           }
           .row-stats .stat-value{
             color:var(--primary-text-color);
-            margin-right:14px;
+            margin-right:4px;
             display:inline-block;
             text-align:left;
             font-variant-numeric:tabular-nums;
           }
-          #stat-ip{ width:9em; }
-          #stat-free{ width:5.5em; }
-          #stat-dl{ width:6.5em; }
+          #stat-ip{ width:145px; }
+          #stat-free{ width:110; }
+          #stat-dl{ width:120px; }
 
           input{
             width:100%;
