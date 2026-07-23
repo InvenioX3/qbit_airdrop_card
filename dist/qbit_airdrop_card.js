@@ -395,7 +395,13 @@ function formatSeeds(num_seeds, num_complete){
           .row-stats .stat-value{
             color:var(--primary-text-color);
             margin-right:14px;
+            display:inline-block;
+            text-align:left;
+            font-variant-numeric:tabular-nums;
           }
+          #stat-ip{ width:9em; }
+          #stat-free{ width:5.5em; }
+          #stat-dl{ width:6.5em; }
 
           input{
             width:100%;
