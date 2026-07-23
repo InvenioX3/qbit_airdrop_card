@@ -338,11 +338,11 @@ function formatSeeds(num_seeds, num_complete){
       c.innerHTML=`
         <div class="wrap">
           <div class="row row-stats">
-            <span class="stat-label">External IP:</span>
+            <span class="stat-label">IP:</span>
             <span id="stat-ip" class="stat-value">—</span>
-            <span class="stat-label">Free space:</span>
+            <span class="stat-label">F/S:</span>
             <span id="stat-free" class="stat-value">—</span>
-            <span class="stat-label">Global d/l:</span>
+            <span class="stat-label">D/l:</span>
             <span id="stat-dl" class="stat-value">—</span>
           </div>
 
