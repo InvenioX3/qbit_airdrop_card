@@ -387,10 +387,10 @@ function formatSeeds(num_seeds, num_complete){
           .row-stats{
             display:flex;
             flex-wrap:nowrap;
-            align-items:center;
+            align-items:right;
             justify-content:center;
             gap:35px;
-			padding:0px 0px 0px 25px;
+			padding:0px 25px 0px 25px;
             font-size:calc(1em - 2pt);
             color:var(--secondary-text-color);
             overflow-x:auto;
