@@ -389,7 +389,7 @@ function formatSeeds(num_seeds, num_complete){
             flex-wrap:nowrap;
             align-items:center;
             justify-content:center;
-            gap:25px;
+            gap:35px;
 			padding:0px 0px 0px 25px;
             font-size:calc(1em - 2pt);
             color:var(--secondary-text-color);
@@ -408,9 +408,9 @@ function formatSeeds(num_seeds, num_complete){
             white-space:nowrap;
             flex-shrink:0;
           }
-          #stat-ip{ width:80px; }
-          #stat-free{ width:100px; }
-          #stat-dl{ width:70px; }
+          #stat-ip{ width:60px; }
+          #stat-free{ width:50px; }
+          #stat-dl{ width:45px; }
 
           input{
             width:100%;
