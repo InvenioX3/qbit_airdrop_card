@@ -386,11 +386,17 @@ function formatSeeds(num_seeds, num_complete){
           .row-input{position:relative}
           .row-stats{
             display:flex;
+            flex-wrap:nowrap;
             align-items:center;
             justify-content:center;
             gap:4px;
             font-size:calc(1em - 2pt);
             color:var(--secondary-text-color);
+            overflow-x:auto;
+          }
+          .row-stats .stat-label{
+            white-space:nowrap;
+            flex-shrink:0;
           }
           .row-stats .stat-value{
             color:var(--primary-text-color);
@@ -398,9 +404,11 @@ function formatSeeds(num_seeds, num_complete){
             display:inline-block;
             text-align:left;
             font-variant-numeric:tabular-nums;
+            white-space:nowrap;
+            flex-shrink:0;
           }
           #stat-ip{ width:145px; }
-          #stat-free{ width:110; }
+          #stat-free{ width:110px; }
           #stat-dl{ width:120px; }
 
           input{
