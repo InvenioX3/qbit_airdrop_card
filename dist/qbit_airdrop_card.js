@@ -340,9 +340,9 @@ function formatSeeds(num_seeds, num_complete){
           <div class="row row-stats">
             <span class="stat-label">IP:</span>
             <span id="stat-ip" class="stat-value">—</span>
-            <span class="stat-label">F/S:</span>
+            <span class="stat-label">Free space:</span>
             <span id="stat-free" class="stat-value">—</span>
-            <span class="stat-label">D/l:</span>
+            <span class="stat-label">D/L:</span>
             <span id="stat-dl" class="stat-value">—</span>
           </div>
 
@@ -407,9 +407,9 @@ function formatSeeds(num_seeds, num_complete){
             white-space:nowrap;
             flex-shrink:0;
           }
-          #stat-ip{ width:145px; }
-          #stat-free{ width:110px; }
-          #stat-dl{ width:120px; }
+          #stat-ip{ width:120px; }
+          #stat-free{ width:130px; }
+          #stat-dl{ width:100px; }
 
           input{
             width:100%;
