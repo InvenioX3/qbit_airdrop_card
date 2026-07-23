@@ -396,7 +396,7 @@ function formatSeeds(num_seeds, num_complete){
           .row-stats .stat-label{
             white-space:nowrap;
             flex-shrink:0;
-			padding:0px 0px 0px 10px;
+			padding:0px 0px 0px 25px;
 			align-items:right;
           }
           .row-stats .stat-value{
@@ -407,7 +407,7 @@ function formatSeeds(num_seeds, num_complete){
             white-space:nowrap;
             flex-shrink:0;
           }
-          #stat-ip{ width:80px; }
+          #stat-ip{ width:75px; }
           #stat-free{ width:50px; }
           #stat-dl{ width:60px; }
 
