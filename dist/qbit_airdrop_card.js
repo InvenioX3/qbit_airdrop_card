@@ -388,15 +388,15 @@ function formatSeeds(num_seeds, num_complete){
             display:flex;
             flex-wrap:nowrap;
             gap:4px;
-			padding:0px 25px 0px 20px;
-            font-size:calc(1em - 2pt);
+			padding:0px 6px 0px 6px;
+            font-size:calc(1em - 3pt);
             color:var(--secondary-text-color);
             overflow-x:auto;
           }
           .row-stats .stat-label{
             white-space:nowrap;
             flex-shrink:0;
-			padding:0px 0px 0px 40px;
+			padding:0px 0px 0px 10px;
 			align-items:right;
           }
           .row-stats .stat-value{
@@ -407,7 +407,7 @@ function formatSeeds(num_seeds, num_complete){
             white-space:nowrap;
             flex-shrink:0;
           }
-          #stat-ip{ width:75px; }
+          #stat-ip{ width:70px; }
           #stat-free{ width:50px; }
           #stat-dl{ width:60px; }
 
