@@ -388,7 +388,7 @@ function formatSeeds(num_seeds, num_complete){
             display:flex;
             flex-wrap:nowrap;
             gap:4px;
-			padding:0px 25px 0px 25px;
+			padding:0px 25px 0px 20px;
             font-size:calc(1em - 2pt);
             color:var(--secondary-text-color);
             overflow-x:auto;
@@ -396,7 +396,7 @@ function formatSeeds(num_seeds, num_complete){
           .row-stats .stat-label{
             white-space:nowrap;
             flex-shrink:0;
-			padding:0px 0px 0px 35px;
+			padding:0px 0px 0px 40px;
 			align-items:right;
           }
           .row-stats .stat-value{
@@ -407,8 +407,8 @@ function formatSeeds(num_seeds, num_complete){
             white-space:nowrap;
             flex-shrink:0;
           }
-          #stat-ip{ width:70px; }
-          #stat-free{ width:60px; }
+          #stat-ip{ width:75px; }
+          #stat-free{ width:50px; }
           #stat-dl{ width:60px; }
 
           input{
