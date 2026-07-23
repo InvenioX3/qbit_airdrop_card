@@ -401,7 +401,7 @@ function formatSeeds(num_seeds, num_complete){
           }
           .row-stats .stat-value{
             color:var(--primary-text-color);
-            margin-right:4px;
+            margin-right:8px;
             text-align:end;
             font-variant-numeric:tabular-nums;
             white-space:nowrap;
