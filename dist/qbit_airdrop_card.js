@@ -401,13 +401,13 @@ function formatSeeds(num_seeds, num_complete){
           }
           .row-stats .stat-value{
             color:var(--primary-text-color);
-            margin-right:8px;
+            margin-right:4px;
             text-align:end;
             font-variant-numeric:tabular-nums;
             white-space:nowrap;
             flex-shrink:0;
           }
-          #stat-ip{ width:70px; }
+          #stat-ip{ width:80px; }
           #stat-free{ width:50px; }
           #stat-dl{ width:60px; }
 
