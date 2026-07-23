@@ -407,9 +407,9 @@ function formatSeeds(num_seeds, num_complete){
             white-space:nowrap;
             flex-shrink:0;
           }
-          #stat-ip{ width:60px; }
-          #stat-free{ width:50px; }
-          #stat-dl{ width:45px; }
+          #stat-ip{ width:70px; }
+          #stat-free{ width:60px; }
+          #stat-dl{ width:60px; }
 
           input{
             width:100%;
