@@ -387,9 +387,7 @@ function formatSeeds(num_seeds, num_complete){
           .row-stats{
             display:flex;
             flex-wrap:nowrap;
-            align-items:right;
-            justify-content:center;
-            gap:35px;
+            gap:15px;
 			padding:0px 25px 0px 25px;
             font-size:calc(1em - 2pt);
             color:var(--secondary-text-color);
@@ -398,6 +396,7 @@ function formatSeeds(num_seeds, num_complete){
           .row-stats .stat-label{
             white-space:nowrap;
             flex-shrink:0;
+			align-items:right;
           }
           .row-stats .stat-value{
             color:var(--primary-text-color);
