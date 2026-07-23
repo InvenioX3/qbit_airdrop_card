@@ -396,7 +396,7 @@ function formatSeeds(num_seeds, num_complete){
           .row-stats .stat-label{
             white-space:nowrap;
             flex-shrink:0;
-			padding:0px 0px 0px 20px;
+			padding:0px 0px 0px 12px;
 			align-items:right;
           }
           .row-stats .stat-value{
