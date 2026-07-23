@@ -390,6 +390,7 @@ function formatSeeds(num_seeds, num_complete){
             align-items:center;
             justify-content:center;
             gap:4px;
+			padding:0px 0px 0px 15px;
             font-size:calc(1em - 2pt);
             color:var(--secondary-text-color);
             overflow-x:auto;
@@ -402,14 +403,14 @@ function formatSeeds(num_seeds, num_complete){
             color:var(--primary-text-color);
             margin-right:4px;
             display:inline-block;
-            text-align:left;
+            text-align:end;
             font-variant-numeric:tabular-nums;
             white-space:nowrap;
             flex-shrink:0;
           }
-          #stat-ip{ width:120px; }
-          #stat-free{ width:130px; }
-          #stat-dl{ width:100px; }
+          #stat-ip{ width:90px; }
+          #stat-free{ width:150px; }
+          #stat-dl{ width:120px; }
 
           input{
             width:100%;
