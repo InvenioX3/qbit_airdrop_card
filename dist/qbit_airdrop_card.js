@@ -396,13 +396,12 @@ function formatSeeds(num_seeds, num_complete){
           .row-stats .stat-label{
             white-space:nowrap;
             flex-shrink:0;
-			padding:0px 0px 0px 15px;
+			padding:0px 0px 0px 35px;
 			align-items:right;
           }
           .row-stats .stat-value{
             color:var(--primary-text-color);
             margin-right:4px;
-            display:inline-block;
             text-align:end;
             font-variant-numeric:tabular-nums;
             white-space:nowrap;
