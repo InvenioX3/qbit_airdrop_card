@@ -329,7 +329,7 @@ function formatSeeds(num_seeds, num_complete){
       this._cfg=Object.assign({refresh_label:"Refresh"},cfg);
       if(!this._built) this._build();
     }
-    set hass(h){this._hass=h; this._loadActive();}
+    set hass(h){this._hass=h; this._loadActive(); this._loadStats();}
     getCardSize(){return 6;}
 
     _build(){
@@ -337,6 +337,13 @@ function formatSeeds(num_seeds, num_complete){
       const c=document.createElement("ha-card");
       c.innerHTML=`
         <div class="wrap">
+          <div class="row row-stats">
+            <span class="stat-label">Free space:</span>
+            <span id="stat-free" class="stat-value">—</span>
+            <span class="stat-label">Global d/l:</span>
+            <span id="stat-dl" class="stat-value">—</span>
+          </div>
+
           <div class="row row-input">
             <input id="mag" placeholder="" />
             <div
@@ -375,6 +382,18 @@ function formatSeeds(num_seeds, num_complete){
           .wrap{padding:10px;display:grid;grid-row-gap:12px}
           .row{display:block}
           .row-input{position:relative}
+          .row-stats{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:6px;
+            font-size:calc(1em - 1pt);
+            color:var(--secondary-text-color);
+          }
+          .row-stats .stat-value{
+            color:var(--primary-text-color);
+            margin-right:14px;
+          }
 
           input{
             width:100%;
@@ -654,10 +673,12 @@ function formatSeeds(num_seeds, num_complete){
       this.appendChild(c);
 
       this._els={
-        mag:     c.querySelector("#mag"),
-        refresh: c.querySelector("#refresh"),
-        status:  c.querySelector("#status"),
-        list:    c.querySelector("#list"),
+        mag:       c.querySelector("#mag"),
+        refresh:   c.querySelector("#refresh"),
+        status:    c.querySelector("#status"),
+        list:      c.querySelector("#list"),
+        statFree:  c.querySelector("#stat-free"),
+        statDl:    c.querySelector("#stat-dl"),
       };
       this._els.confirmOverlay = c.querySelector("#qa-confirm-overlay");
       this._els.confirmText    = c.querySelector(".qa-confirm-text");
@@ -758,6 +779,31 @@ function formatSeeds(num_seeds, num_complete){
         : "Delete torrent and files?";
 
       ov.hidden = false;
+    }
+
+    async _loadStats(){
+      if(!this._hass||!this._els?.statFree||!this._els?.statDl) return;
+      try{
+        const data = await this._hass.callApi("GET","qbit_airdrop/stats");
+        if(!data || !data.ok){
+          this._els.statFree.textContent = "—";
+          this._els.statDl.textContent = "—";
+          return;
+        }
+
+        const freeBytes = Number(data.free_space);
+        this._els.statFree.textContent = Number.isFinite(freeBytes)
+          ? formatSize(freeBytes)
+          : "—";
+
+        const dlBps = Number(data.dl_speed);
+        this._els.statDl.textContent = Number.isFinite(dlBps)
+          ? `${(dlBps / (1024 * 1024)).toFixed(2)} MB/s`
+          : "—";
+      }catch{
+        this._els.statFree.textContent = "—";
+        this._els.statDl.textContent = "—";
+      }
     }
 
     async _loadActive(){
