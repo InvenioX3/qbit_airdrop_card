@@ -356,10 +356,8 @@ function formatSeeds(num_seeds, num_complete){
                 <span class="stat-label">D/L:</span>
                 <span id="stat-dl" class="stat-value">—</span>
               </div>
-            </div>
 
-            <div class="row row-input">
-              <div class="row-input-inner">
+              <div class="row row-input">
                 <input id="mag" placeholder="" />
                 <div
                   id="refresh"
@@ -373,6 +371,8 @@ function formatSeeds(num_seeds, num_complete){
                 </div>
               </div>
             </div>
+
+            <div class="sticky-spacer"></div>
           </div>
 
           <div class="bar">
@@ -398,30 +398,25 @@ function formatSeeds(num_seeds, num_complete){
                 <style>
           .wrap{padding:10px;display:grid;grid-row-gap:4px}
           .row{display:block}
-          .row-input{
-            border-radius:30px;
-            overflow:hidden;
-            padding-bottom:35px;
-            background-color:transparent;
-            background-image:linear-gradient(to bottom, var(--card-background-color) 0%, transparent 100%);
-            background-size:100% 35px;
-            background-position:bottom;
-            background-repeat:no-repeat;
-          }
-          .row-input-inner{
-            position:relative;
-            background:var(--card-background-color);
-            border-radius:30px;
-          }
+          .row-input{position:relative;border-radius:30px;}
           .sticky-block{
             position:sticky;
             top:0;
             z-index:10;
             display:grid;
+            padding-top:2px;
           }
           .sticky-content{
             display:grid;
             background:var(--card-background-color);
+          }
+          .sticky-spacer{
+			background-color: transparent !important;
+			background-image: linear-gradient(to bottom, var(--card-background-color) 0%, transparent 100%) !important;
+			height: 15px !important;
+			width: 100% !important;
+            padding:0;
+            margin:0 auto;
           }
           .row-sticky-entity{
             display:flex;
@@ -445,7 +440,7 @@ function formatSeeds(num_seeds, num_complete){
           .entity-gauge{
             display:flex;
             flex:1;
-            height:10px;
+            height:8px;
 			background:var(--card-background-color);
             border-radius:4px;
             overflow:hidden;
@@ -463,7 +458,7 @@ function formatSeeds(num_seeds, num_complete){
             display:flex;
             flex-wrap:nowrap;
             gap:4px;
-			padding:0px 6px 4px 6px;
+			padding:0px 6px 0px 6px;
             font-size:calc(1em - 3pt);
             color:var(--secondary-text-color);
             overflow-x:auto;
