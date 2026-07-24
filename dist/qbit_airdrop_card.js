@@ -407,10 +407,12 @@ function formatSeeds(num_seeds, num_complete){
             padding-top:2px;
           }
           .sticky-spacer{
-            height:20px;
-            max-width:360px;
-            width:100%;
-			background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%) !important;
+			background-color: transparent !important;
+			background-image: linear-gradient(to bottom, #808080 0%, transparent 100%) !important;
+			height: 15px !important;
+			max-width: 355px !important;
+			width: 100% !important;
+            max-width:355px;
             padding:0;
             margin:0 auto;
           }
