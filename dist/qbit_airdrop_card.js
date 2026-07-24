@@ -408,6 +408,11 @@ function formatSeeds(num_seeds, num_complete){
           }
           .sticky-spacer{
             height:10px;
+            max-width:355px;
+            width:100%;
+            background:linear-gradient(to bottom, #808080, transparent);
+            padding:0;
+            margin:0 auto;
           }
           .row-sticky-entity{
             display:flex;
