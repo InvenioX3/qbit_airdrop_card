@@ -434,7 +434,7 @@ function formatSeeds(num_seeds, num_complete){
           .entity-value{
             flex:0 0 auto;
             font-variant-numeric:tabular-nums;
-			font-size:calc(1em - 2pt);
+			font-size:calc(1em - 3pt);
             color:var(--primary-text-color);
             white-space:nowrap;
           }
