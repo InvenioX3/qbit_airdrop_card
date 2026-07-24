@@ -372,11 +372,7 @@ function formatSeeds(num_seeds, num_complete){
               </div>
             </div>
 
-            <div class="sticky-spacer"></div>
-          </div>
-
-          <div class="bar">
-            <div class="bar-cell center">
+            <div class="sticky-spacer">
               <div id="status" class="status" role="status" aria-live="polite"></div>
             </div>
           </div>
@@ -412,11 +408,14 @@ function formatSeeds(num_seeds, num_complete){
           }
           .sticky-spacer{
 			background-color: transparent !important;
-			background-image: linear-gradient(to bottom, var(--card-background-color) 50%, transparent 100%) !important;
-			height: 20px !important;
+			background-image: linear-gradient(to bottom, var(--card-background-color) 60%, transparent 100%) !important;
+			height: 28px !important;
 			width: 100% !important;
             padding:0;
             margin:0 auto;
+            display:flex;
+            align-items:center;
+            justify-content:center;
           }
           .row-sticky-entity{
             display:flex;
@@ -529,8 +528,6 @@ function formatSeeds(num_seeds, num_complete){
             filter:brightness(1.1);
           }
 
-          .bar{display:grid;grid-template-columns:1fr;align-items:center}
-          .bar-cell{display:flex;align-items:center;justify-content:center}
           .status{height:1.6em;line-height:1.6em;text-align:center;color:var(--secondary-text-color);overflow:hidden;white-space:nowrap;text-overflow:clip}
 
           .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
