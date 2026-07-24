@@ -369,6 +369,8 @@ function formatSeeds(num_seeds, num_complete){
                 ⟳
               </div>
             </div>
+
+            <div class="sticky-spacer"></div>
           </div>
 
           <div class="bar">
@@ -403,7 +405,9 @@ function formatSeeds(num_seeds, num_complete){
             grid-row-gap:12px;
             background:var(--card-background-color);
             padding-top:2px;
-            margin-bottom:10px;
+          }
+          .sticky-spacer{
+            height:10px;
           }
           .row-sticky-entity{
             display:flex;
