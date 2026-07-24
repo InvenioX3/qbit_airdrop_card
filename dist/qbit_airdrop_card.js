@@ -435,6 +435,7 @@ function formatSeeds(num_seeds, num_complete){
             flex:0 0 auto;
             font-variant-numeric:tabular-nums;
 			font-size:calc(1em - 3pt);
+			padding-bottom:1px;
             color:var(--primary-text-color);
             white-space:nowrap;
           }
@@ -442,6 +443,7 @@ function formatSeeds(num_seeds, num_complete){
             display:flex;
             flex:1;
             height:8px;
+			padding-bottom:2px;
 			background:var(--card-background-color);
             border-radius:4px;
             overflow:hidden;
