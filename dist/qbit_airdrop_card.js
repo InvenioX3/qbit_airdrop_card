@@ -400,6 +400,7 @@ function formatSeeds(num_seeds, num_complete){
           .row{display:block}
           .row-input{
             border-radius:30px;
+            overflow:hidden;
             padding-bottom:35px;
             background-color:transparent;
             background-image:linear-gradient(to bottom, var(--card-background-color) 0%, transparent 100%);
