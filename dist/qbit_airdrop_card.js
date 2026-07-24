@@ -414,8 +414,9 @@ function formatSeeds(num_seeds, num_complete){
             padding:0;
             margin:0 auto;
             display:flex;
-            align-items:center;
+            align-items:flex-start;
             justify-content:center;
+            padding-top:6px;
           }
           .row-sticky-entity{
             display:flex;
