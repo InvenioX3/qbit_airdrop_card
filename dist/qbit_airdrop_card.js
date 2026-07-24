@@ -402,13 +402,12 @@ function formatSeeds(num_seeds, num_complete){
             top:0;
             z-index:10;
             display:grid;
-            grid-row-gap:12px;
-            background:var(--card-background-color);
+            grid-row-gap:8px;
             padding-top:2px;
           }
           .sticky-spacer{
 			background-color: transparent !important;
-			background-image: linear-gradient(to bottom, #000000 0%, transparent 100%) !important;
+			background-image: linear-gradient(to bottom, #1c1c1c 0%, transparent 100%) !important;
 			height: 15px !important;
 			width: 100% !important;
             padding:0;
@@ -437,6 +436,7 @@ function formatSeeds(num_seeds, num_complete){
             display:flex;
             flex:1;
             height:8px;
+			background:var(--card-background-color);
             border-radius:4px;
             overflow:hidden;
           }
