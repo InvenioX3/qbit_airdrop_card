@@ -408,7 +408,7 @@ function formatSeeds(num_seeds, num_complete){
             padding-top:2px;
           }
           .sticky-spacer{
-			height: 15px !important;
+			height: 50px !important;
 			width: 100% !important;
             max-width:355px;
             padding:0;
