@@ -403,6 +403,7 @@ function formatSeeds(num_seeds, num_complete){
             grid-row-gap:12px;
             background:var(--card-background-color);
             padding-top:2px;
+            margin-bottom:10px;
           }
           .row-sticky-entity{
             display:flex;
