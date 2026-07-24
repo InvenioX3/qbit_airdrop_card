@@ -412,8 +412,8 @@ function formatSeeds(num_seeds, num_complete){
           }
           .sticky-spacer{
 			background-color: transparent !important;
-			background-image: linear-gradient(to bottom, var(--card-background-color) 0%, transparent 80%) !important;
-			height: 50px !important;
+			background-image: linear-gradient(to bottom, var(--card-background-color) 0%, transparent 50%) !important;
+			height: 30px !important;
 			width: 100% !important;
             padding:0;
             margin:0 auto;
@@ -427,13 +427,14 @@ function formatSeeds(num_seeds, num_complete){
           .row-sticky-entity[hidden]{display:none}
           .entity-name{
             flex:0 0 auto;
-            font-size:calc(1em - 1pt);
+            font-size:calc(1em - 2pt);
             color:var(--secondary-text-color);
             white-space:nowrap;
           }
           .entity-value{
             flex:0 0 auto;
             font-variant-numeric:tabular-nums;
+			font-size:calc(1em - 2pt);
             color:var(--primary-text-color);
             white-space:nowrap;
           }
