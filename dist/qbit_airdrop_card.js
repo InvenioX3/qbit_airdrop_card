@@ -403,6 +403,9 @@ function formatSeeds(num_seeds, num_complete){
             padding-bottom:35px;
             background-color:transparent;
             background-image:linear-gradient(to bottom, var(--card-background-color) 0%, transparent 100%);
+            background-size:100% 35px;
+            background-position:bottom;
+            background-repeat:no-repeat;
           }
           .row-input-inner{position:relative;}
           .sticky-block{
