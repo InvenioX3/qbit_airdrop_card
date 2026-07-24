@@ -337,35 +337,37 @@ function formatSeeds(num_seeds, num_complete){
       const c=document.createElement("ha-card");
       c.innerHTML=`
         <div class="wrap">
-          <div id="sticky-entity-row" class="row row-sticky-entity" hidden>
-            <span id="entity-name" class="entity-name"></span>
-            <span id="entity-value" class="entity-value"></span>
-            <div class="entity-gauge">
-              <div id="entity-gauge-fill"></div>
-              <div class="entity-gauge-background"></div>
+          <div class="sticky-block">
+            <div id="sticky-entity-row" class="row row-sticky-entity" hidden>
+              <span id="entity-name" class="entity-name"></span>
+              <span id="entity-value" class="entity-value"></span>
+              <div class="entity-gauge">
+                <div id="entity-gauge-fill"></div>
+                <div class="entity-gauge-background"></div>
+              </div>
             </div>
-          </div>
 
-          <div class="row row-stats">
-            <span class="stat-label">IP:</span>
-            <span id="stat-ip" class="stat-value">—</span>
-            <span class="stat-label">Free space:</span>
-            <span id="stat-free" class="stat-value">—</span>
-            <span class="stat-label">D/L:</span>
-            <span id="stat-dl" class="stat-value">—</span>
-          </div>
+            <div class="row row-stats">
+              <span class="stat-label">IP:</span>
+              <span id="stat-ip" class="stat-value">—</span>
+              <span class="stat-label">Free space:</span>
+              <span id="stat-free" class="stat-value">—</span>
+              <span class="stat-label">D/L:</span>
+              <span id="stat-dl" class="stat-value">—</span>
+            </div>
 
-          <div class="row row-input">
-            <input id="mag" placeholder="" />
-            <div
-              id="refresh"
-              class="refresh-btn"
-              role="button"
-              tabindex="0"
-              aria-label="${this._cfg.refresh_label || "Refresh"}"
-              title="${this._cfg.refresh_label || "Refresh"}"
-            >
-              ⟳
+            <div class="row row-input">
+              <input id="mag" placeholder="" />
+              <div
+                id="refresh"
+                class="refresh-btn"
+                role="button"
+                tabindex="0"
+                aria-label="${this._cfg.refresh_label || "Refresh"}"
+                title="${this._cfg.refresh_label || "Refresh"}"
+              >
+                ⟳
+              </div>
             </div>
           </div>
 
@@ -393,15 +395,20 @@ function formatSeeds(num_seeds, num_complete){
           .wrap{padding:10px;display:grid;grid-row-gap:12px}
           .row{display:block}
           .row-input{position:relative}
-          .row-sticky-entity{
+          .sticky-block{
             position:sticky;
             top:0;
             z-index:10;
+            display:grid;
+            grid-row-gap:12px;
+            background:var(--card-background-color);
+            padding-top:2px;
+          }
+          .row-sticky-entity{
             display:flex;
             align-items:center;
             gap:8px;
             padding:4px 6px;
-            background:var(--card-background-color);
           }
           .row-sticky-entity[hidden]{display:none}
           .entity-name{
