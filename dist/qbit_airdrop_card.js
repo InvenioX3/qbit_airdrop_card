@@ -396,7 +396,7 @@ function formatSeeds(num_seeds, num_complete){
                 <style>
           .wrap{padding:10px;display:grid;grid-row-gap:4px}
           .row{display:block}
-          .row-input{position:relative}
+          .row-input{position:relative;background:var(--card-background-color);border-radius:30px;}
           .sticky-block{
             position:sticky;
             top:0;
@@ -407,7 +407,7 @@ function formatSeeds(num_seeds, num_complete){
           }
           .sticky-spacer{
 			background-color: transparent !important;
-			background-image: linear-gradient(to bottom, #1c1c1c 0%, transparent 100%) !important;
+			background-image: linear-gradient(to bottom, var(--card-background-color) 0%, transparent 100%) !important;
 			height: 15px !important;
 			width: 100% !important;
             padding:0;
@@ -418,6 +418,7 @@ function formatSeeds(num_seeds, num_complete){
             align-items:center;
             gap:8px;
             padding:4px 6px;
+            background:var(--card-background-color);
           }
           .row-sticky-entity[hidden]{display:none}
           .entity-name{
@@ -457,6 +458,7 @@ function formatSeeds(num_seeds, num_complete){
             font-size:calc(1em - 3pt);
             color:var(--secondary-text-color);
             overflow-x:auto;
+            background:var(--card-background-color);
           }
           .row-stats .stat-label{
             white-space:nowrap;
