@@ -338,35 +338,37 @@ function formatSeeds(num_seeds, num_complete){
       c.innerHTML=`
         <div class="wrap">
           <div class="sticky-block">
-            <div id="sticky-entity-row" class="row row-sticky-entity" hidden>
-              <span id="entity-name" class="entity-name"></span>
-              <span id="entity-value" class="entity-value"></span>
-              <div class="entity-gauge">
-                <div id="entity-gauge-fill"></div>
-                <div class="entity-gauge-background"></div>
+            <div class="sticky-content">
+              <div id="sticky-entity-row" class="row row-sticky-entity" hidden>
+                <span id="entity-name" class="entity-name"></span>
+                <span id="entity-value" class="entity-value"></span>
+                <div class="entity-gauge">
+                  <div id="entity-gauge-fill"></div>
+                  <div class="entity-gauge-background"></div>
+                </div>
               </div>
-            </div>
 
-            <div class="row row-stats">
-              <span class="stat-label">IP:</span>
-              <span id="stat-ip" class="stat-value">—</span>
-              <span class="stat-label">Free space:</span>
-              <span id="stat-free" class="stat-value">—</span>
-              <span class="stat-label">D/L:</span>
-              <span id="stat-dl" class="stat-value">—</span>
-            </div>
+              <div class="row row-stats">
+                <span class="stat-label">IP:</span>
+                <span id="stat-ip" class="stat-value">—</span>
+                <span class="stat-label">Free space:</span>
+                <span id="stat-free" class="stat-value">—</span>
+                <span class="stat-label">D/L:</span>
+                <span id="stat-dl" class="stat-value">—</span>
+              </div>
 
-            <div class="row row-input">
-              <input id="mag" placeholder="" />
-              <div
-                id="refresh"
-                class="refresh-btn"
-                role="button"
-                tabindex="0"
-                aria-label="${this._cfg.refresh_label || "Refresh"}"
-                title="${this._cfg.refresh_label || "Refresh"}"
-              >
-                ⟳
+              <div class="row row-input">
+                <input id="mag" placeholder="" />
+                <div
+                  id="refresh"
+                  class="refresh-btn"
+                  role="button"
+                  tabindex="0"
+                  aria-label="${this._cfg.refresh_label || "Refresh"}"
+                  title="${this._cfg.refresh_label || "Refresh"}"
+                >
+                  ⟳
+                </div>
               </div>
             </div>
 
@@ -396,14 +398,17 @@ function formatSeeds(num_seeds, num_complete){
                 <style>
           .wrap{padding:10px;display:grid;grid-row-gap:4px}
           .row{display:block}
-          .row-input{position:relative;background:var(--card-background-color);border-radius:30px;}
+          .row-input{position:relative;border-radius:30px;}
           .sticky-block{
             position:sticky;
             top:0;
             z-index:10;
             display:grid;
-            grid-row-gap:8px;
             padding-top:2px;
+          }
+          .sticky-content{
+            display:grid;
+            background:var(--card-background-color);
           }
           .sticky-spacer{
 			background-color: transparent !important;
@@ -418,7 +423,6 @@ function formatSeeds(num_seeds, num_complete){
             align-items:center;
             gap:8px;
             padding:4px 6px;
-            background:var(--card-background-color);
           }
           .row-sticky-entity[hidden]{display:none}
           .entity-name{
@@ -458,7 +462,6 @@ function formatSeeds(num_seeds, num_complete){
             font-size:calc(1em - 3pt);
             color:var(--secondary-text-color);
             overflow-x:auto;
-            background:var(--card-background-color);
           }
           .row-stats .stat-label{
             white-space:nowrap;
