@@ -356,8 +356,10 @@ function formatSeeds(num_seeds, num_complete){
                 <span class="stat-label">D/L:</span>
                 <span id="stat-dl" class="stat-value">—</span>
               </div>
+            </div>
 
-              <div class="row row-input">
+            <div class="row row-input">
+              <div class="row-input-inner">
                 <input id="mag" placeholder="" />
                 <div
                   id="refresh"
@@ -371,8 +373,6 @@ function formatSeeds(num_seeds, num_complete){
                 </div>
               </div>
             </div>
-
-            <div class="sticky-spacer"></div>
           </div>
 
           <div class="bar">
@@ -398,7 +398,13 @@ function formatSeeds(num_seeds, num_complete){
                 <style>
           .wrap{padding:10px;display:grid;grid-row-gap:4px}
           .row{display:block}
-          .row-input{position:relative;border-radius:30px;}
+          .row-input{
+            border-radius:30px;
+            padding-bottom:35px;
+            background-color:transparent;
+            background-image:linear-gradient(to bottom, var(--card-background-color) 0%, transparent 100%);
+          }
+          .row-input-inner{position:relative;}
           .sticky-block{
             position:sticky;
             top:0;
@@ -408,14 +414,6 @@ function formatSeeds(num_seeds, num_complete){
           .sticky-content{
             display:grid;
             background:var(--card-background-color);
-          }
-          .sticky-spacer{
-			background-color: transparent !important;
-			background-image: linear-gradient(to bottom, var(--card-background-color) 0%, transparent 100%) !important;
-			height: 45px !important;
-			width: 100% !important;
-            padding:0;
-            margin:0 auto;
           }
           .row-sticky-entity{
             display:flex;
