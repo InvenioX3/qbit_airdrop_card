@@ -396,7 +396,7 @@ function formatSeeds(num_seeds, num_complete){
                 </div>
 
                 <style>
-          .wrap{padding:10px;display:grid;grid-row-gap:4px}
+          .wrap{padding:10px;display:grid;grid-row-gap:0}
           .row{display:block}
           .row-input{position:relative;border-radius:30px;}
           .sticky-block{
