@@ -408,7 +408,11 @@ function formatSeeds(num_seeds, num_complete){
             background-position:bottom;
             background-repeat:no-repeat;
           }
-          .row-input-inner{position:relative;}
+          .row-input-inner{
+            position:relative;
+            background:var(--card-background-color);
+            border-radius:30px;
+          }
           .sticky-block{
             position:sticky;
             top:0;
