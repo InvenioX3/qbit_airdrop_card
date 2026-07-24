@@ -412,8 +412,8 @@ function formatSeeds(num_seeds, num_complete){
           }
           .sticky-spacer{
 			background-color: transparent !important;
-			background-image: linear-gradient(to bottom, var(--card-background-color) 0%, transparent 50%) !important;
-			height: 30px !important;
+			background-image: linear-gradient(to bottom, var(--card-background-color) 0%, transparent 25%) !important;
+			height: 40px !important;
 			width: 100% !important;
             padding:0;
             margin:0 auto;
