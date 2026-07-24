@@ -329,7 +329,7 @@ function formatSeeds(num_seeds, num_complete){
       this._cfg=Object.assign({refresh_label:"Refresh"},cfg);
       if(!this._built) this._build();
     }
-    set hass(h){this._hass=h; this._loadActive(); this._loadStats();}
+    set hass(h){this._hass=h; this._loadActive(); this._loadStats(); this._updateStickyEntity();}
     getCardSize(){return 6;}
 
     _build(){
@@ -337,6 +337,15 @@ function formatSeeds(num_seeds, num_complete){
       const c=document.createElement("ha-card");
       c.innerHTML=`
         <div class="wrap">
+          <div id="sticky-entity-row" class="row row-sticky-entity" hidden>
+            <span id="entity-name" class="entity-name"></span>
+            <span id="entity-value" class="entity-value"></span>
+            <div class="entity-gauge">
+              <div id="entity-gauge-fill"></div>
+              <div class="entity-gauge-background"></div>
+            </div>
+          </div>
+
           <div class="row row-stats">
             <span class="stat-label">IP:</span>
             <span id="stat-ip" class="stat-value">—</span>
@@ -384,6 +393,45 @@ function formatSeeds(num_seeds, num_complete){
           .wrap{padding:10px;display:grid;grid-row-gap:12px}
           .row{display:block}
           .row-input{position:relative}
+          .row-sticky-entity{
+            position:sticky;
+            top:0;
+            z-index:10;
+            display:flex;
+            align-items:center;
+            gap:8px;
+            padding:4px 6px;
+            background:var(--card-background-color);
+          }
+          .row-sticky-entity[hidden]{display:none}
+          .entity-name{
+            flex:0 0 auto;
+            font-size:calc(1em - 1pt);
+            color:var(--secondary-text-color);
+            white-space:nowrap;
+          }
+          .entity-value{
+            flex:0 0 auto;
+            font-variant-numeric:tabular-nums;
+            color:var(--primary-text-color);
+            white-space:nowrap;
+          }
+          .entity-gauge{
+            display:flex;
+            flex:1;
+            height:8px;
+            border-radius:4px;
+            overflow:hidden;
+          }
+          .entity-gauge > div{
+            height:100%;
+            background-color:var(--feature-color,var(--primary-color));
+            transition:width 180ms ease-in-out;
+          }
+          .entity-gauge-background{
+            flex:1;
+            opacity:0.2;
+          }
           .row-stats{
             display:flex;
             flex-wrap:nowrap;
@@ -696,6 +744,10 @@ function formatSeeds(num_seeds, num_complete){
         statIp:    c.querySelector("#stat-ip"),
         statFree:  c.querySelector("#stat-free"),
         statDl:    c.querySelector("#stat-dl"),
+        stickyRow:   c.querySelector("#sticky-entity-row"),
+        entityName:  c.querySelector("#entity-name"),
+        entityValue: c.querySelector("#entity-value"),
+        entityGaugeFill: c.querySelector("#entity-gauge-fill"),
       };
       this._els.confirmOverlay = c.querySelector("#qa-confirm-overlay");
       this._els.confirmText    = c.querySelector(".qa-confirm-text");
@@ -796,6 +848,35 @@ function formatSeeds(num_seeds, num_complete){
         : "Delete torrent and files?";
 
       ov.hidden = false;
+    }
+
+    _updateStickyEntity(){
+      const els = this._els;
+      if (!els?.stickyRow || !els?.entityName || !els?.entityValue || !els?.entityGaugeFill) return;
+
+      const entityId = this._cfg?.entity;
+      const stateObj = (entityId && this._hass) ? this._hass.states[entityId] : null;
+
+      if (!entityId || !stateObj) {
+        els.stickyRow.hidden = true;
+        return;
+      }
+
+      els.stickyRow.hidden = false;
+
+      const friendly = (stateObj.attributes && stateObj.attributes.friendly_name) || entityId;
+      const unit = (stateObj.attributes && stateObj.attributes.unit_of_measurement) || "";
+      els.entityName.textContent = friendly;
+      els.entityValue.textContent = unit ? `${stateObj.state} ${unit}` : String(stateObj.state);
+
+      const value = parseFloat(stateObj.state);
+      const min = Number(this._cfg?.entity_min ?? 0);
+      const max = Number(this._cfg?.entity_max ?? 100);
+
+      els.entityGaugeFill.style.width =
+        (Number.isFinite(value) && min < max)
+          ? `${Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100))}%`
+          : "0%";
     }
 
     async _loadStats(){
