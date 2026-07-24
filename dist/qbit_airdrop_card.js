@@ -394,7 +394,7 @@ function formatSeeds(num_seeds, num_complete){
                 </div>
 
                 <style>
-          .wrap{padding:10px;display:grid;grid-row-gap:12px}
+          .wrap{padding:10px;display:grid;grid-row-gap:4px}
           .row{display:block}
           .row-input{position:relative}
           .sticky-block{
@@ -407,10 +407,10 @@ function formatSeeds(num_seeds, num_complete){
             padding-top:2px;
           }
           .sticky-spacer{
-            height:10px;
-            max-width:355px;
+            height:15px;
+            max-width:360px;
             width:100%;
-            background:linear-gradient(to bottom, #808080, transparent);
+			background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%) !important;
             padding:0;
             margin:0 auto;
           }
