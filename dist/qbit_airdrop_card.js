@@ -404,7 +404,6 @@ function formatSeeds(num_seeds, num_complete){
             top:0;
             z-index:10;
             display:grid;
-            padding-top:2px;
           }
           .sticky-content{
             display:grid;
@@ -413,7 +412,7 @@ function formatSeeds(num_seeds, num_complete){
           .sticky-spacer{
 			background-color: transparent !important;
 			background-image: linear-gradient(to bottom, var(--card-background-color) 0%, transparent 100%) !important;
-			height: 15px !important;
+			height: 45px !important;
 			width: 100% !important;
             padding:0;
             margin:0 auto;
@@ -440,7 +439,7 @@ function formatSeeds(num_seeds, num_complete){
           .entity-gauge{
             display:flex;
             flex:1;
-            height:8px;
+            height:10px;
 			background:var(--card-background-color);
             border-radius:4px;
             overflow:hidden;
@@ -458,7 +457,7 @@ function formatSeeds(num_seeds, num_complete){
             display:flex;
             flex-wrap:nowrap;
             gap:4px;
-			padding:0px 6px 0px 6px;
+			padding:0px 6px 4px 6px;
             font-size:calc(1em - 3pt);
             color:var(--secondary-text-color);
             overflow-x:auto;
