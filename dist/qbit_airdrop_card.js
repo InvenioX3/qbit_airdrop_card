@@ -409,7 +409,7 @@ function formatSeeds(num_seeds, num_complete){
           .sticky-spacer{
 			background-color: transparent !important;
 			background-image: linear-gradient(to bottom, var(--card-background-color) 60%, transparent 100%) !important;
-			height: 40px !important;
+			height: 60px !important;
 			width: 100% !important;
             padding:0;
             margin:0 auto;
@@ -528,7 +528,7 @@ function formatSeeds(num_seeds, num_complete){
             filter:brightness(1.1);
           }
 
-          .status{height:1.6em;line-height:1.6em;text-align:center;color:var(--secondary-text-color);overflow:hidden;white-space:nowrap;text-overflow:clip}
+          .status{height:1.6em;line-height:1.6em;font-size:0.85em;text-align:center;color:var(--secondary-text-color);overflow:hidden;white-space:nowrap;text-overflow:clip}
 
           .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
           .item{
