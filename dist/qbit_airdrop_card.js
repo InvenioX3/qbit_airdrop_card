@@ -403,14 +403,12 @@ function formatSeeds(num_seeds, num_complete){
             z-index:10;
             display:grid;
             grid-row-gap:12px;
-            background:var(--card-background-color);
+            background-color: transparent !important;
+			background-image: linear-gradient(to bottom, #000000 0%, transparent 100%) !important;
             padding-top:2px;
           }
           .sticky-spacer{
-			background-color: transparent !important;
-			background-image: linear-gradient(to bottom, #808080 0%, transparent 100%) !important;
 			height: 15px !important;
-			max-width: 355px !important;
 			width: 100% !important;
             max-width:355px;
             padding:0;
