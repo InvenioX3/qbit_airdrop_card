@@ -541,7 +541,7 @@ function formatSeeds(num_seeds, num_complete){
 			  background:var(--card-background-color);
 			  row-gap:0px;
 			  display:grid;
-			  grid-template-columns:30px auto 100px 65px 65px;
+			  grid-template-columns:30px auto 95px 65px 65px;
 			  grid-template-rows:auto auto auto;
           }
           .item.complete{
