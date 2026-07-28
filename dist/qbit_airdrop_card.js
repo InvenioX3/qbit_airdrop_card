@@ -676,28 +676,6 @@ function formatSeeds(num_seeds, num_complete){
 			  grid-row:3;
 			}
 
-          /* Shimmering gradient text effect for titles */
-		  .loading-text {
-			background: linear-gradient(90deg, #14c714, #f2f7f2, #f2f7f2, #f2f7f2, #f2f7f2, #f2f7f2, #f2f7f2) -100% / 200%;
-			-webkit-background-clip: text;
-					background-clip: text;
-			color: transparent;
-			animation: shimmer 5s linear infinite;
-		  }
-			.loading-text-uploading {
-			  background: linear-gradient(270deg, #14c714, #f2f7f2, #f2f7f2) -100% / 200%;
-			  -webkit-background-clip: text;
-					  background-clip: text;
-			  color: transparent;
-			  /* same keyframes, but run them in reverse so motion is opposite */
-			  animation: shimmer 5s linear infinite reverse;
-			}
-
-          		/* availability === 0 override: only change the gradient, not the clip */
-          		.title-unavailable.loading-text {
-          		  background-image: linear-gradient(90deg, #0a0a0a, #c77e12, #c77e12, #544444, #544444, #544444);
-          		}
-
                     /* Delete confirmation dialog overlay */
                     .qa-confirm-overlay[hidden] {
                       display: none;
@@ -752,9 +730,6 @@ function formatSeeds(num_seeds, num_complete){
                       color: var(--error-color, #b00020);
                     }
 
-                    @keyframes shimmer{
-                      to{background-position:100%}
-                    }
         </style>
       `;
       this.appendChild(c);
@@ -1142,24 +1117,14 @@ function formatSeeds(num_seeds, num_complete){
 		  (stLower === "forcedup" && upSpeed === 0)
 		) {
 		  t.style.color = "#828282";
+		} else {
+			const unavailable =
+				(it.availability >= 0 &&
+				it.availability < 1) ||
+				stLower === "stalleddl";
+
+			t.style.color = unavailable ? "#78541f" : "#d3e6e2";
 		}
-
-        // Orange shimmer for unavailable items — title-only indicator now;
-        // no longer blanks seed/size/speed or overwrites state.
-		const unavailable =
-			(it.availability >= 0 &&
-			it.availability < 1) ||
-			stLower === "stalleddl";
-
-		if (unavailable) {
-			t.classList.add("loading-text","title-unavailable");
-        } else if (stLower === "downloading" || stLower === "forceddl") {
-
-          t.classList.add("loading-text");
-        } else if (stLower === "uploading") {
-
-          t.classList.add("loading-text-uploading");
-        }
 
 		li.appendChild(t);
 		li.appendChild(meta);
