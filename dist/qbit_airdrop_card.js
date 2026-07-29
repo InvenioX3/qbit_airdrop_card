@@ -23,15 +23,30 @@
     return m[2];
   }
 
+  // HTML entity decoder — handles numeric char refs (decimal and hex, any
+  // digit-padding, e.g. &#39; and &#039; both mean U+0027) plus the common
+  // named entities. Applied once here so every downstream consumer
+  // (analyzeTitle/cleanTitle/inferCategory) works on already-clean text.
+  function decodeHtmlEntities(str){
+    return String(str || "")
+      .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+      .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
+      .replace(/&amp;/gi, "&")
+      .replace(/&quot;/gi, '"')
+      .replace(/&apos;/gi, "'")
+      .replace(/&lt;/gi, "<")
+      .replace(/&gt;/gi, ">");
+  }
+
   // dn parser, shared title analysis, title cleaning, and category inference
   function getDisplayName(magnet){
     const q = String(magnet || "").split("?")[1] || "";
     const params = new URLSearchParams(q);
     const dn = params.get("dn");
-	const name = (dn ? decodeURIComponent(dn) : String(magnet || ""))
-	  .replace(/[+]/g, " ")
-	  .replace(/&amp;/gi, "&")
-	  .trim();
+	const name = decodeHtmlEntities(
+	  (dn ? decodeURIComponent(dn) : String(magnet || ""))
+		.replace(/[+]/g, " ")
+	).trim();
 	return stripForeignPrefix(name);
   }
 
@@ -176,11 +191,7 @@
 	const name = info.name;
 	if (!name) return name;
 
-	let normalized = name
-	  .replace(/&amp;/gi, "&")
-	  .replace(/&quot;/gi, '"')
-	  .replace(/&#39;/gi, "'")
-	  .replace(/&apos;/gi, "'");
+	let normalized = decodeHtmlEntities(name);
 
 	if (info.tokenType === "year") {
 	  const m = /\(?\b((?:19|20)\d{2})\b\)?/.exec(normalized);
@@ -606,7 +617,7 @@ function formatSeeds(num_seeds, num_complete){
             top:0;
             left:0;
             bottom:0;
-            background:#78b2ba;
+            background:#6fa8dc;
             transition:width 180ms ease-in-out;
           }
           .progress-label{
