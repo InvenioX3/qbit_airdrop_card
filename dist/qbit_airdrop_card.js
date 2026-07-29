@@ -592,7 +592,7 @@ function formatSeeds(num_seeds, num_complete){
             grid-column:1 / -1;
             grid-row:4;
             position:relative;
-            height:18px;
+            height:15px;
             margin:6px 0px -6px -8px;
           }
           .progress-track{
@@ -617,7 +617,7 @@ function formatSeeds(num_seeds, num_complete){
             justify-content:flex-end;
             padding-right:25px;
             font-variant-numeric:tabular-nums;
-            font-size:calc(1em - 2pt);
+            font-size:calc(1em - 3pt);
             line-height:1;
             white-space:nowrap;
             pointer-events:none;
