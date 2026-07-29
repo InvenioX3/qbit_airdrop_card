@@ -606,7 +606,7 @@ function formatSeeds(num_seeds, num_complete){
             top:0;
             left:0;
             bottom:0;
-            background:#12c5de;
+            background:#78b2ba;
             transition:width 180ms ease-in-out;
           }
           .progress-label{
