@@ -542,7 +542,8 @@ function formatSeeds(num_seeds, num_complete){
 			  row-gap:0px;
 			  display:grid;
 			  grid-template-columns:30px auto 95px 65px 65px;
-			  grid-template-rows:auto auto auto;
+			  grid-template-rows:auto auto auto auto;
+			  overflow:hidden;
           }
           .item.complete{
 			  border-color:#65F527;
@@ -582,19 +583,47 @@ function formatSeeds(num_seeds, num_complete){
             text-overflow:clip;
           }
 
-          /* Percent column — separated out from state, anchored to the
-             bottom edge of its cell. */
-          .pct{
+          /* Progress row — full-bleed bar (bleeds into .item's own rounded
+             corners via negative margin + .item's overflow:hidden) with a
+             right-aligned percent label that flips to a dark color where
+             the fill passes underneath it (two stacked layers, top one
+             clipped to the current fill percentage). */
+          .progress-row{
+            grid-column:1 / -1;
+            grid-row:4;
+            position:relative;
+            height:18px;
+            margin:6px 0px -6px -8px;
+          }
+          .progress-track{
+            position:absolute;
+            inset:0;
+            background:var(--divider-color);
+            opacity:0.25;
+          }
+          .progress-fill{
+            position:absolute;
+            top:0;
+            left:0;
+            bottom:0;
+            background:#12c5de;
+            transition:width 180ms ease-in-out;
+          }
+          .progress-label{
+            position:absolute;
+            inset:0;
             display:flex;
-            align-items:flex-end;
-            justify-content:flex-start;
+            align-items:center;
+            justify-content:flex-end;
+            padding-right:25px;
             font-variant-numeric:tabular-nums;
             font-size:calc(1em - 2pt);
             line-height:1;
-            color:var(--secondary-text-color);
             white-space:nowrap;
-            overflow:hidden;
+            pointer-events:none;
           }
+          .progress-label-light{ color:#d3e6e2; }
+          .progress-label-dark{ color:#000; }
 
 		  /* Seeds column: clickable, triggers setForceStart */
 		  .seed{
@@ -644,12 +673,6 @@ function formatSeeds(num_seeds, num_complete){
 			  white-space:nowrap;
 			  overflow:hidden;
 			  text-overflow:ellipsis;
-			}
-			.pct{
-			  grid-column:4 / -1;
-			  grid-row:2;
-			  justify-content:flex-end;
-			  padding:0px 25px 0px 0px;
 			}
 			.trash{
 			  grid-column:1;
@@ -977,7 +1000,6 @@ function formatSeeds(num_seeds, num_complete){
         const li=document.createElement("li"); li.className="item";
         li.innerHTML=
 		  `<div class="media"></div>`+
-          `<div class="pct"></div>`+
           `<div class="trash muted"></div>`+
           `<div class="mid muted">—</div>`+
           `<div class="seed muted"></div>`+
@@ -1101,11 +1123,35 @@ function formatSeeds(num_seeds, num_complete){
 		  it.audio
 		].filter(Boolean).join(" • ");
 
-		// Percent — end of the same row as meta, separate from the state label.
+		// Progress row — full-bleed bar with a percentage label that flips
+		// to a dark color where the fill passes underneath it.
 		const pctVal = Number(it.percent);
-		const pctEl = document.createElement("div");
-		pctEl.className = "pct";
-		pctEl.textContent = Number.isFinite(pctVal) ? `${pctVal}%` : "";
+		const pctPct = Number.isFinite(pctVal) ? Math.max(0, Math.min(100, pctVal)) : 0;
+		const pctText = Number.isFinite(pctVal) ? `${pctVal}%` : "";
+
+		const progressRow = document.createElement("div");
+		progressRow.className = "progress-row";
+
+		const track = document.createElement("div");
+		track.className = "progress-track";
+
+		const fill = document.createElement("div");
+		fill.className = "progress-fill";
+		fill.style.width = `${pctPct}%`;
+
+		const labelLight = document.createElement("div");
+		labelLight.className = "progress-label progress-label-light";
+		labelLight.textContent = pctText;
+
+		const labelDark = document.createElement("div");
+		labelDark.className = "progress-label progress-label-dark";
+		labelDark.textContent = pctText;
+		labelDark.style.clipPath = `inset(0 calc(100% - ${pctPct}%) 0 0)`;
+
+		progressRow.appendChild(track);
+		progressRow.appendChild(fill);
+		progressRow.appendChild(labelLight);
+		progressRow.appendChild(labelDark);
 
 		t.textContent = it.title || "";
 
@@ -1128,12 +1174,12 @@ function formatSeeds(num_seeds, num_complete){
 
 		li.appendChild(t);
 		li.appendChild(meta);
-		li.appendChild(pctEl);
 		li.appendChild(del);
 		li.appendChild(m);
 		li.appendChild(seed);
 		li.appendChild(d);
 		li.appendChild(s);
+		li.appendChild(progressRow);
 
 		ul.appendChild(li);
 	  }
