@@ -710,7 +710,7 @@ function formatSeeds(num_seeds, num_complete){
 
           .title{
 			  grid-column:1 / -1;
-			  font-size:1.2rem;
+			  font-size:1rem;
 			  padding:0px 5px 0px 5px;
 			  font-weight:500;
 			  white-space:nowrap;
