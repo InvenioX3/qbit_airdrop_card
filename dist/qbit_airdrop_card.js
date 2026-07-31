@@ -334,6 +334,8 @@ function formatSeeds(num_seeds, num_complete){
       this._submitting = false;
       this._confirmDelete = false;
       this._pendingDelete = null;
+      this._sortKey = "percent";
+      this._sortDir = "desc";
     }
     setConfig(cfg){
       if(!cfg) throw new Error("qbit-airdrop-submit-card: config is required");
@@ -380,6 +382,12 @@ function formatSeeds(num_seeds, num_complete){
                 >
                   ⟳
                 </div>
+              </div>
+
+              <div class="row row-sort">
+                <div id="sort-percent" class="sort-btn" data-key="percent" data-label="% Done" role="button" tabindex="0">% Done</div>
+                <div id="sort-name" class="sort-btn" data-key="name" data-label="Name" role="button" tabindex="0">Name</div>
+                <div id="sort-added" class="sort-btn" data-key="added" data-label="Added" role="button" tabindex="0">Added</div>
               </div>
             </div>
 
@@ -494,6 +502,33 @@ function formatSeeds(num_seeds, num_complete){
           #stat-ip{ width:75px; }
           #stat-free{ width:45px; }
           #stat-dl{ width:60px; }
+
+          .row-sort{
+            display:flex;
+            justify-content:center;
+            gap:8px;
+            padding:2px 6px 6px 6px;
+          }
+          .sort-btn{
+            flex:0 0 auto;
+            padding:3px 12px;
+            border-radius:999px;
+            border:1px solid var(--divider-color);
+            background:var(--secondary-background-color);
+            color:var(--secondary-text-color);
+            font-size:calc(1em - 3pt);
+            white-space:nowrap;
+            cursor:pointer;
+            user-select:none;
+          }
+          .sort-btn:hover{
+            filter:brightness(1.1);
+          }
+          .sort-btn.active{
+            border-color:var(--primary-color);
+            color:var(--primary-text-color);
+            font-weight:600;
+          }
 
           input{
             width:100%;
@@ -780,6 +815,9 @@ function formatSeeds(num_seeds, num_complete){
         entityName:  c.querySelector("#entity-name"),
         entityValue: c.querySelector("#entity-value"),
         entityGaugeFill: c.querySelector("#entity-gauge-fill"),
+        sortPercent: c.querySelector("#sort-percent"),
+        sortName:    c.querySelector("#sort-name"),
+        sortAdded:   c.querySelector("#sort-added"),
       };
       this._els.confirmOverlay = c.querySelector("#qa-confirm-overlay");
       this._els.confirmText    = c.querySelector(".qa-confirm-text");
@@ -816,6 +854,10 @@ function formatSeeds(num_seeds, num_complete){
         });
       };
       bind(this._els.refresh,()=>this._onRefresh());
+      bind(this._els.sortPercent, () => this._setSort("percent"));
+      bind(this._els.sortName,    () => this._setSort("name"));
+      bind(this._els.sortAdded,   () => this._setSort("added"));
+      this._updateSortButtons();
 
       // Android auto-submit
       this._armAuto=false; this._valueAtFocus="";
@@ -940,6 +982,57 @@ function formatSeeds(num_seeds, num_complete){
       }
     }
 
+    // Sorts in place per the current key/direction. "name" ties never apply
+    // (name IS the sort), but percent/added always sub-sort by name — always
+    // ascending, independent of the primary sort's own direction — as a
+    // stable, predictable tie-breaker.
+    _sortItems(items){
+      const key = this._sortKey;
+      const dir = this._sortDir === "asc" ? 1 : -1;
+      const nameCmp = (a,b) => a.title.localeCompare(b.title, undefined, {numeric:true, sensitivity:"base"});
+
+      items.sort((a,b) => {
+        if (key === "percent") {
+          const av = Number.isFinite(a.percent) ? a.percent : -1;
+          const bv = Number.isFinite(b.percent) ? b.percent : -1;
+          if (av !== bv) return (av - bv) * dir;
+          return nameCmp(a,b);
+        }
+        if (key === "added") {
+          if (a.addedOn !== b.addedOn) return (a.addedOn - b.addedOn) * dir;
+          return nameCmp(a,b);
+        }
+        return nameCmp(a,b) * dir;
+      });
+    }
+
+    // Sets the active sort key; repeat-clicking the same key flips
+    // ascending/descending instead of re-picking a default direction.
+    _setSort(key){
+      if (this._sortKey === key) {
+        this._sortDir = this._sortDir === "asc" ? "desc" : "asc";
+      } else {
+        this._sortKey = key;
+        this._sortDir = key === "name" ? "asc" : "desc";
+      }
+      this._updateSortButtons();
+      this._loadActive();
+    }
+
+    _updateSortButtons(){
+      const map = {
+        percent: this._els.sortPercent,
+        name: this._els.sortName,
+        added: this._els.sortAdded,
+      };
+      for (const [key, el] of Object.entries(map)) {
+        if (!el) continue;
+        const active = key === this._sortKey;
+        el.classList.toggle("active", active);
+        el.textContent = `${el.dataset.label}${active ? (this._sortDir === "asc" ? " ▲" : " ▼") : ""}`;
+      }
+    }
+
     async _loadActive(){
       if(!this._hass||!this._els?.list) return;
       try{
@@ -975,7 +1068,8 @@ function formatSeeds(num_seeds, num_complete){
               state: String(safe(r,["state"],"") || ""),
               size: safe(r,["size"], null),
               inQueue: !!safe(r,["in_queue"], false),
-              availability: availability
+              availability: availability,
+              addedOn: Number(safe(r,["added_on"], 0)) || 0
             };
           }
           return {
@@ -989,16 +1083,11 @@ function formatSeeds(num_seeds, num_complete){
             state: "",
             size: null,
             inQueue: false,
-            availability: null
+            availability: null,
+            addedOn: 0
           };
         });
-        const _COMPLETE_STATES = new Set(["uploading","stalledup","forcedup"]);
-        items.sort((a,b)=>{
-          const aDone = _COMPLETE_STATES.has(String(a.state||"").toLowerCase()) ? 0 : 1;
-          const bDone = _COMPLETE_STATES.has(String(b.state||"").toLowerCase()) ? 0 : 1;
-          if (aDone !== bDone) return aDone - bDone;
-          return a.title.localeCompare(b.title,undefined,{numeric:true,sensitivity:"base"});
-        });
+        this._sortItems(items);
         this._render(items);
       }catch{
         this._render([]);
