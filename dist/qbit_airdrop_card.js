@@ -715,12 +715,12 @@ function formatSeeds(num_seeds, num_complete){
 			  font-weight:500;
 			  white-space:nowrap;
 			  overflow:hidden;
-			  text-overflow:ellipsis;
+			  scrollbar-width: none;
 			}
 		  .media{
 			  grid-column:1 / 4;
 			  grid-row:2;
-			  font-size:calc(1em - 2pt);
+			  font-size:calc(1em - 3pt);
 			  padding:0px 0px 12px 28px;
 			  line-height:1;
 			  color:var(--secondary-text-color);
