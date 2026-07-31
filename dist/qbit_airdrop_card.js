@@ -714,7 +714,7 @@ function formatSeeds(num_seeds, num_complete){
 			  padding:0px 5px 0px 5px;
 			  font-weight:500;
 			  white-space:nowrap;
-			  overflow:hidden;
+			  overflow:auto;
 			  scrollbar-width: none;
 			}
 		  .media{
