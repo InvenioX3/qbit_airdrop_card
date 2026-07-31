@@ -8,19 +8,22 @@
   const safe = (o,p,f)=>{try{let v=o;for(let i=0;i<p.length;i++){if(v==null)return f;v=v[p[i]]}return v==null?f:v}catch(e){return f}};
 
   // Some non-English tracker sites prepend a duplicate title in the
-  // torrent's native script before the actual (Latin-script) release title,
-  // separated by a run of extra whitespace — e.g. "Дорога, дорога домой
-  // The Way Way Back (2013) BDRip...". Strip that leading segment when it
-  // contains no Latin letters at all, so category/rename inference runs on
-  // the real title instead.
+  // torrent's native script before the actual (Latin-script) release title
+  // — e.g. "Дорога, дорога домой The Way Way Back (2013) BDRip...".
+  // Separator style varies by site (double space, slash, dash, none), so
+  // rather than matching a specific separator, find where the first
+  // substantial run of Latin letters begins and strip everything before it
+  // — but only when that leading segment actually contains non-ASCII
+  // (genuinely foreign-script) characters, so an ordinary English title
+  // that happens to start with punctuation/digits (e.g. a leading year)
+  // is never touched.
   function stripForeignPrefix(nameRaw){
     const name = String(nameRaw || "");
-    const m = /^(.*?)\s{2,}(\S.*)$/.exec(name);
-    if (!m) return name;
-    const lead = m[1];
-    if (/[a-z]/i.test(lead)) return name;
+    const m = /[A-Za-z]{2,}/.exec(name);
+    if (!m || m.index === 0) return name;
+    const lead = name.slice(0, m.index);
     if (!/[^\x00-\x7f]/.test(lead)) return name;
-    return m[2];
+    return name.slice(m.index).replace(/^[\s.,;:!?'"()\[\]{}\-–—/\\]+/, "");
   }
 
   // HTML entity decoder — handles numeric char refs (decimal and hex, any
