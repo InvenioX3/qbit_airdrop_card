@@ -69,7 +69,12 @@
 	const se      = /\bS\d{1,2}E\d{1,3}\b/i.exec(name);
 	const s		  = /\bS\d{1,2}\b(?!-\d)/i.exec(name);
 	const season  = /\bSeason\s+(\d+)(?:\s*-\s*(\d+))?\b/i.exec(name);
-	const complete= /\b(?:Complete\s+Series|Complete\s+Season|Complete)\b/i.exec(name);
+	// Bare "Complete" is TV-only (Complete Series/Season). Movie Blu-ray
+	// disc rips use "COMPLETE BLURAY"/"COMPLETE UHD BLURAY" to mean a full
+	// disc image, unrelated to TV seasons — exclude that via lookahead so
+	// e.g. "The Tuxedo 2002 COMPLETE BLURAY-BAKED" isn't misread as a
+	// complete-series release.
+	const complete= /\b(?:Complete\s+Series|Complete\s+Season|Complete(?!\s+(?:UHD\s+)?BLU-?RAY\b))\b/i.exec(name);
 	const yr = /\(?\b(?:19|20)\d{2}\b\)?/.exec(name);
 
 	// A season range ("Season 1-9") or a list of distinct season tokens
