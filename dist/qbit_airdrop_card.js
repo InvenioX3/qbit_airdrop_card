@@ -1077,7 +1077,8 @@ function formatSeeds(num_seeds, num_complete){
               size: safe(r,["size"], null),
               inQueue: !!safe(r,["in_queue"], false),
               availability: availability,
-              addedOn: Number(safe(r,["added_on"], 0)) || 0
+              addedOn: Number(safe(r,["added_on"], 0)) || 0,
+              amountLeft: Number(safe(r,["amount_left"], 0)) || 0
             };
           }
           return {
@@ -1092,7 +1093,8 @@ function formatSeeds(num_seeds, num_complete){
             size: null,
             inQueue: false,
             availability: null,
-            addedOn: 0
+            addedOn: 0,
+            amountLeft: 0
           };
         });
         this._sortItems(items);
@@ -1231,11 +1233,12 @@ function formatSeeds(num_seeds, num_complete){
 		  it.audio
 		].filter(Boolean).join(" • ");
 
-		// Progress row — full-bleed bar with a percentage label that flips
-		// to a dark color where the fill passes underneath it.
+		// Progress row — full-bleed bar (still driven by percent) with a
+		// label showing amount left (not the percentage) that flips to a
+		// dark color where the fill passes underneath it.
 		const pctVal = Number(it.percent);
 		const pctPct = Number.isFinite(pctVal) ? Math.max(0, Math.min(100, pctVal)) : 0;
-		const pctText = Number.isFinite(pctVal) ? `${pctVal}%` : "";
+		const pctText = formatSize(it.amountLeft);
 
 		const progressRow = document.createElement("div");
 		progressRow.className = "progress-row";
