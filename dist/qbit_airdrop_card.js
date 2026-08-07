@@ -69,12 +69,17 @@
 	const se      = /\bS\d{1,2}E\d{1,3}\b/i.exec(name);
 	const s		  = /\bS\d{1,2}\b(?!-\d)/i.exec(name);
 	const season  = /\bSeason\s+(\d+)(?:\s*-\s*(\d+))?\b/i.exec(name);
-	// Bare "Complete" is TV-only (Complete Series/Season). Movie Blu-ray
-	// disc rips use "COMPLETE BLURAY"/"COMPLETE UHD BLURAY" to mean a full
-	// disc image, unrelated to TV seasons — exclude that via lookahead so
-	// e.g. "The Tuxedo 2002 COMPLETE BLURAY-BAKED" isn't misread as a
-	// complete-series release.
-	const complete= /\b(?:Complete\s+Series|Complete\s+Season|Complete(?!\s+(?:UHD\s+)?BLU-?RAY\b))\b/i.exec(name);
+	// "Complete Series"/"Complete Season" is an unconditional TV signal. A
+	// *bare* "Complete" with neither word attached is not — movie Blu-ray/
+	// UHD/REMUX releases commonly use bare "COMPLETE" as a disc-completeness
+	// descriptor in every possible word order relative to BLURAY/REMUX/UHD
+	// (e.g. "COMPLETE BLURAY", "BluRay COMPLETE REMUX"), so adjacency checks
+	// don't generalize. Instead, only trust a bare "Complete" as a TV signal
+	// when corroborated by an actual season signal (s/season) elsewhere in
+	// the title — that's the reliable distinguishing signal, not word order.
+	const completeStrong = /\bComplete\s+(?:Series|Season)\b/i.exec(name);
+	const completeBare = /\bComplete\b/i.exec(name);
+	const completeCorroborated = !!(completeBare && (s || season));
 	const yr = /\(?\b(?:19|20)\d{2}\b\)?/.exec(name);
 
 	// A season range ("Season 1-9") or a list of distinct season tokens
@@ -92,13 +97,13 @@
 		token = se;
 		tokenType = "se";
 	}
-	else if (complete || seasonIsRange || multipleSeasonTokens) {
+	else if (completeStrong || seasonIsRange || multipleSeasonTokens || completeCorroborated) {
 		tokenType = "complete";
 		// Redundant season notation (e.g. "S02 Season 2 COMPLETE") can put
 		// multiple season-related markers in the title — cut at whichever
 		// occurs first so category inference clears all of them, not just
 		// the one that triggered "complete" classification.
-		token = [complete, season, s]
+		token = [completeStrong, completeCorroborated ? completeBare : null, season, s]
 			.filter(Boolean)
 			.reduce((earliest, c) => (!earliest || c.index < earliest.index) ? c : earliest, null);
 	}
