@@ -1,22 +1,9 @@
-// /config/www/qbit_airdrop_card.js
-// Qbit Airdrop submit card v1
-
 (function () {
   const TAG = "qbit-airdrop-submit-card";
   if (customElements.get(TAG)) return;
 
   const safe = (o,p,f)=>{try{let v=o;for(let i=0;i<p.length;i++){if(v==null)return f;v=v[p[i]]}return v==null?f:v}catch(e){return f}};
 
-  // Some non-English tracker sites prepend a duplicate title in the
-  // torrent's native script before the actual (Latin-script) release title
-  // — e.g. "Дорога, дорога домой The Way Way Back (2013) BDRip...".
-  // Separator style varies by site (double space, slash, dash, none), so
-  // rather than matching a specific separator, find where the first
-  // substantial run of Latin letters begins and strip everything before it
-  // — but only when that leading segment actually contains non-ASCII
-  // (genuinely foreign-script) characters, so an ordinary English title
-  // that happens to start with punctuation/digits (e.g. a leading year)
-  // is never touched.
   function stripForeignPrefix(nameRaw){
     const name = String(nameRaw || "");
     const m = /[A-Za-z]{2,}/.exec(name);
@@ -69,23 +56,10 @@
 	const se      = /\bS\d{1,2}E\d{1,3}\b/i.exec(name);
 	const s		  = /\bS\d{1,2}\b(?!-\d)/i.exec(name);
 	const season  = /\bSeason\s+(\d+)(?:\s*-\s*(\d+))?\b/i.exec(name);
-	// "Complete Series"/"Complete Season" is an unconditional TV signal. A
-	// *bare* "Complete" with neither word attached is not — movie Blu-ray/
-	// UHD/REMUX releases commonly use bare "COMPLETE" as a disc-completeness
-	// descriptor in every possible word order relative to BLURAY/REMUX/UHD
-	// (e.g. "COMPLETE BLURAY", "BluRay COMPLETE REMUX"), so adjacency checks
-	// don't generalize. Instead, only trust a bare "Complete" as a TV signal
-	// when corroborated by an actual season signal (s/season) elsewhere in
-	// the title — that's the reliable distinguishing signal, not word order.
 	const completeStrong = /\bComplete\s+(?:Series|Season)\b/i.exec(name);
 	const completeBare = /\bComplete\b/i.exec(name);
 	const completeCorroborated = !!(completeBare && (s || season));
 	const yr = /\(?\b(?:19|20)\d{2}\b\)?/.exec(name);
-
-	// A season range ("Season 1-9") or a list of distinct season tokens
-	// ("S01 S02 S03...") indicates a complete/multi-season release, not a
-	// single season — even though the bare regexes above would otherwise
-	// match just the first token.
 	const seasonIsRange = !!(season && season[2]);
 	const multipleSeasonTokens =
 		((name.match(/\bS\d{1,2}\b(?!-\d)/gi) || []).length) >= 2;
@@ -99,19 +73,11 @@
 	}
 	else if (completeStrong || seasonIsRange || multipleSeasonTokens || completeCorroborated) {
 		tokenType = "complete";
-		// Redundant season notation (e.g. "S02 Season 2 COMPLETE") can put
-		// multiple season-related markers in the title — cut at whichever
-		// occurs first so category inference clears all of them, not just
-		// the one that triggered "complete" classification.
 		token = [completeStrong, completeCorroborated ? completeBare : null, season, s]
 			.filter(Boolean)
 			.reduce((earliest, c) => (!earliest || c.index < earliest.index) ? c : earliest, null);
 	}
 	else if (s && season) {
-		// Redundant season notation in the same title (e.g. "Season 01 S01")
-		// — use whichever occurs first so category inference cuts before
-		// both, instead of picking by type-priority and leaving the earlier
-		// one stuck in the category string.
 		if (s.index <= season.index) {
 			token = s;
 			tokenType = "s";
@@ -197,8 +163,6 @@
 	};
   }
 
-  // Name truncation. Pass a pre-computed `infoParam` (from analyzeTitle) to
-  // avoid re-running the analysis when the caller already has it.
   function cleanTitle(nameRaw, infoParam){
 	const info = infoParam || analyzeTitle(nameRaw);
 	const name = info.name;
@@ -253,8 +217,6 @@
 	  .trim();
   }
 
-  // Category inference: takes the already-computed display name and
-  // analyzeTitle() result so callers don't have to redo that analysis.
   function inferCategory(name, info){
     if (!name || !info.token) {
 
@@ -302,7 +264,6 @@ function displayStatus(stateRaw, inQueue){
     return b>=GB?`${(b/GB).toFixed(1)} GB`:`${(b/MB).toFixed(1)} MB`;
   }
 
-// Speed formatter shared by download/upload: e.g. "↓3.8MB" or "↑768KB"
 function formatSpeed(bps, arrow){
   const s = Number(bps);
   if (!Number.isFinite(s) || s <= 0) return "";
@@ -324,7 +285,6 @@ function formatSpeed(bps, arrow){
   return `${arrow}${Math.round(s)}B`;
 }
 
-// seeds formatter
 function formatSeeds(num_seeds, num_complete){
   const s = Number(num_seeds);
   const c = Number(num_complete);
@@ -347,7 +307,7 @@ function formatSeeds(num_seeds, num_complete){
       this._submitting = false;
       this._confirmDelete = false;
       this._pendingDelete = null;
-      this._sortKey = "percent";
+      this._sortKey = "added";
       this._sortDir = "desc";
     }
     setConfig(cfg){
@@ -398,9 +358,9 @@ function formatSeeds(num_seeds, num_complete){
               </div>
 
               <div class="row row-sort">
+				<div id="sort-added" class="sort-btn" data-key="added" data-label="Added" role="button" tabindex="0">Added</div>
                 <div id="sort-percent" class="sort-btn" data-key="percent" data-label="% Done" role="button" tabindex="0">% Done</div>
                 <div id="sort-name" class="sort-btn" data-key="name" data-label="Name" role="button" tabindex="0">Name</div>
-                <div id="sort-added" class="sort-btn" data-key="added" data-label="Added" role="button" tabindex="0">Added</div>
               </div>
             </div>
 
