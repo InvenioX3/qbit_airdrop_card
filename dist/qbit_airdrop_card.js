@@ -361,6 +361,7 @@ function formatSeeds(num_seeds, num_complete){
 				<div id="sort-added" class="sort-btn" data-key="added" data-label="Added" role="button" tabindex="0">Added</div>
                 <div id="sort-percent" class="sort-btn" data-key="percent" data-label="% Done" role="button" tabindex="0">% Done</div>
                 <div id="sort-name" class="sort-btn" data-key="name" data-label="Name" role="button" tabindex="0">Name</div>
+                <div id="cleanup-btn" class="sort-btn" role="button" tabindex="0">Cleanup</div>
               </div>
             </div>
 
@@ -791,6 +792,7 @@ function formatSeeds(num_seeds, num_complete){
         sortPercent: c.querySelector("#sort-percent"),
         sortName:    c.querySelector("#sort-name"),
         sortAdded:   c.querySelector("#sort-added"),
+        cleanupBtn:  c.querySelector("#cleanup-btn"),
       };
       this._els.confirmOverlay = c.querySelector("#qa-confirm-overlay");
       this._els.confirmText    = c.querySelector(".qa-confirm-text");
@@ -830,6 +832,7 @@ function formatSeeds(num_seeds, num_complete){
       bind(this._els.sortPercent, () => this._setSort("percent"));
       bind(this._els.sortName,    () => this._setSort("name"));
       bind(this._els.sortAdded,   () => this._setSort("added"));
+      bind(this._els.cleanupBtn, () => this._runCleanup());
       this._updateSortButtons();
 
       // Android auto-submit
@@ -1362,6 +1365,16 @@ function formatSeeds(num_seeds, num_complete){
         this._loadActive();
         this._setStatus("Updated");
       },900);
+    }
+
+    async _runCleanup(){
+      this._setStatus("Running cleanup…");
+      try{
+        await this._hass.callService("qbit_airdrop","run_cleanup",{});
+        this._setStatus("Cleanup triggered — check logs for results");
+      }catch{
+        this._setStatus("Cleanup failed",false,2000);
+      }
     }
   }
 
