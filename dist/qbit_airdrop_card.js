@@ -568,6 +568,12 @@ function formatSeeds(num_seeds, num_complete){
           .item.complete{
 			  border-color:#65F527;
           }
+          .item.remuxed{
+			  border-color:#3ea6ff;
+          }
+          .item.remux-skipped{
+			  border-color:#ffb020;
+          }
 
           /* Trash column (delete torrent + files) */
           .trash{
@@ -1046,7 +1052,8 @@ function formatSeeds(num_seeds, num_complete){
               inQueue: !!safe(r,["in_queue"], false),
               availability: availability,
               addedOn: Number(safe(r,["added_on"], 0)) || 0,
-              amountLeft: Number(safe(r,["amount_left"], 0)) || 0
+              amountLeft: Number(safe(r,["amount_left"], 0)) || 0,
+              tags: String(safe(r,["tags"],"") || "")
             };
           }
           return {
@@ -1062,7 +1069,8 @@ function formatSeeds(num_seeds, num_complete){
             inQueue: false,
             availability: null,
             addedOn: 0,
-            amountLeft: 0
+            amountLeft: 0,
+            tags: ""
           };
         });
         this._sortItems(items);
@@ -1093,6 +1101,13 @@ function formatSeeds(num_seeds, num_complete){
         const forced = stLower === "forceddl" || stLower === "forcedup";
         if (stLower === "uploading" || stLower === "stalledup" || stLower === "forcedup") {
           li.classList.add("complete");
+        }
+
+        const tagSet = new Set(String(it.tags || "").split(",").map(t => t.trim()).filter(Boolean));
+        if (tagSet.has("Remuxed")) {
+          li.classList.add("remuxed");
+        } else if (tagSet.has("Remux skipped - language undefined")) {
+          li.classList.add("remux-skipped");
         }
 
         // Trash (delete torrent + files) — moved off the state column so an
