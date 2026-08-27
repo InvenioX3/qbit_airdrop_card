@@ -1328,6 +1328,12 @@ function formatSeeds(num_seeds, num_complete){
 		  magnet,
 		  category,
 
+		  // Bare cleaned title, no resolution/codec/audio suffix — used by the
+		  // remux step to set the video track's --track-name for movies
+		  // (rename_name deliberately keeps that suffix for the filename
+		  // itself, so it's not reusable as-is for this).
+		  clean_title: cleanedTitle,
+
 		  rename_name:
 			titleInfo.tokenType === "year"
 			  ? [
