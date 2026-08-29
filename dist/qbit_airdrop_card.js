@@ -571,9 +571,6 @@ function formatSeeds(num_seeds, num_complete){
           .item.remuxed{
 			  border-color:#3ea6ff;
           }
-          .item.remux-skipped{
-			  border-color:#ffb020;
-          }
 
           /* Trash column (delete torrent + files) */
           .trash{
@@ -1106,8 +1103,6 @@ function formatSeeds(num_seeds, num_complete){
         const tagSet = new Set(String(it.tags || "").split(",").map(t => t.trim()).filter(Boolean));
         if (tagSet.has("Remuxed")) {
           li.classList.add("remuxed");
-        } else if (tagSet.has("Remux skipped - language undefined")) {
-          li.classList.add("remux-skipped");
         }
 
         // Trash (delete torrent + files) — moved off the state column so an
