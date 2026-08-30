@@ -791,6 +791,7 @@ function formatSeeds(num_seeds, num_complete){
                     .qa-files-dialog {
                       max-width: 480px;
                       max-height: 70vh;
+                      overflow: hidden;
                     }
                     .qa-files-title {
                       font-weight: 500;
@@ -798,12 +799,15 @@ function formatSeeds(num_seeds, num_complete){
                       white-space: nowrap;
                       overflow: hidden;
                       text-overflow: ellipsis;
+                      flex: 0 0 auto;
                     }
                     .qa-files-list {
                       list-style: none;
                       margin: 0;
                       padding: 0;
                       overflow-y: auto;
+                      flex: 1 1 auto;
+                      min-height: 0;
                       display: flex;
                       flex-direction: column;
                       gap: 4px;
