@@ -382,6 +382,17 @@ function formatSeeds(num_seeds, num_complete){
                       </div>
                     </div>
                   </div>
+
+                  <!-- File list overlay -->
+                  <div id="qa-files-overlay" class="qa-confirm-overlay" hidden>
+                    <div class="qa-confirm-dialog qa-files-dialog">
+                      <div class="qa-files-title"></div>
+                      <ul class="qa-files-list"></ul>
+                      <div class="qa-confirm-buttons">
+                        <button type="button" class="qa-files-close">Close</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <style>
@@ -776,6 +787,36 @@ function formatSeeds(num_seeds, num_complete){
                       color: var(--error-color, #b00020);
                     }
 
+                    /* File list overlay */
+                    .qa-files-dialog {
+                      max-width: 480px;
+                      max-height: 70vh;
+                    }
+                    .qa-files-title {
+                      font-weight: 500;
+                      font-size: calc(1em - 1pt);
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    }
+                    .qa-files-list {
+                      list-style: none;
+                      margin: 0;
+                      padding: 0;
+                      overflow-y: auto;
+                      display: flex;
+                      flex-direction: column;
+                      gap: 4px;
+                    }
+                    .qa-files-list li {
+                      font-size: calc(1em - 2pt);
+                      font-variant-numeric: tabular-nums;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      color: var(--secondary-text-color);
+                    }
+
         </style>
       `;
       this.appendChild(c);
@@ -819,6 +860,22 @@ function formatSeeds(num_seeds, num_complete){
           }
           this._pendingDelete = null;
           this._updateConfirmOverlay();
+        });
+      }
+
+      this._els.filesOverlay = c.querySelector("#qa-files-overlay");
+      this._els.filesTitle   = c.querySelector(".qa-files-title");
+      this._els.filesList    = c.querySelector(".qa-files-list");
+      this._els.filesClose   = c.querySelector(".qa-files-close");
+
+      if (this._els.filesOverlay && this._els.filesClose) {
+        this._els.filesClose.addEventListener("click", () => {
+          this._els.filesOverlay.hidden = true;
+        });
+        this._els.filesOverlay.addEventListener("click", (e) => {
+          if (e.target === this._els.filesOverlay) {
+            this._els.filesOverlay.hidden = true;
+          }
         });
       }
 
@@ -1243,6 +1300,21 @@ function formatSeeds(num_seeds, num_complete){
 		progressRow.appendChild(labelDark);
 
 		t.textContent = it.title || "";
+		if (it.hash) {
+		  t.style.cursor = "pointer";
+		  t.setAttribute("role", "button");
+		  t.setAttribute("tabindex", "0");
+		  t.title = "Show file list";
+		  const showFiles = () => this._showFiles(it.hash, it.title || "");
+		  t.addEventListener("click", showFiles);
+		  t.addEventListener("keydown", (e) => {
+			const k = e.key || e.code;
+			if (k === "Enter" || k === " " || k === "Spacebar" || k === "Space") {
+			  e.preventDefault();
+			  showFiles();
+			}
+		  });
+		}
 
 		// Gray completed uploads, and forced uploads that currently have no upload traffic.
 		const upSpeed = Number(it.upspeed) || 0;
@@ -1299,6 +1371,32 @@ function formatSeeds(num_seeds, num_complete){
         this._setStatus("Force start failed",false,2000);
       }
       setTimeout(()=>{ this._loadActive(); },900);
+    }
+
+    async _showFiles(hash, title){
+      if(!hash || !this._els?.filesOverlay) return;
+      this._els.filesTitle.textContent = title || "";
+      this._els.filesList.innerHTML = "";
+      this._els.filesOverlay.hidden = false;
+      try{
+        const data = await this._hass.callApi("GET", `qbit_airdrop/files?hash=${encodeURIComponent(hash)}`);
+        const files = (data && data.ok && Array.isArray(data.files)) ? data.files : [];
+        if(!files.length){
+          const li = document.createElement("li");
+          li.textContent = "No files found";
+          this._els.filesList.appendChild(li);
+          return;
+        }
+        for(const name of files){
+          const li = document.createElement("li");
+          li.textContent = name;
+          this._els.filesList.appendChild(li);
+        }
+      }catch{
+        const li = document.createElement("li");
+        li.textContent = "Failed to load file list";
+        this._els.filesList.appendChild(li);
+      }
     }
 
     async _onSubmit(){
