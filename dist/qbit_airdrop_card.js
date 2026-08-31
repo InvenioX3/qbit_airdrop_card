@@ -1384,6 +1384,12 @@ function formatSeeds(num_seeds, num_complete){
       this._els.filesOverlay.hidden = false;
       try{
         const data = await this._hass.callApi("GET", `qbit_airdrop/files?hash=${encodeURIComponent(hash)}`);
+        if(data && data.ok && data.is_bluray){
+          const li = document.createElement("li");
+          li.textContent = `'${title || ""}' is a Blu-Ray disc.`;
+          this._els.filesList.appendChild(li);
+          return;
+        }
         const files = (data && data.ok && Array.isArray(data.files)) ? data.files : [];
         if(!files.length){
           const li = document.createElement("li");
