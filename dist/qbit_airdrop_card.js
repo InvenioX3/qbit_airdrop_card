@@ -819,6 +819,7 @@ function formatSeeds(num_seeds, num_complete){
                       overflow: hidden;
                       text-overflow: ellipsis;
                       color: var(--secondary-text-color);
+                      flex: 0 0 auto;
                     }
 
         </style>
