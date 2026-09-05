@@ -821,6 +821,14 @@ function formatSeeds(num_seeds, num_complete){
                       color: var(--secondary-text-color);
                       flex: 0 0 auto;
                     }
+                    .qa-files-list li.qa-files-sub {
+                      padding-left: 18px;
+                      font-size: calc(1em - 3pt);
+                      opacity: 0.75;
+                    }
+                    .qa-files-list li.qa-files-sub::before {
+                      content: "↳ ";
+                    }
 
         </style>
       `;
@@ -1398,10 +1406,16 @@ function formatSeeds(num_seeds, num_complete){
           this._els.filesList.appendChild(li);
           return;
         }
-        for(const name of files){
+        for(const group of files){
           const li = document.createElement("li");
-          li.textContent = name;
+          li.textContent = group.name;
           this._els.filesList.appendChild(li);
+          for(const subName of (group.subtitles || [])){
+            const subLi = document.createElement("li");
+            subLi.className = "qa-files-sub";
+            subLi.textContent = subName;
+            this._els.filesList.appendChild(subLi);
+          }
         }
       }catch{
         const li = document.createElement("li");
